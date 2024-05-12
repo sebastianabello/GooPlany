@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -15,22 +12,24 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "recover")
+public class RecoverEntity {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "recover_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String email;
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    private String token;
+
+    private Boolean is_used;
 
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<RoleEntity> roles = new HashSet<>();
 
 }
