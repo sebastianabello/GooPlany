@@ -1,4 +1,2 @@
-package com.gooplanycol.gooplany.domain.model;
-
-public class Badge {
+package com.gooplanycol.gooplany.domain.model;public class Badge {
 }
