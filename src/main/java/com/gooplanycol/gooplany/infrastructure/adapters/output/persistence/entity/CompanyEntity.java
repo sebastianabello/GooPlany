@@ -20,18 +20,16 @@ public class CompanyEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
-    private AddressEntity address;
-
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserEntity user;
+
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
+    private AddressEntity address;
 
 }

@@ -1,11 +1,8 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

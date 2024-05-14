@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response;
 
-import jakarta.persistence.Entity;
 import lombok.*;
 
 import java.time.LocalDateTime;
