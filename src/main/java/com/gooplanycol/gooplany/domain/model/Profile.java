@@ -6,6 +6,9 @@ import com.gooplanycol.gooplany.utils.Level;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,18 +16,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profile {
-
-    private Long id;
+    private UUID id;
+    private User user;
     private String firstName;
     private String lastName;
-    private String username;
+    private String userName;
     private LocalDate birthdate;
-    private Country country;
     private String description;
-    private String emergencyContact;
-    private Gender gender;
+    private Country country;
+    private Address address;
+    private EmergencyContact emergencyContact;
     private Level level;
-    private User user;
-    private Media profilePicture;
-    private Media headerImage;
+    private Media media;
+    private Gender gender;
+    private List<Interest> interests;
 }

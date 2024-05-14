@@ -53,7 +53,7 @@ public class ProfileService implements ProfileInputPort {
                 .map(userFound -> {
                     userFound.setFirstName(profile.getFirstName());
                     userFound.setLastName(profile.getLastName());
-                    userFound.setUsername(profile.getUsername());
+                    userFound.setUserName(profile.getUserName());
                     userFound.setBirthdate(profile.getBirthdate());
                     userFound.setCountry(profile.getCountry());
                     userFound.setDescription(profile.getDescription());
