@@ -3,15 +3,18 @@ package com.gooplanycol.gooplany.application.service;
 import com.gooplanycol.gooplany.application.ports.input.CompanyInputPort;
 import com.gooplanycol.gooplany.application.ports.output.AddressOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.CompanyOutPort;
+import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.UserOutputPort;
 import com.gooplanycol.gooplany.domain.exception.CompanyNotFoundException;
 import com.gooplanycol.gooplany.domain.model.Address;
 import com.gooplanycol.gooplany.domain.model.Company;
+import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class CompanyService implements CompanyInputPort {
     private final CompanyOutPort companyOutPort;
     private final UserOutputPort userOutputPort;
     private final AddressOutputPort addressOutputPort;
+    private final EventPostOutputPort eventPostOutputPort;
 
 
     @Override
@@ -62,4 +66,17 @@ public class CompanyService implements CompanyInputPort {
     public void deleteById(Long id) {
         companyOutPort.deleteById(id);
     }
+
+    public EventPost createEventPostForCompany(Company company, EventPost eventPost) {
+        eventPost.setCompany(company);
+        return eventPostOutputPort.save(eventPost);
+    }
+
+    public List<EventPost> getEventsForCompany(Company company) {
+        List<EventPost> allEvents = eventPostOutputPort.findAll();
+        return allEvents.stream()
+                .filter(event -> event.getCompany().equals(company))
+                .collect(Collectors.toList());
+    }
+
 }
