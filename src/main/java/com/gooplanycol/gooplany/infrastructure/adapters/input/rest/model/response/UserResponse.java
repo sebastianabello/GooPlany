@@ -1,5 +1,6 @@
-package com.gooplanycol.gooplany.domain.model;
+package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response;
 
+import jakarta.persistence.Entity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,10 +10,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class UserResponse {
     private Long id;
     private String email;
-    private String password;
     private LocalDateTime createAt;
 }
