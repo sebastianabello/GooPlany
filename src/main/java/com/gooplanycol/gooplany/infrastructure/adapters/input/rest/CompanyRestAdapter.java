@@ -1,12 +1,15 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest;
 
 import com.gooplanycol.gooplany.application.ports.input.CompanyInputPort;
-import com.gooplanycol.gooplany.application.service.CompanyService;
+import com.gooplanycol.gooplany.application.ports.input.EventPostInputPort;
 import com.gooplanycol.gooplany.domain.model.Company;
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.CompanyRestMapper;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.EventPostRestMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.CompanyCreateRequest;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.EventPostCreateRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.CompanyResponse;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.EventPostResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,8 +24,10 @@ import java.util.List;
 public class CompanyRestAdapter {
 
     private final CompanyInputPort companyInputPort;
-    private final CompanyService companyService;
     private final CompanyRestMapper companyRestMapper;
+    private final EventPostInputPort eventPostInputPort;
+    private final EventPostRestMapper eventPostRestMapper;
+
 
     @GetMapping("/v1/api")
     public List<CompanyResponse> findAll() {
@@ -51,17 +56,18 @@ public class CompanyRestAdapter {
     }
 
     @PostMapping("/v1/api/{companyId}/events")
-    public ResponseEntity<EventPost> createEventForCompany(@PathVariable Long companyId, @RequestBody EventPost eventPost) {
-        Company company = companyService.findById(companyId);
-        EventPost createdEvent = companyService.createEventPostForCompany(company, eventPost);
-        return ResponseEntity.ok(createdEvent);
+    public ResponseEntity<EventPostResponse> createEventForCompany(@PathVariable Long companyId, @RequestBody EventPostCreateRequest request) {
+        Company company = companyInputPort.findById(companyId);
+        EventPost eventPost = eventPostRestMapper.toEventPost(request);
+        eventPost.setCompany(company);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(eventPostRestMapper.toEventPostResponse(eventPostInputPort.save(eventPost)));
     }
 
     @GetMapping("/v1/api/{companyId}/events")
-    public ResponseEntity<List<EventPost>> getEventsForCompany(@PathVariable Long companyId) {
-        Company company = companyService.findById(companyId);
-        List<EventPost> companyEvents = companyService.getEventsForCompany(company);
-        return ResponseEntity.ok(companyEvents);
+    public ResponseEntity<List<EventPostResponse>> getEventsForCompany(@PathVariable Long companyId) {
+        List<EventPost> companyEvents = eventPostInputPort.findByCompanyId(companyId);
+        return ResponseEntity.ok(eventPostRestMapper.toEventPostResponseList(companyEvents));
     }
 
 }

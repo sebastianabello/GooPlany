@@ -6,13 +6,12 @@ import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,10 +23,9 @@ import java.util.UUID;
 public class EventPostEntity {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "event_post_id",updatable = false, nullable = false)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String title;
     private String description;
@@ -60,6 +58,7 @@ public class EventPostEntity {
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

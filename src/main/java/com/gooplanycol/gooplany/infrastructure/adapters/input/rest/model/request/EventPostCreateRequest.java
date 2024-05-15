@@ -1,8 +1,7 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
 import com.gooplanycol.gooplany.domain.model.Address;
-import com.gooplanycol.gooplany.utils.Country;
-import com.gooplanycol.gooplany.utils.TypeOfStreet;
+
 import lombok.*;
 
 

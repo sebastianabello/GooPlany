@@ -1,6 +1,9 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response;
 
+import com.gooplanycol.gooplany.domain.model.Company;
 import lombok.*;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,5 +25,5 @@ public class EventPostResponse {
     private String eventStatus;
     private String createdAt;
     private AddressResponse addressId;
-    private Long companyId;
+    private Company companyId;
 }

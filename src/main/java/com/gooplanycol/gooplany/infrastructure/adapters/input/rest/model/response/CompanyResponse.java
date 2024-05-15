@@ -5,7 +5,6 @@ import com.gooplanycol.gooplany.domain.model.User;
 
 import lombok.*;
 
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,5 +16,5 @@ public class CompanyResponse {
     private Long id;
     private String name;
     private String phoneNumber;
-    // private Address address;
+    private Address address;
 }

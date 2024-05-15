@@ -1,7 +1,6 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
 import com.gooplanycol.gooplany.domain.model.Company;
-import com.gooplanycol.gooplany.domain.model.Profile;
 
 import java.util.List;
 
@@ -15,4 +14,5 @@ public interface CompanyInputPort {
     Company update(Long id,Company company);
 
     void deleteById(Long id);
+
 }

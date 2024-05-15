@@ -45,4 +45,10 @@ public class ProfileRestAdapter {
         profileInputPort.deleteById(id);
     }
 
+    @PostMapping("/v1/api/{profileId}/events/{eventId}/register")
+    public ResponseEntity<Void> registerToEvent(@PathVariable Long profileId, @PathVariable Long eventId) {
+        profileInputPort.registerToEvent(profileId, eventId);
+        return ResponseEntity.ok().build();
+    }
+
 }

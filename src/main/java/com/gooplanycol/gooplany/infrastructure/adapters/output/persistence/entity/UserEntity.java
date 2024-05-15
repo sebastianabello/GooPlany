@@ -27,6 +27,7 @@ public class UserEntity {
     private String password;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @ManyToMany(fetch = FetchType.EAGER)

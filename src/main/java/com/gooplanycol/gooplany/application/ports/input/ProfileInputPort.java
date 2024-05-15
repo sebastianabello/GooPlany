@@ -1,7 +1,6 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
 import com.gooplanycol.gooplany.domain.model.Profile;
-import com.gooplanycol.gooplany.domain.model.User;
 
 import java.util.List;
 
@@ -15,4 +14,6 @@ public interface ProfileInputPort {
     Profile update(Long id,Profile profile);
 
     void deleteById(Long id);
+
+    void registerToEvent(Long profileId, Long eventId);
 }

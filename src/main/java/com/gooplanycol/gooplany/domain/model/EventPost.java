@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventPost {
-    private UUID id;
+    private Long id;
     private String title;
     private String description;
     private EventCategory eventCategory;

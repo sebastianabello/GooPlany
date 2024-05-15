@@ -37,4 +37,6 @@ public class EventPostOutputAdapter implements EventPostOutputPort {
     public void deleteById(Long id) {
         eventPostRepository.deleteById(id);
     }
+
+
 }

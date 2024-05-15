@@ -1,15 +1,13 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
-import com.gooplanycol.gooplany.domain.model.Address;
-import com.gooplanycol.gooplany.domain.model.Company;
 import com.gooplanycol.gooplany.domain.model.EventPost;
+import com.gooplanycol.gooplany.domain.model.Profile;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EventPostInputPort {
 
-    EventPost createEventPost(EventPost eventPost);
+    EventPost save(EventPost eventPost);
 
     EventPost findById(Long id);
 
@@ -19,7 +17,8 @@ public interface EventPostInputPort {
 
     void deleteById(Long id);
 
-    List<EventPost> findByAddress(Address address);
+    List<EventPost> findByCompanyId(Long companyId);
 
+    List<Profile> findProfilesByEventId(Long eventId);
 
 }

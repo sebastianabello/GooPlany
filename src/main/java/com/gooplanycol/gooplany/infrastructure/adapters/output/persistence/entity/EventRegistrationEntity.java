@@ -21,7 +21,7 @@ public class EventRegistrationEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserEntity user;
+    private ProfileEntity profile;
 
     @ManyToOne
     @JoinColumn(name = "event_post_id", referencedColumnName = "event_post_id")
