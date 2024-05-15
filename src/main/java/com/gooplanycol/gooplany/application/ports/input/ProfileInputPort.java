@@ -16,4 +16,6 @@ public interface ProfileInputPort {
     void deleteById(Long id);
 
     void registerToEvent(Long profileId, Long eventId);
+
+    List<String> getEmailsByEventId(Long eventId);
 }

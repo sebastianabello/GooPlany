@@ -88,5 +88,10 @@ public class ProfileService implements ProfileInputPort {
         eventRegistrationOutputPort.save(eventRegistration);
     }
 
-
+    @Override
+    public List<String> getEmailsByEventId(Long eventId) {
+        return eventRegistrationOutputPort.findAllByEventPostId(eventId).stream()
+                .map(eventRegistration -> eventRegistration.getProfile().getUser().getEmail())
+                .toList();
+    }
 }

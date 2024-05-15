@@ -18,6 +18,5 @@ public interface EventRegistrationOutputPort {
 
     List<EventRegistration> findAllByEventPostId(Long eventPostId);
 
-    // ahora findByProfileAndEventPostId
     Optional<EventRegistration> findByProfileAndEventPostId(Long profileId, Long eventPostId);
 }
