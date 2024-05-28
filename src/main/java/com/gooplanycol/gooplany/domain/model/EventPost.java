@@ -1,7 +1,7 @@
 package com.gooplanycol.gooplany.domain.model;
 
 import com.gooplanycol.gooplany.utils.EventCategory;
-import com.gooplanycol.gooplany.utils.EventPostStatus;
+import com.gooplanycol.gooplany.utils.StatusEventPost;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import lombok.*;
@@ -9,7 +9,6 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,7 +29,7 @@ public class EventPost {
     private Integer capacity;
     private LocalDateTime startAt;
     private LocalDateTime finishAt;
-    private EventPostStatus eventStatus;
+    private StatusEventPost eventStatus;
     private LocalDate createdAt;
     private LocalDate updatedAt;
     private List<Media> images;

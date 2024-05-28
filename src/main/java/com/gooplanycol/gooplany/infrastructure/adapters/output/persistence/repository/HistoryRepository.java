@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository;
 
-
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventPostEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryEntity;
 import org.springframework.data.domain.Page;

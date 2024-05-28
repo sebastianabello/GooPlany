@@ -1,7 +1,7 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
 import com.gooplanycol.gooplany.utils.EventCategory;
-import com.gooplanycol.gooplany.utils.EventPostStatus;
+import com.gooplanycol.gooplany.utils.StatusEventPost;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import jakarta.persistence.*;
@@ -56,7 +56,7 @@ public class EventPostEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "event_status")
-    private EventPostStatus eventStatus;
+    private StatusEventPost eventStatus;
 
     @Column(name = "created_at")
     private LocalDate createdAt;

@@ -1,6 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response;
 
-import com.gooplanycol.gooplany.utils.EventPostStatus;
+import com.gooplanycol.gooplany.utils.StatusEventPost;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ public record EventPostResponse(
         Integer capacity,
         LocalDateTime startAt,
         LocalDateTime finishAt,
-        EventPostStatus status,
+        StatusEventPost status,
         LocalDate createdAt,
         LocalDate updatedAt,
         String statusEventPost,

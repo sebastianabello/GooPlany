@@ -28,13 +28,12 @@ public class EventRegistrationEntity {
     private LocalDateTime registeredAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private ProfileEntity profile;
+    @JoinColumn(name = "profile_id", referencedColumnName = "user_id")
+    private ProfileEntity profileId;
 
     @ManyToOne
     @JoinColumn(name = "event_post_id", referencedColumnName = "event_post_id")
-    private EventPostEntity eventPost;
-
+    private EventPostEntity eventPostId;
 
 
 }
