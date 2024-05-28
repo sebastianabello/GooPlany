@@ -2,7 +2,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.input.rest;
 
 import com.gooplanycol.gooplany.application.ports.input.ProfileInputPort;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.ProfileRestMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.ProfileCreateRequest;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.ProfileRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.ProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +30,13 @@ public class ProfileRestAdapter {
     }
 
     @PostMapping("/v1/api")
-    public ResponseEntity<ProfileResponse> save(@Valid @RequestBody ProfileCreateRequest request) {
+    public ResponseEntity<ProfileResponse> save(@Valid @RequestBody ProfileRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(profileRestMapper.toProfileResponse(profileInputPort.save(profileRestMapper.toProfile(request))));
     }
 
     @PutMapping("/v1/api/{id}")
-    public ProfileResponse update(@PathVariable Long id, @Valid @RequestBody ProfileCreateRequest request) {
+    public ProfileResponse update(@PathVariable Long id, @Valid @RequestBody ProfileRequest request) {
         return profileRestMapper.toProfileResponse(profileInputPort.update(id, profileRestMapper.toProfile(request)));
     }
 

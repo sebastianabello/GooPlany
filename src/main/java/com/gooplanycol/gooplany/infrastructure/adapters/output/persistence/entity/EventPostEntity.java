@@ -1,16 +1,15 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
 import com.gooplanycol.gooplany.utils.EventCategory;
-import com.gooplanycol.gooplany.utils.EventStatus;
+import com.gooplanycol.gooplany.utils.EventPostStatus;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -23,7 +22,7 @@ import java.util.List;
 public class EventPostEntity {
 
     @Id
-    @Column(name = "event_post_id",updatable = false, nullable = false)
+    @Column(name = "event_post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -56,14 +55,18 @@ public class EventPostEntity {
     private LocalDateTime finishAt;
 
     @Enumerated(EnumType.STRING)
-    private EventStatus eventStatus;
+    @Column(name = "event_status")
+    private EventPostStatus eventStatus;
 
-    @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDate updatedAt;
+
 
     @OneToMany(mappedBy = "eventPost", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MediaEntity> images = new ArrayList<>();
+    private List<MediaEntity> images;
 
     @ManyToOne
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")

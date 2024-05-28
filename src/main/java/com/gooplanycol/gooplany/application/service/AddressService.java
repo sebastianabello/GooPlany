@@ -2,7 +2,7 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.AddressInputPort;
 import com.gooplanycol.gooplany.application.ports.output.AddressOutputPort;
-import com.gooplanycol.gooplany.domain.exception.AddressNotFoundException;
+import com.gooplanycol.gooplany.domain.exception.AddressException;
 import com.gooplanycol.gooplany.domain.model.Address;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class AddressService implements AddressInputPort {
                     addressFound.setComplement(company.getComplement());
                     return addressOutputPort.save(addressFound);
                 })
-                .orElseThrow(AddressNotFoundException::new);
+                .orElseThrow(AddressException::new);
     }
 
     @Override

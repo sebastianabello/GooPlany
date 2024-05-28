@@ -3,10 +3,9 @@ package com.gooplanycol.gooplany.application.service;
 import com.gooplanycol.gooplany.application.ports.input.EventPostInputPort;
 import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.EventRegistrationOutputPort;
-import com.gooplanycol.gooplany.domain.exception.EventPostNotFoundException;
+import com.gooplanycol.gooplany.domain.exception.EventPostException;
 import com.gooplanycol.gooplany.domain.model.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class EventPostService implements EventPostInputPort {
     @Override
     public EventPost findById(Long id) {
         return eventPostOutputPort.findById(id)
-                .orElseThrow(EventPostNotFoundException::new);
+                .orElseThrow(EventPostException::new);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class EventPostService implements EventPostInputPort {
                     eventPostFound.setFinishAt(eventPost.getFinishAt());
                     return eventPostOutputPort.save(eventPostFound);
                 })
-                .orElseThrow(EventPostNotFoundException::new);
+                .orElseThrow(EventPostException::new);
     }
 
     @Override

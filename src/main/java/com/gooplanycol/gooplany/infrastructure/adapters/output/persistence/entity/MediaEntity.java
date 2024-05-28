@@ -3,6 +3,8 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.enti
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
@@ -10,7 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "media")
-public class MediaEntity {
+public class MediaEntity implements Serializable {
+
     @Id
     @Column(name = "media_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +31,14 @@ public class MediaEntity {
     @Column(name = "size")
     private Long size;
 
+    /**
     @ManyToOne
     @JoinColumn(name = "event_post_id", referencedColumnName = "event_post_id")
     private EventPostEntity eventPost;
 
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserEntity user;
+    */
 }

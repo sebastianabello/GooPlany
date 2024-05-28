@@ -2,35 +2,37 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.enti
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
-@Entity
-@Builder
+@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "user")
+public abstract class UserEntity {
 
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String cellphone;
+
     @Column(unique = true)
     private String email;
-    private String password;
 
-    @CreationTimestamp
+    @OneToMany(mappedBy = "user",cascade = CascadeType.PERSIST)
+    private List<TokenEntity> tokens;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private List<ConfirmationTokenEntity> confirmationTokens;
+
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<RoleEntity> roles = new HashSet<>();
+    @Column(name = "updated_at")
+    private LocalDate updatedAt;
 
 }

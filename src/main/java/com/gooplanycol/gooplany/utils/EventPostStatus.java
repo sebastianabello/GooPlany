@@ -1,6 +1,6 @@
 package com.gooplanycol.gooplany.utils;
 
-public enum EventStatus {
+public enum EventPostStatus {
     PENDING,
     IN_PROGRESS,
     FINISHED

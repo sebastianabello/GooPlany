@@ -6,8 +6,8 @@ import com.gooplanycol.gooplany.domain.model.Company;
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.CompanyRestMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.EventPostRestMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.CompanyCreateRequest;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.EventPostCreateRequest;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.CompanyRequest;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.EventPostRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.CompanyResponse;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.EventPostResponse;
 import jakarta.validation.Valid;
@@ -25,6 +25,7 @@ public class CompanyRestAdapter {
 
     private final CompanyInputPort companyInputPort;
     private final CompanyRestMapper companyRestMapper;
+
     private final EventPostInputPort eventPostInputPort;
     private final EventPostRestMapper eventPostRestMapper;
 
@@ -40,13 +41,13 @@ public class CompanyRestAdapter {
     }
 
     @PostMapping("/v1/api")
-    public ResponseEntity<CompanyResponse> save(@Valid @RequestBody CompanyCreateRequest request) {
+    public ResponseEntity<CompanyResponse> save(@Valid @RequestBody CompanyRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(companyRestMapper.toCompanyResponse(companyInputPort.save(companyRestMapper.toCompany(request))));
     }
 
     @PutMapping("/v1/api/{id}")
-    public CompanyResponse update(@PathVariable Long id, @Valid @RequestBody CompanyCreateRequest request) {
+    public CompanyResponse update(@PathVariable Long id, @Valid @RequestBody CompanyRequest request) {
         return companyRestMapper.toCompanyResponse(companyInputPort.update(id, companyRestMapper.toCompany(request)));
     }
 
@@ -56,7 +57,7 @@ public class CompanyRestAdapter {
     }
 
     @PostMapping("/v1/api/{companyId}/events")
-    public ResponseEntity<EventPostResponse> createEventForCompany(@PathVariable Long companyId, @RequestBody EventPostCreateRequest request) {
+    public ResponseEntity<EventPostResponse> createEventForCompany(@PathVariable Long companyId, @RequestBody EventPostRequest request) {
         Company company = companyInputPort.findById(companyId);
         EventPost eventPost = eventPostRestMapper.toEventPost(request);
         eventPost.setCompany(company);

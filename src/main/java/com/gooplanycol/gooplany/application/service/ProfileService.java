@@ -6,8 +6,8 @@ import com.gooplanycol.gooplany.application.ports.output.EventRegistrationOutput
 import com.gooplanycol.gooplany.application.ports.output.ProfileOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.UserOutputPort;
 import com.gooplanycol.gooplany.domain.exception.AlreadyRegisteredException;
-import com.gooplanycol.gooplany.domain.exception.EventPostNotFoundException;
-import com.gooplanycol.gooplany.domain.exception.ProfileNotFoundException;
+import com.gooplanycol.gooplany.domain.exception.EventPostException;
+import com.gooplanycol.gooplany.domain.exception.ProfileException;
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.EventRegistration;
 import com.gooplanycol.gooplany.domain.model.Profile;
@@ -31,7 +31,7 @@ public class ProfileService implements ProfileInputPort {
     @Override
     public Profile findById(Long id) {
         return profileOutputPort.findById(id)
-                .orElseThrow(ProfileNotFoundException::new);
+                .orElseThrow(ProfileException::new);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ProfileService implements ProfileInputPort {
                     userFound.setLevel(profile.getLevel());
                     return profileOutputPort.save(userFound);
                 })
-                .orElseThrow(ProfileNotFoundException::new);
+                .orElseThrow(ProfileException::new);
     }
 
     @Override
@@ -72,8 +72,8 @@ public class ProfileService implements ProfileInputPort {
 
     @Override
     public void registerToEvent(Long profileId, Long eventId) {
-        Profile profile = profileOutputPort.findById(profileId).orElseThrow(ProfileNotFoundException::new);
-        EventPost eventPost = eventPostOutputPort.findById(eventId).orElseThrow(EventPostNotFoundException::new);
+        Profile profile = profileOutputPort.findById(profileId).orElseThrow(ProfileException::new);
+        EventPost eventPost = eventPostOutputPort.findById(eventId).orElseThrow(EventPostException::new);
 
         // Comprueba si ya existe una inscripción para este perfil y evento
         Optional<EventRegistration> existingRegistration = eventRegistrationOutputPort.findByProfileAndEventPostId(profileId, eventId);

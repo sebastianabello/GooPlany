@@ -2,17 +2,17 @@ package com.gooplanycol.gooplany.domain.model;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-
     private Long id;
+    private String cellphone;
     private String email;
-    private String password;
-    private LocalDateTime createAt;
+    private List<Token> tokens;
+    private LocalDate createAt;
 }

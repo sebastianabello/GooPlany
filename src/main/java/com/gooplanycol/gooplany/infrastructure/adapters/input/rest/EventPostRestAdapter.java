@@ -5,7 +5,7 @@ import com.gooplanycol.gooplany.application.ports.input.EventPostInputPort;
 import com.gooplanycol.gooplany.domain.model.Profile;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.EventPostRestMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.ProfileRestMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.EmailCreateRequest;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.EmailRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.EventPostResponse;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.ProfileResponse;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class EventPostRestAdapter {
     }
 
     @PostMapping("/v1/api/{eventId}/notify")
-    public void notifyProfiles(@PathVariable Long eventId, @RequestBody EmailCreateRequest request) {
+    public void notifyProfiles(@PathVariable Long eventId, @RequestBody EmailRequest request) {
         emailInputPort.sendEmailToProfiles(eventId, request.getSubject(), request.getText());
     }
 }

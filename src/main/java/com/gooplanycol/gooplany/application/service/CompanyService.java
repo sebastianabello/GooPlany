@@ -5,7 +5,7 @@ import com.gooplanycol.gooplany.application.ports.output.AddressOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.CompanyOutPort;
 import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.UserOutputPort;
-import com.gooplanycol.gooplany.domain.exception.CompanyNotFoundException;
+import com.gooplanycol.gooplany.domain.exception.CompanyException;
 import com.gooplanycol.gooplany.domain.model.Address;
 import com.gooplanycol.gooplany.domain.model.Company;
 import com.gooplanycol.gooplany.domain.model.EventPost;
@@ -29,7 +29,7 @@ public class CompanyService implements CompanyInputPort {
     @Override
     public Company findById(Long id) {
         return companyOutPort.findById(id)
-                .orElseThrow(CompanyNotFoundException::new);
+                .orElseThrow(CompanyException::new);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CompanyService implements CompanyInputPort {
                     companyFound.setAddress(company.getAddress());
                     return companyOutPort.save(companyFound);
                 })
-                .orElseThrow(CompanyNotFoundException::new);
+                .orElseThrow(CompanyException::new);
     }
 
     @Override

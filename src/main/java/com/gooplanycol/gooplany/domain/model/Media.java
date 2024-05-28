@@ -13,6 +13,4 @@ public class Media {
     private String contentType;
     private String url;
     private Long size;
-    private EventPost eventPost;
-    private User user;
 }

@@ -1,12 +1,13 @@
 package com.gooplanycol.gooplany.domain.model;
 
 import com.gooplanycol.gooplany.utils.EventCategory;
-import com.gooplanycol.gooplany.utils.EventStatus;
+import com.gooplanycol.gooplany.utils.EventPostStatus;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,10 @@ public class EventPost {
     private Integer capacity;
     private LocalDateTime startAt;
     private LocalDateTime finishAt;
-    private EventStatus eventStatus;
-    private LocalDateTime createdAt;
-    private List<Media> images = new ArrayList<>();
+    private EventPostStatus eventStatus;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
+    private List<Media> images;
     private Address address;
     private Company company;
 }

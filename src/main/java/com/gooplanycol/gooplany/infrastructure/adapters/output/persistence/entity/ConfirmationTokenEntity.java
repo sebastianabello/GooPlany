@@ -2,7 +2,6 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.enti
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -10,26 +9,25 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "recover")
-public class RecoverEntity {
-
+@Table(name = "confirmation_token")
+public class ConfirmationTokenEntity {
     @Id
-    @Column(name = "recover_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
+    @Column(nullable = false)
     private String token;
-
-    private Boolean is_used;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt;
-
+    @Column(nullable = false)
+    private LocalDateTime expiresAt;
+    private LocalDateTime confirmedAt;
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "user_id"
+    )
+    private ProfileEntity profile;
 }

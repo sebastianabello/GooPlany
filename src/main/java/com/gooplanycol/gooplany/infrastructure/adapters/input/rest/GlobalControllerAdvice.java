@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest;
 
-import com.gooplanycol.gooplany.domain.exception.UserNotFoundException;
 import com.gooplanycol.gooplany.domain.model.ErrorResponse;
 import com.gooplanycol.gooplany.utils.ErrorCatalog;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -18,15 +17,6 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalControllerAdvice {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(UserNotFoundException.class)
-    public ErrorResponse handleStudentNotFoundException() {
-        return ErrorResponse.builder()
-                .code(ErrorCatalog.USER_NOT_FOUND.getCode())
-                .message(ErrorCatalog.USER_NOT_FOUND.getMessage())
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
