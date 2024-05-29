@@ -18,23 +18,32 @@ public class AddressOutputAdapter implements AddressOutputPort {
     private final AddressOutputMapper mapper;
 
     @Override
-    public Optional<Address> findById(Long id) {
-        return addressRepository.findById(id)
-                .map(mapper::toAddress);
-    }
-
-    @Override
-    public List<Address> findAll() {
-        return mapper.toAddressList(addressRepository.findAll());
-    }
-
-    @Override
     public Address save(Address address) {
-        return mapper.toAddress(addressRepository.save(mapper.toAddressEntity(address)));
+        return null;
     }
 
     @Override
-    public void deleteById(Long id) {
-        addressRepository.deleteById(id);
+    public boolean remove(Long id) {
+        return false;
+    }
+
+    @Override
+    public Optional<Address> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Address> findAll(Integer offset, Integer pageSize) {
+        return List.of();
+    }
+
+    @Override
+    public List<Address> findAddressesByPostalCode(Integer offset, Integer pageSize, String postalCode) {
+        return List.of();
+    }
+
+    @Override
+    public List<Address> findAddressesByCountry(Integer offset, Integer pageSize, String country) {
+        return List.of();
     }
 }

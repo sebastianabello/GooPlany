@@ -2,6 +2,7 @@ package com.gooplanycol.gooplany.utils;
 
 // Esta tabla sirve para definir los tipos de lugares que se pueden registrar en la tabla de lugares
 public enum TypeOfPlace {
+    NOT_SPECIFIED,
     PARK,
     BAR,
     SHOPPING_CENTER,
@@ -18,4 +19,10 @@ public enum TypeOfPlace {
     UNIVERSITY,
     SCHOOL,
     CHURCH;
+
+    private String message;
+
+    TypeOfPlace() {
+        this.message = this.name().toLowerCase();
+    }
 }

@@ -29,18 +29,15 @@ public class CompanyService implements CompanyInputPort {
     private final ConfirmationTokenOutputPort confirmationTokenOutputPort;
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
         return companyOutPort.authenticate(authenticationRequest);
     }
 
-
     @Override
     public boolean removeCompany(Long id) {
         return companyOutPort.removeCompany(id);
     }
-
 
     @Override
     public Company editData(Company response, Long id) {
