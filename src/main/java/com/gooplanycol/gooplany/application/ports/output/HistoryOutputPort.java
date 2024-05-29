@@ -11,8 +11,6 @@ public interface HistoryOutputPort {
 
     boolean remove(Long id);
 
-    History findById(Long id);
-
     List<History> findAll(Integer offset, Integer pageSize);
 
     List<EventPost> findEventPosts(Long id, Integer offset, Integer pageSize);

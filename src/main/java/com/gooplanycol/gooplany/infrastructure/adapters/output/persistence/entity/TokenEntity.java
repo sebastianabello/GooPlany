@@ -26,6 +26,10 @@ public class TokenEntity {
     @JoinColumn(name = "profile_id")
     private ProfileEntity profile;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private CompanyEntity company;
+
     private boolean revoked;
 
     private boolean expired;

@@ -13,6 +13,7 @@ import com.gooplanycol.gooplany.utils.Role;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class RegistrationProfileOutputAdapter implements RegistrationProfileOutputPort {
 

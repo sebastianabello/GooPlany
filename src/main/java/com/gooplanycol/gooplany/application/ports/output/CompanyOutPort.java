@@ -13,9 +13,11 @@ public interface CompanyOutPort {
 
     AuthenticationResponse authenticate(AuthenticationRequest authenticationRequestDTO);
 
+    Company save(Company address);
+
     Company getCustomerByToken(String token);
 
-    boolean removeCustomer(Long id);
+    boolean removeCompany(Long id);
 
     // Company editData(Company response, Long id);
 
@@ -31,7 +33,7 @@ public interface CompanyOutPort {
 
     Company changePwd(String pwd, Long id);
 
-    List<Address> addAddress(Address addressRequestDTO, Long id);
+    List<Address> addAddress(Address address, Long id);
 
-    boolean removeAddress(Long id_address, Long id_customer);
+    boolean removeAddress(Long addressId, Long companyId);
 }

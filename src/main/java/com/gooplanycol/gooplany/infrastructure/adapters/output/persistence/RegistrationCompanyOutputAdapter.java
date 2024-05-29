@@ -11,6 +11,7 @@ import com.gooplanycol.gooplany.utils.Role;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class RegistrationCompanyOutputAdapter implements RegistrationCompanyOutputPort {
 
@@ -44,7 +45,7 @@ public class RegistrationCompanyOutputAdapter implements RegistrationCompanyOutp
                         .tokens(new ArrayList<>())
                         .confirmationTokens(new ArrayList<>())
                         .address(new ArrayList<>())
-                        .roles(Arrays.asList(Role.USER))
+                        .roles(Arrays.asList(Role.COMPANY))
                         .build();
                 company.setName(request.getName());
                 company.setCellphone(request.getCellphone());
