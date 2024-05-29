@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.domain.model;
 import com.gooplanycol.gooplany.utils.Role;
-import com.gooplanycol.gooplany.utils.TokenType;
 import lombok.*;
 
 import java.time.LocalDate;

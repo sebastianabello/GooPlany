@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventPost {
+public class EventPost extends Utils {
     private Long id;
     private String title;
     private String description;
@@ -35,4 +35,22 @@ public class EventPost {
     private List<Media> images;
     private Address address;
     private Company company;
+
+    public EventCategory findEventCategory(String eventCategory) {
+        return EventCategory.valueOf(eventCategory);
+    }
+
+    public TypeOfAudience findTypeOfAudience(String typeOfAudience) {
+        return TypeOfAudience.valueOf(typeOfAudience);
+    }
+
+    public TypeOfPlace findTypeOfPlace(String typeOfPlace) {
+        return TypeOfPlace.valueOf(typeOfPlace);
+    }
+
+    public StatusEventPost findStatusEventPost(String statusEventPost) {
+        return StatusEventPost.valueOf(statusEventPost);
+    }
+
+
 }

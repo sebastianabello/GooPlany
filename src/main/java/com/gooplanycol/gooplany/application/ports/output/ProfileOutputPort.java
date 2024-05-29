@@ -14,7 +14,7 @@ public interface ProfileOutputPort {
 
     Profile getProfileByToken(String token);
 
-    Profile save(Profile address);
+    Profile save(Profile profile);
 
     boolean removeProfile(Long id);
 
@@ -24,7 +24,7 @@ public interface ProfileOutputPort {
 
     // History findHistory(Long id);
 
-    Optional<Profile> findByEmail(String email);
+    Profile findByEmail(String email);
 
     Profile changePwd(String pwd, Long id);
 

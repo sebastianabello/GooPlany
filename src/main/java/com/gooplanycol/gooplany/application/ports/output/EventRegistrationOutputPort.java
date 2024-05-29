@@ -1,6 +1,7 @@
 package com.gooplanycol.gooplany.application.ports.output;
 
 import com.gooplanycol.gooplany.domain.model.EventRegistration;
+import com.gooplanycol.gooplany.utils.StatusRegistrationEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,6 @@ public interface EventRegistrationOutputPort {
 
     List<EventRegistration> findAllByEventPostId(Long eventPostId);
 
-    List<EventRegistration> findByStatusRegistrationEvent(String statusRegistrationEvent);
+    List<EventRegistration> findByStatusRegistrationEvent(StatusRegistrationEvent statusRegistrationEvent);
 
 }

@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/event")
 public class EventPostRestAdapter {
+
     private final EventPostInputPort eventPostInputPort;
     private final EventPostRestMapper eventPostRestMapper;
     private final ProfileRestMapper profileRestMapper;
@@ -35,8 +36,9 @@ public class EventPostRestAdapter {
 
     @GetMapping("/v1/api/{eventId}/profiles")
     public ResponseEntity<List<ProfileResponse>> getProfilesByEventId(@PathVariable Long eventId) {
-        List<Profile> profiles = eventPostInputPort.findProfilesByEventId(eventId);
-        return ResponseEntity.ok(profileRestMapper.toProfileResponseList(profiles));
+        // List<Profile> profiles = eventPostInputPort.findProfilesByEventId(eventId);
+        // return ResponseEntity.ok(profileRestMapper.toProfileResponseList(profiles));
+        return null;
     }
 
     @PostMapping("/v1/api/{eventId}/notify")

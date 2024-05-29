@@ -12,12 +12,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -45,7 +44,7 @@ public class RegistrationCompanyOutputAdapter implements RegistrationCompanyOutp
                         .tokens(new ArrayList<>())
                         .confirmationTokens(new ArrayList<>())
                         .address(new ArrayList<>())
-                        .roles(Arrays.asList(Role.COMPANY))
+                        .roles(List.of(Role.COMPANY))
                         .build();
                 company.setName(request.getName());
                 company.setCellphone(request.getCellphone());
@@ -74,13 +73,13 @@ public class RegistrationCompanyOutputAdapter implements RegistrationCompanyOutp
 
     }
 
-    public ConfirmationToken generateToken(Company profile) {
+    public ConfirmationToken generateToken(Company company) {
         String tokenValue = UUID.randomUUID().toString();
         ConfirmationToken token = ConfirmationToken.builder()
                 .token(tokenValue)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(15))
-                .user(profile)
+                .company(company)
                 .build();
         confirmationTokenOutputAdapter.saveConfirmationToken(token);
         return token;
@@ -96,12 +95,12 @@ public class RegistrationCompanyOutputAdapter implements RegistrationCompanyOutp
             } else {
                 LocalDateTime expiredAt = confirmationToken.getExpiresAt();
                 if (expiredAt.isBefore(LocalDateTime.now())) {//is expired
-                    resendConfirmationEmail(confirmationToken.getUser().getEmail());
+                    resendConfirmationEmail(confirmationToken.getCompany().getEmail());
                     System.out.println("Token expired, send another one");
                     return "the token was expired so we already send you another one";
                 } else {
                     confirmationTokenOutputAdapter.setConfirmedAt(token);
-                    Company company = (Company) confirmationToken.getUser();
+                    Company company = confirmationToken.getCompany();
                     company.setEnable(true);
                     companyOutputMapper.toCompany(companyRepository.save(companyOutputMapper.toCompanyEntity(company)));
                     return "Email confirmed successfully";

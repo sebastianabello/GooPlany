@@ -1,7 +1,7 @@
 package com.gooplanycol.gooplany.application.ports.output;
 
 import com.gooplanycol.gooplany.domain.model.EventPost;
-import com.gooplanycol.gooplany.domain.model.Profile;
+import com.gooplanycol.gooplany.domain.model.EventRegistration;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +13,9 @@ public interface EventPostOutputPort {
 
     boolean remove(Long id);
 
-    List<EventPost> findByCompanyId(Long companyId);
+    List<EventPost> findByCompanyId(Long id);
 
-    List<Profile> findProfilesByEventId(Long eventId);
+    List<EventRegistration> findProfilesByEventId(Long id);
 
     List<EventPost> findAll(Integer offset, Integer pageSize);
 

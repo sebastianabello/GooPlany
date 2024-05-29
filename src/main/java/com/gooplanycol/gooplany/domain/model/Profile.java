@@ -1,7 +1,6 @@
 package com.gooplanycol.gooplany.domain.model;
 
 import com.gooplanycol.gooplany.utils.Gender;
-import com.gooplanycol.gooplany.utils.Level;
 import com.gooplanycol.gooplany.utils.Role;
 import lombok.*;
 
@@ -27,6 +26,7 @@ public class Profile extends User {
     private String username;
     private String pwd;
     private LocalDate birthdate;
+    private History history;
     private String country;
     private String description;
     private String emergencyContact;
@@ -35,4 +35,5 @@ public class Profile extends User {
     private Media profilePicture;
     private Media headerImage;
     private List<Role> roles;
+
 }

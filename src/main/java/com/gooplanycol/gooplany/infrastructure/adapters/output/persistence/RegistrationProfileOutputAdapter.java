@@ -7,19 +7,17 @@ import com.gooplanycol.gooplany.domain.model.ConfirmationToken;
 import com.gooplanycol.gooplany.domain.model.Profile;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.ProfileOutputMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CompanyRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.ProfileRepository;
 import com.gooplanycol.gooplany.utils.Role;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -30,8 +28,11 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
     private final ProfileOutputMapper profileOutputMapper;
 
     private final EmailValidator emailValidator;
+
     private final EmailSenderService emailSenderService;
+
     private final PasswordEncoder passwordEncoder;
+
     private final ConfirmationTokenOutputAdapter confirmationTokenOutputAdapter;
 
     @Override
@@ -52,7 +53,7 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
                         .level(request.getLevel())
                         .profilePicture(request.getProfilePicture())
                         .headerImage(request.getHeaderImage())
-                        .roles(Arrays.asList(Role.USER))
+                        .roles(List.of(Role.USER))
                         .build();
                 profile.setFirstName(request.getFirstName());
                 profile.setLastName(request.getLastName());
@@ -89,7 +90,7 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
                 .token(tokenValue)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(15))
-                .user(profile)
+                .profile(profile)
                 .build();
         confirmationTokenOutputAdapter.saveConfirmationToken(token);
         return token;
@@ -105,12 +106,12 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
             } else {
                 LocalDateTime expiredAt = confirmationToken.getExpiresAt();
                 if (expiredAt.isBefore(LocalDateTime.now())) {//is expired
-                    resendConfirmationEmail(confirmationToken.getUser().getEmail());
+                    resendConfirmationEmail(confirmationToken.getProfile().getEmail());
                     System.out.println("Token expired, send another one");
                     return "the token was expired so we already send you another one";
                 } else {
                     confirmationTokenOutputAdapter.setConfirmedAt(token);
-                    Profile profile = (Profile) confirmationToken.getUser();
+                    Profile profile = confirmationToken.getProfile();
                     profile.setEnable(true);
                     profileOutputMapper.toProfile(profileRepository.save(profileOutputMapper.toProfileEntity(profile)));
                     return "Email confirmed successfully";

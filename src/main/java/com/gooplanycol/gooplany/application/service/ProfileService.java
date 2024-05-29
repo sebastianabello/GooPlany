@@ -1,16 +1,9 @@
 package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.ProfileInputPort;
-import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
-import com.gooplanycol.gooplany.application.ports.output.EventRegistrationOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.ProfileOutputPort;
-import com.gooplanycol.gooplany.domain.exception.AlreadyRegisteredException;
-import com.gooplanycol.gooplany.domain.exception.EventPostException;
 import com.gooplanycol.gooplany.domain.exception.ProfileException;
-import com.gooplanycol.gooplany.domain.model.EventPost;
-import com.gooplanycol.gooplany.domain.model.EventRegistration;
 import com.gooplanycol.gooplany.domain.model.Profile;
-import com.gooplanycol.gooplany.domain.model.User;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
 import com.gooplanycol.gooplany.utils.Gender;
@@ -84,8 +77,7 @@ public class ProfileService implements ProfileInputPort {
 
     @Override
     public Profile findByEmail(String email) {
-        return profileOutputPort.findByEmail(email)
-                .orElseThrow(() -> new ProfileException("The profile fetched by email doesn't exist"));
+        return profileOutputPort.findByEmail(email);
     }
 
     @Override

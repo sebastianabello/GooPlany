@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface EventPostRepository extends JpaRepository<EventPostEntity, Long> {
 
@@ -17,12 +19,12 @@ public interface EventPostRepository extends JpaRepository<EventPostEntity, Long
     Page<EventPostEntity> findEventPostByEventCategory(Pageable pageable, @Param("eventCategory") EventCategory eventCategory);
 
     @Query("SELECT e FROM EventPostEntity e WHERE e.company =:companyName")
-    Page<EventPostEntity> findEventPostByCompanyName(Pageable pageable, @Param("companyName") String companyName);
+    List<EventPostEntity> findEventPostByCompanyName(@Param("companyName") String companyName);
 
     @Query("SELECT e FROM EventPostEntity e WHERE e.company.id =:companyId")
-    Page<EventPostEntity> findEventPostEntitiesByCompanyId(Pageable pageable, @Param("companyId") Long companyId);
+    List<EventPostEntity> findEventPostByCompanyId(@Param("companyId") Long companyId);
 
     @Query("SELECT e FROM EventPostEntity e WHERE e.statusEventPost =:statusEventPost")
-    Page<EventPostEntity> findEventPostByStatus(@Param("eventStatus") StatusEventPost statusEventPost, Pageable pageable);
+    Page<EventPostEntity> findEventPostByStatus(@Param("eventStatus") String statusEventPost, Pageable pageable);
 
 }

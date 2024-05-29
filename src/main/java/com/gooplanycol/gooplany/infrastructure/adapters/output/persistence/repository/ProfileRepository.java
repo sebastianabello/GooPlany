@@ -17,6 +17,5 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
     @Query("SELECT p FROM ProfileEntity p WHERE p.username = :username")
     Optional<ProfileEntity> findProfileByUsername(@Param("username") String username);
 
-
-
+    boolean registerProfileToEvent(Long profileId, Long eventId);
 }

@@ -36,5 +36,4 @@ public class ConfirmationTokenOutputAdapter implements ConfirmationTokenOutputPo
         confirmationToken.setConfirmedAt(LocalDateTime.now());
     }
 
-
 }

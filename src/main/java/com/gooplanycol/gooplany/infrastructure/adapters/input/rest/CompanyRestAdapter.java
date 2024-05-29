@@ -67,8 +67,7 @@ public class CompanyRestAdapter {
 
     @GetMapping("/v1/api/{companyId}/events")
     public ResponseEntity<List<EventPostResponse>> getEventsForCompany(@PathVariable Long companyId) {
-        List<EventPost> companyEvents = eventPostInputPort.findByCompanyId(companyId);
-        return ResponseEntity.ok(eventPostRestMapper.toEventPostResponseList(companyEvents));
+        return null;
     }
 
 }

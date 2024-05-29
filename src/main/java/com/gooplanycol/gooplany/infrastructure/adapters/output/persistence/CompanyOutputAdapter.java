@@ -50,7 +50,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
 
     private final PasswordEncoder passwordEncoder;
 
-    private void saveCustomerToken(Company company, String jwtToken) {
+    private void saveCompanyToken(Company company, String jwtToken) {
         Token token = new Token(
                 null,
                 jwtToken,
@@ -62,15 +62,15 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         tokenOutputMapper.toToken(tokenRepository.save(tokenOutputMapper.toTokenEntity(token)));
     }
 
-    private void revokeAllCustomerTokens(Company company) {
-        List<Token> validCustomerTokens = tokenOutputMapper.toTokenList(tokenRepository.findAllValidTokenByCompany(company.getId()));
-        if (validCustomerTokens.isEmpty())
+    private void revokeAllCompanyTokens(Company company) {
+        List<Token> validCompanyTokens = tokenOutputMapper.toTokenList(tokenRepository.findAllValidTokenByCompany(company.getId()));
+        if (validCompanyTokens.isEmpty())
             return;
-        validCustomerTokens.forEach(t -> {
+        validCompanyTokens.forEach(t -> {
             t.setExpired(true);
             t.setRevoked(true);
         });
-        tokenOutputMapper.toTokenList(tokenRepository.saveAll(tokenOutputMapper.toTokenEntityList(validCustomerTokens)));
+        tokenOutputMapper.toTokenList(tokenRepository.saveAll(tokenOutputMapper.toTokenEntityList(validCompanyTokens)));
     }
 
     @Override
@@ -84,8 +84,8 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         );
         Company company = companyOutputMapper.toCompany(companyRepository.findCompanyByName(username).orElse(null));
         String jwtToken = jwtService.generateToken(companyOutputMapper.toCompanyEntity(company));
-        revokeAllCustomerTokens(company);
-        saveCustomerToken(company, jwtToken);
+        revokeAllCompanyTokens(company);
+        saveCompanyToken(company, jwtToken);
         return new AuthenticationResponse(jwtToken);
     }
 

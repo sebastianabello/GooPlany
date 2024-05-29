@@ -1,6 +1,7 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
 import com.gooplanycol.gooplany.domain.model.EventPost;
+import com.gooplanycol.gooplany.domain.model.EventRegistration;
 import com.gooplanycol.gooplany.domain.model.Profile;
 
 import java.util.List;
@@ -13,9 +14,9 @@ public interface EventPostInputPort {
 
     boolean remove(Long id);
 
-    List<EventPost> findByCompanyId(Long companyId);
+    List<EventPost> findByCompanyId(Long id);
 
-    List<Profile> findProfilesByEventId(Long eventId);
+    List<EventRegistration> findProfilesByEventId(Long id);
 
     EventPost changeStatus(String status, Long id);
 
