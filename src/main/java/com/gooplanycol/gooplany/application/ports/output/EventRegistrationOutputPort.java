@@ -8,15 +8,20 @@ import java.util.Optional;
 
 public interface EventRegistrationOutputPort {
 
-    EventRegistration save(EventRegistration eventRegistration);
-
     Optional<EventRegistration> findById(Long id);
 
     List<EventRegistration> findAll();
 
-    void deleteById(Long id);
+    Optional<EventRegistration> findByProfileAndEventPostId(Long profileId, Long eventPostId);
+
+    EventRegistration save(EventRegistration eventRegistration);
+
+    boolean remove(Long id);
+
+    boolean isProfileRegisteredEvent(Long profileId, Long eventId);
 
     List<EventRegistration> findAllByEventPostId(Long eventPostId);
 
-    Optional<EventRegistration> findByProfileAndEventPostId(Long profileId, Long eventPostId);
+    List<EventRegistration> findByStatusRegistrationEvent(String statusRegistrationEvent);
+
 }

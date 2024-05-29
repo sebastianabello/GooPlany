@@ -14,6 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profile extends User {
+    private Long id;
+    private String cellphone;
+    private String email;
+    private List<Token> tokens;
+    private List<ConfirmationToken> confirmationTokens;
+    private LocalDate createAt;
+    private LocalDate updatedAt;
     private String firstName;
     private String lastName;
     private boolean enable;

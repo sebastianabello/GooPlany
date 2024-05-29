@@ -1,21 +1,34 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
+import com.gooplanycol.gooplany.domain.model.History;
 import com.gooplanycol.gooplany.domain.model.Profile;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
 
 import java.util.List;
 
 public interface ProfileInputPort {
+
+    AuthenticationResponse authenticate(AuthenticationRequest authenticationRequestDTO);
+
+    Profile getProfileByToken(String token);
+
+    boolean removeProfile(Long id);
+
+    Profile editData(Profile response, Long id);
+
     Profile findById(Long id);
 
-    List<Profile> findAll();
+    List<Profile> findAll(Integer offset, Integer pageSize);
 
-    Profile save(Profile profile);
+    // History findHistory(Long id);
 
-    Profile update(Long id,Profile profile);
+    Profile findByEmail(String email);
 
-    void deleteById(Long id);
+    Profile changePwd(String pwd, Long id);
 
-    void registerToEvent(Long profileId, Long eventId);
+    boolean registerProfileToEvent(Long profileId, Long eventId);
 
-    List<String> getEmailsByEventId(Long eventId);
+    // List<String> getEmailsByEventId(Long eventId);
+
 }

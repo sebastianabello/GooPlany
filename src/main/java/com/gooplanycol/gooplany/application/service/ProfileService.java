@@ -4,7 +4,6 @@ import com.gooplanycol.gooplany.application.ports.input.ProfileInputPort;
 import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.EventRegistrationOutputPort;
 import com.gooplanycol.gooplany.application.ports.output.ProfileOutputPort;
-import com.gooplanycol.gooplany.application.ports.output.UserOutputPort;
 import com.gooplanycol.gooplany.domain.exception.AlreadyRegisteredException;
 import com.gooplanycol.gooplany.domain.exception.EventPostException;
 import com.gooplanycol.gooplany.domain.exception.ProfileException;

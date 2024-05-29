@@ -21,6 +21,4 @@ public interface EventRegistrationRepository extends JpaRepository<EventRegistra
     @Query("SELECT e FROM EventRegistrationEntity e WHERE e.statusRegistrationEvent = :statusRegistrationEvent")
     List<EventRegistrationEntity> findByStatusRegistrationEvent(@Param("statusRegistrationEvent") StatusRegistrationEvent statusRegistrationEvent);
 
-    @Query("SELECT e FROM EventRegistrationEntity e WHERE e.profileId = :profileId AND e.statusRegistrationEvent = :statusRegistrationEvent")
-    Optional<EventRegistrationEntity> findByProfileIdAndStatusRegistrationEvent(@Param("profileId") Long profileId, @Param("statusRegistrationEvent") StatusRegistrationEvent statusRegistrationEvent);
 }

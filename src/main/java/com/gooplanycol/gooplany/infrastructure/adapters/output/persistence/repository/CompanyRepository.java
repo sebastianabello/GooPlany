@@ -17,9 +17,9 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
     Optional<HistoryEntity> findCompanyHistory(@Param("customerId") Long id);
 
     @Query("SELECT c.address FROM CompanyEntity c WHERE c.id= :customerId")
-    Page<AddressEntity> findCompanyEntityByAddress(@Param("customerId") Long id, Pageable pageable);
+    Page<AddressEntity> findCompanyByAddress(@Param("customerId") Long id, Pageable pageable);
+    @Query("SELECT c FROM CompanyEntity c WHERE c.email= :email")
+    Optional<CompanyEntity> findCompanyByEmail(@Param("email") String email);
 
-    Optional<CompanyEntity> findCompanyEntityByEmail(String email);
-
-    Optional<CompanyEntity> findCustomerByUsername(String username);
+    Optional<CompanyEntity> findCompanyByName(String username);
 }

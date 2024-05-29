@@ -12,12 +12,15 @@ import org.springframework.data.repository.query.Param;
 public interface EventPostRepository extends JpaRepository<EventPostEntity, Long> {
 
     @Query("SELECT e FROM EventPostEntity e WHERE e.eventCategory =:eventCategory")
-    Page<EventPostEntity> findEventPostEntitiesByEventCategory(Pageable pageable, @Param("eventCategory") EventCategory eventCategory);
+    Page<EventPostEntity> findEventPostByEventCategory(Pageable pageable, @Param("eventCategory") EventCategory eventCategory);
 
     @Query("SELECT e FROM EventPostEntity e WHERE e.company =:companyName")
-    Page<EventPostRepository> findEventPostEntitiesByCompanyName(Pageable pageable, @Param("companyName") String companyName);
+    Page<EventPostEntity> findEventPostByCompanyName(Pageable pageable, @Param("companyName") String companyName);
 
-    @Query("SELECT e FROM EventPostEntity e WHERE e.eventStatus =:eventStatus")
-    Page<EventPostEntity> findEventPostByStatus(@Param("eventStatus") StatusEventPost eventStatus, Pageable pageable);
+    @Query("SELECT e FROM EventPostEntity e WHERE e.company.id =:companyId")
+    Page<EventPostEntity> findEventPostEntitiesByCompanyId(Pageable pageable, @Param("companyId") Long companyId);
+
+    @Query("SELECT e FROM EventPostEntity e WHERE e.statusEventPost =:statusEventPost")
+    Page<EventPostEntity> findEventPostByStatus(@Param("eventStatus") StatusEventPost statusEventPost, Pageable pageable);
 
 }

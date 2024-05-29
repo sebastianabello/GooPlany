@@ -11,7 +11,11 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AddressRestMapper {
+
     Address toAddress(AddressRequest request);
+
     AddressResponse toAddressResponse(Address address);
+
     List<AddressResponse> toAddressResponseList(List<Address> addresses);
+
 }

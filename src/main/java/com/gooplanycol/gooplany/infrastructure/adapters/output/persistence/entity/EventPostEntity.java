@@ -56,7 +56,7 @@ public class EventPostEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "event_status")
-    private StatusEventPost eventStatus;
+    private StatusEventPost statusEventPost;
 
     @Column(name = "created_at")
     private LocalDate createdAt;

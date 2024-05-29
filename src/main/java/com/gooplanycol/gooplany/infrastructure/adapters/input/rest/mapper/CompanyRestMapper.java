@@ -12,6 +12,8 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CompanyRestMapper {
     Company toCompany(CompanyRequest request);
+
     CompanyResponse toCompanyResponse(Company company);
+
     List<CompanyResponse> toCompanyResponseList(List<Company> companies);
 }

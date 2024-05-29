@@ -14,5 +14,7 @@ public class User {
     private String cellphone;
     private String email;
     private List<Token> tokens;
+    private List<ConfirmationToken> confirmationTokens;
     private LocalDate createAt;
+    private LocalDate updatedAt;
 }

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class EventRegistration {
     private Long id;
+    private String statusRegistrationEvent;
     private LocalDateTime registeredAt;
     private Profile profile;
     private EventPost eventPost;

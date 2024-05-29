@@ -12,7 +12,7 @@ public class Token {
     private Long id;
     private String token;
     private TokenType tokenType;
-    private Profile profile;
+    private User user;
     private boolean revoked;
     private boolean expired;
 }

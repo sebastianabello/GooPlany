@@ -3,7 +3,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.respon
 import java.time.LocalDate;
 import java.util.List;
 
-public record HistoryResponseDTO(
+public record HistoryResponse(
         Long id,
         List<EventPostResponse> eventPosts,
         LocalDate dateModification

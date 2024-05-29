@@ -4,7 +4,6 @@ import com.gooplanycol.gooplany.utils.StatusRegistrationEvent;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

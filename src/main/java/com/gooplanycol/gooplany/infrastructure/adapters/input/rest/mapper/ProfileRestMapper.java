@@ -11,7 +11,10 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProfileRestMapper {
+
     Profile toProfile(ProfileRequest request);
+
     ProfileResponse toProfileResponse(Profile profile);
+
     List<ProfileResponse> toProfileResponseList(List<Profile> profiles);
 }

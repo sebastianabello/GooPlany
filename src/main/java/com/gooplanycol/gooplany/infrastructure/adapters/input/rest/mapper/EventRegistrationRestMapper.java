@@ -12,6 +12,8 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EventRegistrationRestMapper {
     EventRegistration toEventRegistration(EventRegistrationRequest request);
+
     EventRegistrationResponse toEventRegistrationResponse(EventRegistration eventRegistration);
+
     List<EventRegistrationResponse> toEventRegistrationResponseList(List<EventRegistration> eventRegistrations);
 }

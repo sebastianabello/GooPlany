@@ -9,16 +9,20 @@ public interface EventPostInputPort {
 
     EventPost save(EventPost eventPost);
 
-    EventPost findById(Long id);
+    EventPost edit(EventPost eventPost, Long id);
 
-    List<EventPost> findAll();
-
-    EventPost updateEventPost(Long id, EventPost eventPost);
-
-    void deleteById(Long id);
+    boolean remove(Long id);
 
     List<EventPost> findByCompanyId(Long companyId);
 
     List<Profile> findProfilesByEventId(Long eventId);
+
+    EventPost changeStatus(String status, Long id);
+
+    List<EventPost> findAll(Integer offset, Integer pageSize);
+
+    EventPost findById(Long id);
+
+    List<EventPost> findEventPostByStatus(Integer offset, Integer pageSize, String statusEventPost);
 
 }
