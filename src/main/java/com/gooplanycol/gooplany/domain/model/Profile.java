@@ -31,7 +31,7 @@ public class Profile extends User {
     private String description;
     private String emergencyContact;
     private Gender gender;
-    private Level level;
+    private String level;
     private Media profilePicture;
     private Media headerImage;
     private List<Role> roles;

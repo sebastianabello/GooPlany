@@ -11,9 +11,14 @@ import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.EventRegistration;
 import com.gooplanycol.gooplany.domain.model.Profile;
 import com.gooplanycol.gooplany.domain.model.User;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
+import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
+import com.gooplanycol.gooplany.utils.Gender;
+import com.gooplanycol.gooplany.utils.Level;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,74 +28,73 @@ import java.util.Optional;
 public class ProfileService implements ProfileInputPort {
 
     private final ProfileOutputPort profileOutputPort;
-    private final UserOutputPort userOutputPort;
-    private final EventPostOutputPort eventPostOutputPort;
-    private final EventRegistrationOutputPort eventRegistrationOutputPort;
+
+    @Override
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequestDTO) {
+        return profileOutputPort.authenticate(authenticationRequestDTO);
+    }
+
+    @Override
+    public Profile getProfileByToken(String token) {
+        return profileOutputPort.getProfileByToken(token);
+    }
+
+    @Override
+    public boolean removeProfile(Long id) {
+        return profileOutputPort.removeProfile(id);
+    }
+
+    @Override
+    public Profile editData(Profile response, Long id) {
+        return profileOutputPort.findById(id)
+                .map(profile -> {
+                    profile.setCellphone(response.getCellphone());
+                    profile.setEmail(response.getEmail());
+                    profile.setUsername(response.getUsername());
+                    profile.setFirstName(response.getFirstName());
+                    profile.setLastName(response.getLastName());
+                    profile.setDescription(response.getDescription());
+                    profile.setEmergencyContact(response.getEmergencyContact());
+                    profile.setLevel(findLevel(response.getLevel()).name());
+                    profile.setUpdatedAt(LocalDate.now());
+                    return profileOutputPort.save(profile);
+                })
+                .orElseThrow(() -> new ProfileException("The profile to update doesn't exist or the request is null"));
+    }
+
+    private Level findLevel(String level){
+        return switch (level) {
+            case "private" -> Level.PRIVATE;
+            case "friends" -> Level.FRIENDS;
+            case "friends_of_friends" -> Level.FRIENDS_OF_FRIENDS;
+            default -> Level.PUBLIC;
+        };
+    }
 
     @Override
     public Profile findById(Long id) {
         return profileOutputPort.findById(id)
-                .orElseThrow(ProfileException::new);
+                .orElseThrow(() -> new ProfileException("The profile fetched by id doesn't exist"));
     }
 
     @Override
-    public List<Profile> findAll() {
-        return profileOutputPort.findAll();
+    public List<Profile> findAll(Integer offset, Integer pageSize) {
+        return profileOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public Profile save(Profile profile) {
-        User user = profile.getUser();
-        user = userOutputPort.save(user);
-        profile.setUser(user);
-        return profileOutputPort.save(profile);
+    public Profile findByEmail(String email) {
+        return profileOutputPort.findByEmail(email)
+                .orElseThrow(() -> new ProfileException("The profile fetched by email doesn't exist"));
     }
 
     @Override
-    public Profile update(Long id, Profile profile) {
-        return profileOutputPort.findById(id)
-                .map(userFound -> {
-                    userFound.setFirstName(profile.getFirstName());
-                    userFound.setLastName(profile.getLastName());
-                    userFound.setUsername(profile.getUsername());
-                    userFound.setBirthdate(profile.getBirthdate());
-                    userFound.setCountry(profile.getCountry());
-                    userFound.setDescription(profile.getDescription());
-                    userFound.setEmergencyContact(profile.getEmergencyContact());
-                    userFound.setGender(profile.getGender());
-                    userFound.setLevel(profile.getLevel());
-                    return profileOutputPort.save(userFound);
-                })
-                .orElseThrow(ProfileException::new);
+    public Profile changePwd(String pwd, Long id) {
+        return profileOutputPort.changePwd(pwd, id);
     }
 
     @Override
-    public void deleteById(Long id) {
-        profileOutputPort.deleteById(id);
-    }
-
-    @Override
-    public void registerToEvent(Long profileId, Long eventId) {
-        Profile profile = profileOutputPort.findById(profileId).orElseThrow(ProfileException::new);
-        EventPost eventPost = eventPostOutputPort.findById(eventId).orElseThrow(EventPostException::new);
-
-        // Comprueba si ya existe una inscripción para este perfil y evento
-        Optional<EventRegistration> existingRegistration = eventRegistrationOutputPort.findByProfileAndEventPostId(profileId, eventId);
-        if (existingRegistration.isPresent()) {
-            throw new AlreadyRegisteredException("El usuario ya está inscrito en este evento");
-        }
-
-        EventRegistration eventRegistration = new EventRegistration();
-        eventRegistration.setProfile(profile);
-        eventRegistration.setEventPost(eventPost);
-        eventRegistration.setRegisteredAt(LocalDateTime.now());
-        eventRegistrationOutputPort.save(eventRegistration);
-    }
-
-    @Override
-    public List<String> getEmailsByEventId(Long eventId) {
-        return eventRegistrationOutputPort.findAllByEventPostId(eventId).stream()
-                .map(eventRegistration -> eventRegistration.getProfile().getUser().getEmail())
-                .toList();
+    public boolean registerProfileToEvent(Long profileId, Long eventId) {
+        return profileOutputPort.registerProfileToEvent(profileId, eventId);
     }
 }

@@ -6,4 +6,10 @@ public enum Level {
         PUBLIC,
         FRIENDS,
         FRIENDS_OF_FRIENDS;
+
+        private String message;
+
+        Level() {
+                this.message = this.name().toLowerCase();
+        }
 }
