@@ -4,9 +4,8 @@ import com.gooplanycol.gooplany.domain.model.ConfirmationToken;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.ConfirmationTokenEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ConfirmationTokenOutputMapper {
 
     ConfirmationTokenEntity toConfirmationTokenEntity(ConfirmationToken confirmationTokenEntity);
