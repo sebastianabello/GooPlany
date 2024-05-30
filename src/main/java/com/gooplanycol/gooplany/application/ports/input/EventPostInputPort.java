@@ -2,7 +2,6 @@ package com.gooplanycol.gooplany.application.ports.input;
 
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.EventRegistration;
-import com.gooplanycol.gooplany.domain.model.Profile;
 
 import java.util.List;
 

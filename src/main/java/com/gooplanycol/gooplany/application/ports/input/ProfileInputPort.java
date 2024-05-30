@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
-import com.gooplanycol.gooplany.domain.model.History;
 import com.gooplanycol.gooplany.domain.model.Profile;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
@@ -26,8 +25,6 @@ public interface ProfileInputPort {
     Profile findByEmail(String email);
 
     Profile changePwd(String pwd, Long id);
-
-    boolean registerProfileToEvent(Long profileId, Long eventId);
 
     // List<String> getEmailsByEventId(Long eventId);
 

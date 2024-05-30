@@ -24,25 +24,9 @@ public class EventPostRestAdapter {
     private final ProfileRestMapper profileRestMapper;
     private final EmailInputPort emailInputPort;
 
-    @GetMapping("/v1/api")
-    public List<EventPostResponse> findAll() {
-        return eventPostRestMapper.toEventPostResponseList(eventPostInputPort.findAll());
-    }
-
     @GetMapping("/v1/api/{id}")
     public EventPostResponse findById(@PathVariable Long id) {
         return eventPostRestMapper.toEventPostResponse(eventPostInputPort.findById(id));
     }
 
-    @GetMapping("/v1/api/{eventId}/profiles")
-    public ResponseEntity<List<ProfileResponse>> getProfilesByEventId(@PathVariable Long eventId) {
-        // List<Profile> profiles = eventPostInputPort.findProfilesByEventId(eventId);
-        // return ResponseEntity.ok(profileRestMapper.toProfileResponseList(profiles));
-        return null;
-    }
-
-    @PostMapping("/v1/api/{eventId}/notify")
-    public void notifyProfiles(@PathVariable Long eventId, @RequestBody EmailRequest request) {
-        emailInputPort.sendEmailToProfiles(eventId, request.getSubject(), request.getText());
-    }
 }

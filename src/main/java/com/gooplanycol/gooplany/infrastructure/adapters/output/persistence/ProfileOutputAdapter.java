@@ -158,13 +158,4 @@ public class ProfileOutputAdapter implements ProfileOutputPort {
         }
     }
 
-    @Override
-    public boolean registerProfileToEvent(Long profileId, Long eventId) {
-        if (profileRepository.existsById(profileId) && eventPostRepository.existsById(eventId)) {
-            profileRepository.registerProfileToEvent(profileId, eventId);
-            return true;
-        } else {
-            throw new CompanyException("The profile fetched to register to event doesn't exist");
-        }
-    }
 }

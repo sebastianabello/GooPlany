@@ -4,12 +4,13 @@ import com.gooplanycol.gooplany.domain.model.Profile;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.ProfileEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProfileOutputMapper {
 
     ProfileEntity toProfileEntity(Profile profile);

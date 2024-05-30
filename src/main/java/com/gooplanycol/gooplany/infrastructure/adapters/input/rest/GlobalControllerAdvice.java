@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalControllerAdvice {
@@ -30,7 +29,7 @@ public class GlobalControllerAdvice {
                 .details(result.getFieldErrors()
                         .stream()
                         .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                        .collect(Collectors.toList()))
+                        .toList())
                 .timestamp(LocalDateTime.now())
                 .build();
     }

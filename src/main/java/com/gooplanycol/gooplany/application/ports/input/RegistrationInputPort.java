@@ -11,5 +11,4 @@ public interface RegistrationInputPort {
 
     AuthenticationResponse save(Company company) throws IllegalAccessException;
 
-    String confirmToken(String token);
 }

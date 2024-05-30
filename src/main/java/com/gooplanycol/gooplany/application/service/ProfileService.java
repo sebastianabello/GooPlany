@@ -6,15 +6,12 @@ import com.gooplanycol.gooplany.domain.exception.ProfileException;
 import com.gooplanycol.gooplany.domain.model.Profile;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
-import com.gooplanycol.gooplany.utils.Gender;
 import com.gooplanycol.gooplany.utils.Level;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -85,8 +82,4 @@ public class ProfileService implements ProfileInputPort {
         return profileOutputPort.changePwd(pwd, id);
     }
 
-    @Override
-    public boolean registerProfileToEvent(Long profileId, Long eventId) {
-        return profileOutputPort.registerProfileToEvent(profileId, eventId);
-    }
 }
