@@ -23,12 +23,12 @@ public class CustomerService implements CustomerInputPort {
 
     @Override
     public Customer getProfileByToken(String token) {
-        return customerOutputPort.getProfileByToken(token);
+        return customerOutputPort.getCustomerByToken(token);
     }
 
     @Override
     public boolean removeProfile(Long id) {
-        return customerOutputPort.removeProfile(id);
+        return customerOutputPort.removeCustomer(id);
     }
 
     @Override

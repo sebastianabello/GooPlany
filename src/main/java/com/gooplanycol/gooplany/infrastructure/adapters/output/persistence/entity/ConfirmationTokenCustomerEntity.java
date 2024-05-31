@@ -17,5 +17,5 @@ import lombok.*;
 public class ConfirmationTokenCustomerEntity extends ConfirmationTokenEntity {
     @ManyToOne
     @JoinColumn(nullable = false, name = "customer_id")
-    private CustomerEntity profile;
+    private CustomerEntity customer;
 }

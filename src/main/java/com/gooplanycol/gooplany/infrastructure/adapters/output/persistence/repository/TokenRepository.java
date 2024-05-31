@@ -21,7 +21,7 @@ public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
     List<TokenEntity> findAllValidTokenByCompany(@Param("companyId") Long id);
 
     @Query("SELECT t.company FROM TokenEntity t WHERE t.tok= :token ")
-    CustomerEntity getProfileByToken(@Param("token") String token);
+    CustomerEntity getCustomerByToken(@Param("token") String token);
 
     @Query("SELECT t.company FROM TokenEntity t WHERE t.tok= :token ")
     CompanyEntity getCompanyByToken(@Param("token") String token);

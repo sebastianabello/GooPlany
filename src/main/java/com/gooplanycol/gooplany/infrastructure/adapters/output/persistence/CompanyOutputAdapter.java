@@ -4,15 +4,9 @@ import com.gooplanycol.gooplany.application.ports.output.CompanyOutPort;
 import com.gooplanycol.gooplany.application.service.JwtService;
 import com.gooplanycol.gooplany.domain.exception.CompanyException;
 import com.gooplanycol.gooplany.domain.model.*;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.AddressEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CompanyEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventPostEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.TokenEntity;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.*;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.*;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.AddressRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CompanyRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventPostRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.*;
 import com.gooplanycol.gooplany.utils.TokenType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,18 +31,14 @@ public class CompanyOutputAdapter implements CompanyOutPort {
     private final AddressRepository addressRepository;
     private final AddressOutputMapper addressOutputMapper;
 
-    private final EventPostRepository eventPostRepository;
-    private final EventPostOutputMapper eventPostOutputMapper;
 
-    private final HistoryOutputMapper historyOutputMapper;
+    private final HistoryCompanyOutputMapper historyOutputMapper;
 
     private final TokenRepository tokenRepository;
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtService jwtService;
-
-    // private final ConfirmationTokenOutputAdapter confirmationTokenOutputAdapter;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -75,8 +65,11 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         tokenRepository.saveAll(validCompanyTokens);
     }
 
+
     @Override
-    public Authentication authenticate(String username, String pwd) {
+    public Company authenticate(Company authenticationCompany) {
+        String username = authenticationCompany.getUsername();
+        String pwd = authenticationCompany.getPwd();
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         username, pwd
@@ -87,10 +80,10 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         if (company != null) {
             revokeAllCompanyTokens(company);
             saveCompanyToken(company, jwtToken);
+            return new Company(jwtToken);
         } else {
-            throw new CompanyException("The company fetched by username doesn't exist");
+            throw new CompanyException("The company fetched to authenticate doesn't exist");
         }
-        return new Authentication(jwtToken);
     }
 
     @Override
@@ -113,7 +106,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
             if (company.getConfirmationTokens() != null) {
                 company.getConfirmationTokens().forEach(confirmationToken -> confirmationToken.setCompany(null));
             }
-            company.setHistory(null);
+            company.setHistoryCompany(null);
             companyRepository.delete(company);
             return true;
         } else {
@@ -161,8 +154,8 @@ public class CompanyOutputAdapter implements CompanyOutPort {
     @Transactional
     public HistoryCompany findHistory(Long id) {
         CompanyEntity company = companyRepository.findById(id).orElse(null);
-        if (company != null && company.getHistory() != null) {
-            return historyOutputMapper.toHistory(company.getHistory());
+        if (company != null && company.getHistoryCompany() != null) {
+            return historyOutputMapper.toHistoryCompany(company.getHistoryCompany());
         } else {
             throw new CompanyException("The company's history doesn't exist");
         }
@@ -179,20 +172,6 @@ public class CompanyOutputAdapter implements CompanyOutPort {
                     .collect(Collectors.toList());
         } else {
             throw new CompanyException("The list of company's address is null");
-        }
-    }
-
-    @Override
-    @Transactional
-    public List<EventPost> findEventPost(Long id, Integer offset, Integer pageSize) {
-        CompanyEntity company = companyRepository.findById(id).orElse(null);
-        if (company != null && company.getEventPosts() != null) {
-            Page<EventPostEntity> list = companyRepository.findCompanyEventPost(id, PageRequest.of(offset, pageSize));
-            return list.stream()
-                    .map(eventPostOutputMapper::toEventPost)
-                    .collect(Collectors.toList());
-        } else {
-            throw new CompanyException("The list of company's event post is null");
         }
     }
 
@@ -259,58 +238,4 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         }
     }
 
-    @Override
-    @Transactional
-    public List<EventPost> addEventPost(EventPost eventPost, Long id) {
-        CompanyEntity company = companyRepository.findById(id).orElse(null);
-        if (company != null && eventPost != null) {
-            if (eventPost.getId() != null) {
-                EventPostEntity eventPostFound = eventPostRepository.findById(eventPost.getId()).orElse(null);
-                if (eventPostFound != null) {
-                    company.getEventPosts().add(eventPostFound);
-                } else {
-                    throw new CompanyException("The address to add doesn't exist");
-                }
-            } else {
-
-                EventPostEntity newEventPost = EventPostEntity.builder()
-                        .title(eventPost.getTitle())
-                        .description(eventPost.getDescription())
-                        .eventCategory(eventPost.findEventCategory(eventPost.getEventCategory()))
-                        .typeOfAudience(eventPost.findTypeOfAudience(eventPost.getTypeOfAudience()))
-                        .typeOfPlace(eventPost.findTypeOfPlace(eventPost.getTypeOfPlace()))
-                        .isFree(eventPost.getIsFree())
-                        .price(eventPost.getPrice())
-                        .isUnlimited(eventPost.getIsUnlimited())
-                        .capacity(eventPost.getCapacity())
-                        .startAt(eventPost.getStartAt())
-                        .finishAt(eventPost.getFinishAt())
-                        .createdAt(LocalDateTime.now())
-                        .statusEventPost(eventPost.findStatusEventPost(eventPost.getStatusEventPost()))
-                        // falta la dirección del evento
-                        .company(company)
-                        .build();
-                company.getEventPosts().add(newEventPost);
-            }
-            companyRepository.save(company);
-            Page<EventPostEntity> list = companyRepository.findCompanyEventPost(id, PageRequest.of(0, 10));
-            return list.stream().map(eventPostOutputMapper::toEventPost).collect(Collectors.toList());
-        } else {
-            throw new CompanyException("The company or the address to add doesn't exist");
-        }
-    }
-
-    @Override
-    @Transactional
-    public boolean removeEventPost(Long eventPostId, Long companyId) {
-            EventPostEntity eventPost = eventPostRepository.findById(eventPostId).orElse(null);
-            CompanyEntity company = companyRepository.findById(companyId).orElse(null);
-            if (company != null && eventPost != null) {
-                company.getEventPosts().remove(eventPost);
-                companyRepository.save(company);
-                return true;
-            } else {
-                throw new CompanyException("The company or the address to remove doesn't exist");
-            }
-    }
 }

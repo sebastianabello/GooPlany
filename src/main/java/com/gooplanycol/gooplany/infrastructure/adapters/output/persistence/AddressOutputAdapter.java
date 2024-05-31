@@ -3,6 +3,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 import com.gooplanycol.gooplany.application.ports.output.AddressOutputPort;
 import com.gooplanycol.gooplany.domain.exception.AddressException;
 import com.gooplanycol.gooplany.domain.model.Address;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.AddressEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.AddressOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.AddressRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,10 +24,14 @@ public class AddressOutputAdapter implements AddressOutputPort {
     @Override
     public Address save(Address address) {
         if (address != null) {
-            address.getStreet();
-            address.getCountry();
-            address.getPostalCode();
-            return addressOutputMapper.toAddress(addressRepository.save(addressOutputMapper.toAddressEntity(address)));
+            AddressEntity addressEntity = new AddressEntity(
+                    null,
+                    address.getStreet(),
+                    address.getCountry(),
+                    address.getPostalCode()
+            );
+            AddressEntity addressSaved = addressRepository.save(addressEntity);
+            return addressOutputMapper.toAddress(addressSaved);
         } else {
             throw new AddressException("The address to save is null");
         }
@@ -36,7 +39,15 @@ public class AddressOutputAdapter implements AddressOutputPort {
 
     @Override
     public Address edit(Address address, Long id) {
-        return null;
+        AddressEntity addressEntity = addressRepository.findById(id).orElse(null);
+        if (addressEntity != null && address != null) {
+            addressEntity.setCountry(address.getCountry());
+            addressEntity.setStreet(address.getStreet());
+            addressEntity.setPostalCode(address.getPostalCode());
+            return addressOutputMapper.toAddress(addressRepository.save(addressEntity));
+        } else {
+            throw new AddressException("The address to update doesn't exist or the request is null");
+        }
     }
 
     @Override
@@ -50,10 +61,10 @@ public class AddressOutputAdapter implements AddressOutputPort {
     }
 
     @Override
-    public Optional<Address> findById(Long id) {
-        Address address = addressOutputMapper.toAddress(addressRepository.findById(id).orElse(null));
-        if (address != null) {
-            return Optional.of(address);
+    public Address findById(Long id) {
+        AddressEntity addressEntity = addressRepository.findById(id).orElse(null);
+        if (addressEntity != null) {
+            return addressOutputMapper.toAddress(addressEntity);
         } else {
             throw new AddressException("The address fetched by id doesn't exist");
         }
@@ -61,9 +72,9 @@ public class AddressOutputAdapter implements AddressOutputPort {
 
     @Override
     public List<Address> findAll(Integer offset, Integer pageSize) {
-        Page<Address> list = addressOutputMapper.toAddressPage(addressRepository.findAll(PageRequest.of(offset, pageSize)));
-        if (list != null && !list.isEmpty()) {
-            return new ArrayList<>(list.getContent());
+        Page<AddressEntity> list = addressRepository.findAll(PageRequest.of(offset, pageSize));
+        if (!list.isEmpty()) {
+            return list.getContent().stream().map(addressOutputMapper::toAddress).collect(Collectors.toList());
         } else {
             throw new AddressException("The list of addresses fetched is null");
         }
@@ -71,9 +82,9 @@ public class AddressOutputAdapter implements AddressOutputPort {
 
     @Override
     public List<Address> findAddressesByPostalCode(Integer offset, Integer pageSize, String postalCode) {
-        Page<Address> list = addressOutputMapper.toAddressPage(addressRepository.findAddressesByPostalCode(PageRequest.of(offset, pageSize), postalCode));
+        Page<AddressEntity> list = addressRepository.findAddressesByPostalCode(PageRequest.of(offset, pageSize), postalCode);
         if (list != null && !list.isEmpty()) {
-            return new ArrayList<>(list.getContent());
+            return list.getContent().stream().map(addressOutputMapper::toAddress).collect(Collectors.toList());
         } else {
             throw new AddressException("The list of addresses fetched by postal code is null");
         }
@@ -81,9 +92,9 @@ public class AddressOutputAdapter implements AddressOutputPort {
 
     @Override
     public List<Address> findAddressesByCountry(Integer offset, Integer pageSize, String country) {
-        Page<Address> list = addressOutputMapper.toAddressPage(addressRepository.findAddressesByCountry(PageRequest.of(offset, pageSize), country));
+        Page<AddressEntity> list = addressRepository.findAddressesByCountry(PageRequest.of(offset, pageSize), country);
         if (list != null) {
-            return list.stream().collect(Collectors.toList());
+            return list.stream().map(addressOutputMapper::toAddress).collect(Collectors.toList());
         } else {
             throw new AddressException("The list of addresses fetched by country code is null");
         }

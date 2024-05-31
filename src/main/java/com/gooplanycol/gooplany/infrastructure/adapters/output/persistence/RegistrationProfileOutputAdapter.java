@@ -5,7 +5,6 @@ import com.gooplanycol.gooplany.application.service.EmailValidator;
 import com.gooplanycol.gooplany.domain.model.ConfirmationToken;
 import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.ProfileOutputMapper;
 import com.gooplanycol.gooplany.utils.Role;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

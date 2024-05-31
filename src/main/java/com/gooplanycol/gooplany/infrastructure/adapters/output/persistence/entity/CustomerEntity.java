@@ -25,7 +25,7 @@ public class CustomerEntity extends UserEntity implements UserDetails {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "history_id")
-    private HistoryCustomerEntity historyCompany;
+    private HistoryCustomerEntity historyCustomer;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")

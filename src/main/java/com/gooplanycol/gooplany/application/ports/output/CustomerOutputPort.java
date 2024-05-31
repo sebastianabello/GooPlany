@@ -10,9 +10,9 @@ public interface CustomerOutputPort {
 
     Customer authenticate(Customer authenticationCustomer);
 
-    Customer getProfileByToken(String token);
+    Customer getCustomerByToken(String token);
 
-    boolean removeProfile(Long id);
+    boolean removeCustomer(Long id);
 
     Customer editData(Customer customerEdit, Long id);
 
