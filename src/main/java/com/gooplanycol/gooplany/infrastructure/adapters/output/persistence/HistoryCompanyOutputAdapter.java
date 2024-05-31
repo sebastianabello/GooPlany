@@ -3,7 +3,6 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 import com.gooplanycol.gooplany.application.ports.output.HistoryCompanyOutputPort;
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.HistoryCompany;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.HistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

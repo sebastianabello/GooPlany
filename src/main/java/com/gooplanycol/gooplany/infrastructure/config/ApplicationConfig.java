@@ -1,7 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.config;
 
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CompanyRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

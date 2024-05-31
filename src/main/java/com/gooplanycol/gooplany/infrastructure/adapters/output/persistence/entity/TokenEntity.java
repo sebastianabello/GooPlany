@@ -22,8 +22,8 @@ public class TokenEntity {
     private TokenType tokenType;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
-    private CustomerEntity profile;
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -42,11 +42,11 @@ public class TokenEntity {
         this.expired = expired;
     }
 
-    public TokenEntity(Long id, String tok, TokenType tokenType, CustomerEntity profile, boolean revoked, boolean expired) {
+    public TokenEntity(Long id, String tok, TokenType tokenType, CustomerEntity customer, boolean revoked, boolean expired) {
         this.id = id;
         this.tok = tok;
         this.tokenType = tokenType;
-        this.profile = profile;
+        this.customer = customer;
         this.revoked = revoked;
         this.expired = expired;
     }

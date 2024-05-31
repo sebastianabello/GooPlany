@@ -23,7 +23,7 @@ public class CompanyEntity extends UserEntity implements UserDetails {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "history_id")
-    private HistoryEntity history;
+    private HistoryCompanyEntity historyCompany;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
@@ -37,7 +37,7 @@ public class CompanyEntity extends UserEntity implements UserDetails {
     private List<TokenEntity> tokens;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
-    private List<ConfirmationTokenEntity> confirmationTokens;
+    private List<ConfirmationTokenCompanyEntity> confirmationTokens;
 
     private boolean enable;
 

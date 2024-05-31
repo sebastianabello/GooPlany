@@ -10,7 +10,6 @@ import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.respons
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.ProfileOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.TokenOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventPostRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.ProfileRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
 import com.gooplanycol.gooplany.utils.TokenType;
 import lombok.RequiredArgsConstructor;

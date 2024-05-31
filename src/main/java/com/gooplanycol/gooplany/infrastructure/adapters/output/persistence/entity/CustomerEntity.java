@@ -56,14 +56,6 @@ public class CustomerEntity extends UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_picture_id", referencedColumnName = "media_id")
-    private MediaEntity profilePicture;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "header_image_id", referencedColumnName = "media_id")
-    private MediaEntity headerImage;
-
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(
             name = "customer_roles",

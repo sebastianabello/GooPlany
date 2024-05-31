@@ -2,10 +2,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
 import com.gooplanycol.gooplany.domain.exception.EventPostException;
 import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventRegistrationOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.ProfileOutputMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventRegistrationRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.ProfileRepository;
 import com.gooplanycol.gooplany.utils.StatusEventParticipant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

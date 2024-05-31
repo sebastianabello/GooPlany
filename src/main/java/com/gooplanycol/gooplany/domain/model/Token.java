@@ -16,5 +16,4 @@ public class Token {
     private Company company;
     private boolean revoked;
     private boolean expired;
-
 }

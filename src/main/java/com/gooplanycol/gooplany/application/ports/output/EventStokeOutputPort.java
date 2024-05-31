@@ -18,12 +18,10 @@ public interface EventStokeOutputPort {
 
     EventStoke findEventPostById(Long id);
 
-    List<EventStoke> findEventStokesByEnableEventPost(Integer offset, Integer pageSize);
+    List<EventStoke> findEventStokesByStatusEventPost(String status, Integer offset, Integer pageSize);
 
     EventStoke findProductStockByTitle(String title);
 
     EventStoke changeStatus(String status, Long id);
-
-    List<EventStoke> findEventStokeByStatus(Integer offset, Integer pageSize, String statusEventPost);
 
 }
