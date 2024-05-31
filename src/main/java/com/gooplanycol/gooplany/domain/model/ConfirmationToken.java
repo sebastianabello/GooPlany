@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfirmationToken {
@@ -15,15 +16,7 @@ public class ConfirmationToken {
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
-    private Profile profile;
-    private Company company;
-
-
-    /**
-    public ConfirmationToken() {
-        this.profile = new Profile();
-    }
-     */
-
+    private Customer company;
+    private Customer customer;
 }
 

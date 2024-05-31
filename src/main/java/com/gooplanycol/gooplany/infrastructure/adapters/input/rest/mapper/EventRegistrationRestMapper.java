@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper;
 
-import com.gooplanycol.gooplany.domain.model.EventRegistration;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.EventRegistrationRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.EventRegistrationResponse;
 import org.mapstruct.Mapper;

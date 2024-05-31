@@ -3,35 +3,26 @@ package com.gooplanycol.gooplany.application.service;
 import com.gooplanycol.gooplany.application.ports.input.CompanyInputPort;
 
 import com.gooplanycol.gooplany.application.ports.output.*;
-import com.gooplanycol.gooplany.domain.model.Address;
-import com.gooplanycol.gooplany.domain.model.Company;
-import com.gooplanycol.gooplany.domain.model.History;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
+import com.gooplanycol.gooplany.domain.model.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CompanyService implements CompanyInputPort {
 
-    @Qualifier("companyOutputAdapter")
     private final CompanyOutPort companyOutPort;
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
-    private final ConfirmationTokenOutputPort confirmationTokenOutputPort;
-    private final PasswordEncoder passwordEncoder;
+    @Override
+    public Authentication authenticate(String username, String password) {
+        return companyOutPort.authenticate(username, password);
+    }
 
     @Override
-    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
-        return companyOutPort.authenticate(authenticationRequest);
+    public Company getCompanyByToken(String token) {
+        return companyOutPort.getCompanyByToken(token);
     }
 
     @Override
@@ -40,22 +31,13 @@ public class CompanyService implements CompanyInputPort {
     }
 
     @Override
-    public Company editData(Company response, Long id) {
-        return companyOutPort.findById(id)
-                .map(company -> {
-                    company.setName(response.getName());
-                    company.setCellphone(response.getCellphone());
-                    company.setEmail(response.getEmail());
-                    company.setUpdatedAt(LocalDate.now());
-                    return companyOutPort.save(company);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("The company to update doesn't exist or the request is null"));
+    public Company editData(Company companyEdit, Long id) {
+        return companyOutPort.editData(companyEdit, id);
     }
 
     @Override
     public Company findById(Long id) {
-        return companyOutPort.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("The company doesn't exist"));
+        return companyOutPort.findById(id);
     }
 
     @Override
@@ -64,7 +46,7 @@ public class CompanyService implements CompanyInputPort {
     }
 
     @Override
-    public History findHistory(Long id) {
+    public HistoryCompany findHistory(Long id) {
         return companyOutPort.findHistory(id);
     }
 
@@ -74,18 +56,18 @@ public class CompanyService implements CompanyInputPort {
     }
 
     @Override
+    public List<EventPost> findEventPost(Long id, Integer offset, Integer pageSize) {
+        return companyOutPort.findEventPost(id, offset, pageSize);
+    }
+
+    @Override
     public Company findByEmail(String email) {
         return companyOutPort.findByEmail(email);
     }
 
     @Override
     public Company changePwd(String pwd, Long id) {
-        return companyOutPort.findById(id)
-                .map(company -> {
-                    company.setPwd(passwordEncoder.encode(pwd));
-                    return companyOutPort.save(company);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("The company to update doesn't exist or the request is null"));
+        return companyOutPort.changePwd(pwd, id);
     }
 
     @Override
@@ -96,5 +78,15 @@ public class CompanyService implements CompanyInputPort {
     @Override
     public boolean removeAddress(Long addressId, Long customerId) {
         return companyOutPort.removeAddress(addressId, customerId);
+    }
+
+    @Override
+    public List<EventPost> addEventPost(EventPost eventPost, Long id) {
+        return companyOutPort.addEventPost(eventPost, id);
+    }
+
+    @Override
+    public boolean removeEventPost(Long eventPostId, Long companyId) {
+        return companyOutPort.removeEventPost(eventPostId, companyId);
     }
 }

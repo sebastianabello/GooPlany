@@ -1,7 +1,7 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository;
 
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventRegistrationEntity;
-import com.gooplanycol.gooplany.utils.StatusRegistrationEvent;
+import com.gooplanycol.gooplany.utils.StatusEventParticipant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +21,6 @@ public interface EventRegistrationRepository extends JpaRepository<EventRegistra
     boolean existsByProfileIdAndEventPostId(@Param("profileId") Long profileId,@Param("eventPostId") Long eventPostId);
 
     @Query("SELECT e FROM EventRegistrationEntity e WHERE e.statusRegistrationEvent = :statusRegistrationEvent")
-    List<EventRegistrationEntity> findByStatusRegistrationEvent(@Param("statusRegistrationEvent") StatusRegistrationEvent statusRegistrationEvent);
+    List<EventRegistrationEntity> findByStatusRegistrationEvent(@Param("statusRegistrationEvent") StatusEventParticipant statusEventParticipant);
 
 }

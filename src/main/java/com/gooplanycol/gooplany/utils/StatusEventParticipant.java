@@ -1,13 +1,13 @@
 package com.gooplanycol.gooplany.utils;
 
-public enum StatusRegistrationEvent {
+public enum StatusEventParticipant {
     REGISTERED,
     CANCELED,
     UNREGISTERED;
 
     private String message;
 
-    StatusRegistrationEvent() {
+    StatusEventParticipant() {
         this.message = this.name().toLowerCase();
     }
 }

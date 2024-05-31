@@ -4,7 +4,6 @@ import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
 import com.gooplanycol.gooplany.domain.exception.EventPostException;
 import com.gooplanycol.gooplany.domain.model.Company;
 import com.gooplanycol.gooplany.domain.model.EventPost;
-import com.gooplanycol.gooplany.domain.model.EventRegistration;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CompanyOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventPostOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventRegistrationOutputMapper;

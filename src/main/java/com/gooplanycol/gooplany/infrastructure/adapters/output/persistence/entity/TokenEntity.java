@@ -13,7 +13,6 @@ import lombok.*;
 @Table(name = "token")
 public class TokenEntity {
     @Id
-    @Column(name = "token_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -33,4 +32,23 @@ public class TokenEntity {
     private boolean revoked;
 
     private boolean expired;
+
+    public TokenEntity(Long id, String token, TokenType tokenType, CompanyEntity company, boolean revoked, boolean expired) {
+        this.id = id;
+        this.token = token;
+        this.tokenType = tokenType;
+        this.company = company;
+        this.revoked = revoked;
+        this.expired = expired;
+    }
+
+    public TokenEntity(Long id, String token, TokenType tokenType, ProfileEntity profile, boolean revoked, boolean expired) {
+        this.id = id;
+        this.token = token;
+        this.tokenType = tokenType;
+        this.profile = profile;
+        this.revoked = revoked;
+        this.expired = expired;
+    }
+
 }

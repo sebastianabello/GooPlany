@@ -1,39 +1,18 @@
 package com.gooplanycol.gooplany.domain.model;
 
-import com.gooplanycol.gooplany.utils.Gender;
-import com.gooplanycol.gooplany.utils.Role;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Profile extends User {
+public abstract class Profile {
     private Long id;
+    private String name;
     private String cellphone;
     private String email;
-    private List<Token> tokens;
-    private List<ConfirmationToken> confirmationTokens;
-    private LocalDate createAt;
-    private LocalDate updatedAt;
-    private String firstName;
-    private String lastName;
-    private boolean enable;
-    private String username;
-    private String pwd;
-    private LocalDate birthdate;
-    private History history;
-    private String country;
-    private String description;
-    private String emergencyContact;
-    private Gender gender;
-    private String level;
-    private Media profilePicture;
-    private Media headerImage;
-    private List<Role> roles;
-
+    private LocalDateTime createAt;
+    private LocalDateTime updatedAt;
 }

@@ -1,9 +1,9 @@
 package com.gooplanycol.gooplany.application.service;
 
-import com.gooplanycol.gooplany.application.ports.input.ProfileInputPort;
-import com.gooplanycol.gooplany.application.ports.output.ProfileOutputPort;
+import com.gooplanycol.gooplany.application.ports.input.CustomerInputPort;
+import com.gooplanycol.gooplany.application.ports.output.CustomerOutputPort;
 import com.gooplanycol.gooplany.domain.exception.ProfileException;
-import com.gooplanycol.gooplany.domain.model.Profile;
+import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
 import com.gooplanycol.gooplany.utils.Level;
@@ -15,28 +15,28 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProfileService implements ProfileInputPort {
+public class CustomerService implements CustomerInputPort {
 
-    private final ProfileOutputPort profileOutputPort;
+    private final CustomerOutputPort customerOutputPort;
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequestDTO) {
-        return profileOutputPort.authenticate(authenticationRequestDTO);
+        return customerOutputPort.authenticate(authenticationRequestDTO);
     }
 
     @Override
-    public Profile getProfileByToken(String token) {
-        return profileOutputPort.getProfileByToken(token);
+    public Customer getProfileByToken(String token) {
+        return customerOutputPort.getProfileByToken(token);
     }
 
     @Override
     public boolean removeProfile(Long id) {
-        return profileOutputPort.removeProfile(id);
+        return customerOutputPort.removeProfile(id);
     }
 
     @Override
-    public Profile editData(Profile response, Long id) {
-        return profileOutputPort.findById(id)
+    public Customer editData(Customer response, Long id) {
+        return customerOutputPort.findById(id)
                 .map(profile -> {
                     profile.setCellphone(response.getCellphone());
                     profile.setEmail(response.getEmail());
@@ -47,7 +47,7 @@ public class ProfileService implements ProfileInputPort {
                     profile.setEmergencyContact(response.getEmergencyContact());
                     profile.setLevel(findLevel(response.getLevel()).name());
                     profile.setUpdatedAt(LocalDate.now());
-                    return profileOutputPort.save(profile);
+                    return customerOutputPort.save(profile);
                 })
                 .orElseThrow(() -> new ProfileException("The profile to update doesn't exist or the request is null"));
     }
@@ -62,24 +62,24 @@ public class ProfileService implements ProfileInputPort {
     }
 
     @Override
-    public Profile findById(Long id) {
-        return profileOutputPort.findById(id)
+    public Customer findById(Long id) {
+        return customerOutputPort.findById(id)
                 .orElseThrow(() -> new ProfileException("The profile fetched by id doesn't exist"));
     }
 
     @Override
-    public List<Profile> findAll(Integer offset, Integer pageSize) {
-        return profileOutputPort.findAll(offset, pageSize);
+    public List<Customer> findAll(Integer offset, Integer pageSize) {
+        return customerOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public Profile findByEmail(String email) {
-        return profileOutputPort.findByEmail(email);
+    public Customer findByEmail(String email) {
+        return customerOutputPort.findByEmail(email);
     }
 
     @Override
-    public Profile changePwd(String pwd, Long id) {
-        return profileOutputPort.changePwd(pwd, id);
+    public Customer changePwd(String pwd, Long id) {
+        return customerOutputPort.changePwd(pwd, id);
     }
 
 }

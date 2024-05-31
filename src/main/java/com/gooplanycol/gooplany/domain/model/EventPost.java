@@ -7,34 +7,32 @@ import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventPost extends Utils {
     private Long id;
     private String title;
     private String description;
-    private String eventCategory;
-    private String typeOfAudience;
-    private String typeOfPlace;
+    private EventCategory eventCategory;
+    private TypeOfAudience typeOfAudience;
+    private TypeOfPlace typeOfPlace;
     private Boolean isFree;
     private BigDecimal price;
     private Boolean isUnlimited;
     private Integer capacity;
     private LocalDateTime startAt;
     private LocalDateTime finishAt;
-    private String statusEventPost;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private StatusEventPost statusEventPost;
     private List<Media> images;
     private Address address;
-    private Company company;
+    private boolean enableEventPost;
 
     public EventCategory findEventCategory(String eventCategory) {
         return EventCategory.valueOf(eventCategory);

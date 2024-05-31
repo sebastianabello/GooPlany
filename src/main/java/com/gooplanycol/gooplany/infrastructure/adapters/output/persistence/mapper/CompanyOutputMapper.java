@@ -12,8 +12,10 @@ import java.util.Optional;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CompanyOutputMapper {
     CompanyEntity toCompanyEntity(Company company);
+
     Company toCompany(CompanyEntity entity);
+
     List<Company> toCompanyList(List<CompanyEntity> entityList);
-    Optional<Company> toCompanyOptional(Company company);
+
     Page<Company> toCompanyPage(Page<CompanyEntity> entityPage);
 }

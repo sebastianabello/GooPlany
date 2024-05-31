@@ -59,7 +59,7 @@ public class EventPostEntity {
     private StatusEventPost statusEventPost;
 
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDate updatedAt;

@@ -1,14 +1,14 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record CompanyRequest(
         String name,
         String cellphone,
         String email,
-        String nit,
+        String username,
         String pwd,
-        AddressRequest address,
-        LocalDate createAt
+        LocalDateTime createdAt,
+        AddressRequest address
 ) {
 }

@@ -1,6 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper;
 
-import com.gooplanycol.gooplany.domain.model.Profile;
+import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.ProfileRequest;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.ProfileResponse;
 import org.mapstruct.Mapper;
@@ -12,9 +12,9 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProfileRestMapper {
 
-    Profile toProfile(ProfileRequest request);
+    Customer toProfile(ProfileRequest request);
 
-    ProfileResponse toProfileResponse(Profile profile);
+    ProfileResponse toProfileResponse(Customer customer);
 
-    List<ProfileResponse> toProfileResponseList(List<Profile> profiles);
+    List<ProfileResponse> toProfileResponseList(List<Customer> customers);
 }

@@ -1,6 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
-import com.gooplanycol.gooplany.application.ports.output.RegistrationCompanyOutputPort;
+import com.gooplanycol.gooplany.application.ports.output.RegistrationOutputPort;
 import com.gooplanycol.gooplany.application.service.EmailSenderService;
 import com.gooplanycol.gooplany.application.service.EmailValidator;
 import com.gooplanycol.gooplany.domain.model.*;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class RegistrationCompanyOutputAdapter implements RegistrationCompanyOutputPort {
+public class RegistrationOutputAdapter implements RegistrationOutputPort {
 
     private final CompanyRepository companyRepository;
     private final CompanyOutputMapper companyOutputMapper;
@@ -49,9 +48,9 @@ public class RegistrationCompanyOutputAdapter implements RegistrationCompanyOutp
                 company.setName(request.getName());
                 company.setCellphone(request.getCellphone());
                 company.setEmail(request.getEmail());
-                company.setNit(request.getNit());
+                company.setUsername(request.getUsername());
                 company.setPwd(passwordEncoder.encode(request.getPwd()));
-                company.setCreateAt(LocalDate.now());
+                company.setCreateAt(LocalDateTime.now());
 
                 companyOutputMapper.toCompany(companyRepository.save(companyOutputMapper.toCompanyEntity(company)));
                 return new AuthenticationResponse(resendConfirmationEmail(company.getEmail())); //confirmation token

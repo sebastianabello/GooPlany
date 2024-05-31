@@ -1,23 +1,24 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
 import com.gooplanycol.gooplany.domain.model.EventPost;
-import com.gooplanycol.gooplany.domain.model.History;
+import com.gooplanycol.gooplany.domain.model.HistoryCustomer;
 
 import java.util.List;
 
-public interface HistoryInputPort {
+public interface HistoryCustomerInputPort {
 
-    History save(History history);
+    HistoryCustomer save(HistoryCustomer historyCustomer);
 
     boolean remove(Long id);
 
-    History findById(Long id);
+    HistoryCustomer findById(Long id);
 
-    List<History> findAll(Integer offset, Integer pageSize);
+    List<HistoryCustomer> findAll(Integer offset, Integer pageSize);
 
     List<EventPost> findEventPosts(Long id, Integer offset, Integer pageSize);
 
     List<EventPost> addEventPost(EventPost eventPost, Long id);
 
     boolean removeEvenPosts(Long eventPostId, Long historyId);
+
 }

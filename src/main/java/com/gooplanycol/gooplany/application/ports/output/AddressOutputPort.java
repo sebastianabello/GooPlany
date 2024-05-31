@@ -9,6 +9,8 @@ public interface AddressOutputPort {
 
     Address save(Address address);
 
+    Address edit(Address address, Long id);
+
     boolean remove(Long id);
 
     Optional<Address> findById(Long id);

@@ -1,8 +1,8 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
-import com.gooplanycol.gooplany.application.ports.output.HistoryOutputPort;
+import com.gooplanycol.gooplany.application.ports.output.HistoryCompanyOutputPort;
 import com.gooplanycol.gooplany.domain.model.EventPost;
-import com.gooplanycol.gooplany.domain.model.History;
+import com.gooplanycol.gooplany.domain.model.HistoryCompany;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.HistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,12 +11,12 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class HistoryOutputAdapter implements HistoryOutputPort {
+public class HistoryCompanyOutputAdapter implements HistoryCompanyOutputPort {
 
     private final HistoryRepository historyRepository;
 
     @Override
-    public History save(History history) {
+    public HistoryCompany save(HistoryCompany historyCompany) {
         return null;
     }
 
@@ -26,12 +26,12 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
     }
 
     @Override
-    public History findById(Long id) {
+    public HistoryCompany findById(Long id) {
         return null;
     }
 
     @Override
-    public List<History> findAll(Integer offset, Integer pageSize) {
+    public List<HistoryCompany> findAll(Integer offset, Integer pageSize) {
         return List.of();
     }
 

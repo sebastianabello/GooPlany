@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper;
 
-import com.gooplanycol.gooplany.domain.model.EventRegistration;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventRegistrationEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

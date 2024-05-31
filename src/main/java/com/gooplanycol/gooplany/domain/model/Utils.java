@@ -69,11 +69,11 @@ public class Utils {
         };
     }
 
-    protected StatusRegistrationEvent StatusRegistration(String status) {
+    protected StatusEventParticipant StatusRegistration(String status) {
         return switch (status.toLowerCase()) {
-            case "registered" -> StatusRegistrationEvent.REGISTERED;
-            case "canceled" -> StatusRegistrationEvent.CANCELED;
-            default -> StatusRegistrationEvent.UNREGISTERED;
+            case "registered" -> StatusEventParticipant.REGISTERED;
+            case "canceled" -> StatusEventParticipant.CANCELED;
+            default -> StatusEventParticipant.UNREGISTERED;
         };
     }
 

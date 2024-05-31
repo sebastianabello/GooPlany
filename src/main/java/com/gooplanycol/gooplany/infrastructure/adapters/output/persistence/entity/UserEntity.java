@@ -3,36 +3,21 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.enti
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
 public abstract class UserEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String name;
     private String cellphone;
-
     @Column(unique = true)
     private String email;
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.PERSIST)
-    private List<TokenEntity> tokens;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    private List<ConfirmationTokenEntity> confirmationTokens;
-
-    @Column(name = "created_at")
-    private LocalDate createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDate updatedAt;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

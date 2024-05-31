@@ -15,42 +15,50 @@ import java.util.stream.Collectors;
 @Setter
 @Entity
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "company")
 public class CompanyEntity extends UserEntity implements UserDetails {
-
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(unique = true, nullable = false)
-    private String nit;
-
-    private boolean enable;
-
-    private String pwd;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "history_id")
     private HistoryEntity history;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "company_id")
     private List<AddressEntity> address;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    private List<EventPostEntity> eventPosts;
+
+    @OneToMany(mappedBy = "company",cascade = CascadeType.PERSIST)
+    private List<TokenEntity> tokens;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
+    private List<ConfirmationTokenEntity> confirmationTokens;
+
+    private boolean enable;
+
+    @Column(unique = true)
+    private String username;
+
+    private String pwd;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(
             name = "company_roles",
-            joinColumns = @JoinColumn(name = "profile_id"))
+            joinColumns = @JoinColumn(name = "company_id"))
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> {
-            return new SimpleGrantedAuthority("ROLE_" + role.name());
-        }).collect(Collectors.toList());
+        return roles.stream().map(role ->
+                new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -60,7 +68,7 @@ public class CompanyEntity extends UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nit;
+        return username;
     }
 
     @Override

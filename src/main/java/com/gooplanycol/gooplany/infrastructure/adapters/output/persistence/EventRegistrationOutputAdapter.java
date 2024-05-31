@@ -1,17 +1,12 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
-import com.gooplanycol.gooplany.application.ports.output.EventRegistrationOutputPort;
 import com.gooplanycol.gooplany.domain.exception.EventPostException;
-import com.gooplanycol.gooplany.domain.model.Company;
-import com.gooplanycol.gooplany.domain.model.EventRegistration;
-import com.gooplanycol.gooplany.domain.model.Profile;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.EventPostResponse;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.ProfileResponse;
+import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventRegistrationOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.ProfileOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventRegistrationRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.ProfileRepository;
-import com.gooplanycol.gooplany.utils.StatusRegistrationEvent;
+import com.gooplanycol.gooplany.utils.StatusEventParticipant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -66,7 +61,7 @@ public class EventRegistrationOutputAdapter implements EventRegistrationOutputPo
             EventRegistration eventRegistrationSaved = EventRegistration.builder()
                     .statusRegistrationEvent(eventRegistration.StatusRegistrationEvent(eventRegistration.getStatusRegistrationEvent()).name())
                     .registeredAt(LocalDateTime.now())
-                    .profile(findProfile(eventRegistration.getProfile().getId()))
+                    .profile(findProfile(eventRegistration.getCustomer().getId()))
                     .build();
             return eventRegistrationOutputMapper.toEventRegistration(eventRegistrationRepository.save(eventRegistrationOutputMapper.toEventRegistrationEntity(eventRegistrationSaved)));
         } else {
@@ -74,10 +69,10 @@ public class EventRegistrationOutputAdapter implements EventRegistrationOutputPo
         }
     }
 
-    private Profile findProfile(Long id) {
-        Profile profile = profileOutputMapper.toProfile(profileRepository.findById(id).orElse(null));
-        if (profile != null) {
-            return profile;
+    private Customer findProfile(Long id) {
+        Customer customer = profileOutputMapper.toProfile(profileRepository.findById(id).orElse(null));
+        if (customer != null) {
+            return customer;
         } else {
             throw new EventPostException("The profile doesn't exist");
         }
@@ -109,8 +104,8 @@ public class EventRegistrationOutputAdapter implements EventRegistrationOutputPo
     }
 
     @Override
-    public List<EventRegistration> findByStatusRegistrationEvent(StatusRegistrationEvent statusRegistrationEvent) {
-        List<EventRegistration> eventRegistrations = eventRegistrationOutputMapper.toEventRegistrationList(eventRegistrationRepository.findByStatusRegistrationEvent(statusRegistrationEvent));
+    public List<EventRegistration> findByStatusRegistrationEvent(StatusEventParticipant statusEventParticipant) {
+        List<EventRegistration> eventRegistrations = eventRegistrationOutputMapper.toEventRegistrationList(eventRegistrationRepository.findByStatusRegistrationEvent(statusEventParticipant));
         if (eventRegistrations != null) {
             return eventRegistrations;
         } else {

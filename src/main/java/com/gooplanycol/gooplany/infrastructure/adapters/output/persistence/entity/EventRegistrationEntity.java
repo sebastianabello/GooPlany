@@ -1,6 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
-import com.gooplanycol.gooplany.utils.StatusRegistrationEvent;
+import com.gooplanycol.gooplany.utils.StatusEventParticipant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class EventRegistrationEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private StatusRegistrationEvent statusRegistrationEvent;
+    private StatusEventParticipant statusEventParticipant;
 
     @Column(name = "registered_at")
     private LocalDateTime registeredAt;

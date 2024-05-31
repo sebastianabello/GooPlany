@@ -1,10 +1,9 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
-import com.gooplanycol.gooplany.application.ports.output.RegistrationProfileOutputPort;
 import com.gooplanycol.gooplany.application.service.EmailSenderService;
 import com.gooplanycol.gooplany.application.service.EmailValidator;
 import com.gooplanycol.gooplany.domain.model.ConfirmationToken;
-import com.gooplanycol.gooplany.domain.model.Profile;
+import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.ProfileOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.ProfileRepository;
@@ -36,14 +35,14 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
     private final ConfirmationTokenOutputAdapter confirmationTokenOutputAdapter;
 
     @Override
-    public AuthenticationResponse save(Profile request) throws IllegalAccessException {
+    public AuthenticationResponse save(Customer request) throws IllegalAccessException {
         if (request != null) {
             boolean customerExist = profileRepository.findProfileByEmail(request.getEmail()).isPresent();
             boolean isValidEmail = emailValidator.test(request.getEmail());
             if (customerExist || !isValidEmail) {
                 throw new IllegalAccessException("email already taken or  email not valid");
             } else {
-                Profile profile = Profile.builder()
+                Customer customer = Customer.builder()
                         .enable(false)
                         .tokens(new ArrayList<>())
                         .confirmationTokens(new ArrayList<>())
@@ -55,17 +54,17 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
                         .headerImage(request.getHeaderImage())
                         .roles(List.of(Role.USER))
                         .build();
-                profile.setFirstName(request.getFirstName());
-                profile.setLastName(request.getLastName());
-                profile.setEmail(request.getEmail());
-                profile.setUsername(request.getUsername());
-                profile.setPwd(passwordEncoder.encode(profile.getPwd()));
-                profile.setCellphone(request.getCellphone());
-                profile.setBirthdate(request.getBirthdate());
-                profile.setCountry(request.getCountry());
-                profile.setCreateAt(LocalDate.now());
-                profileOutputMapper.toProfile(profileRepository.save(profileOutputMapper.toProfileEntity(profile)));
-                return new AuthenticationResponse(resendConfirmationEmail(profile.getEmail())); //confirmation token
+                customer.setFirstName(request.getFirstName());
+                customer.setLastName(request.getLastName());
+                customer.setEmail(request.getEmail());
+                customer.setUsername(request.getUsername());
+                customer.setPwd(passwordEncoder.encode(customer.getPwd()));
+                customer.setCellphone(request.getCellphone());
+                customer.setBirthdate(request.getBirthdate());
+                customer.setCountry(request.getCountry());
+                customer.setCreateAt(LocalDate.now());
+                profileOutputMapper.toProfile(profileRepository.save(profileOutputMapper.toProfileEntity(customer)));
+                return new AuthenticationResponse(resendConfirmationEmail(customer.getEmail())); //confirmation token
             }
         } else {
             return null;
@@ -73,24 +72,24 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
     }
 
     public String resendConfirmationEmail(String email) {
-        Profile profile = profileOutputMapper.toProfile(profileRepository.findProfileByEmail(email)
+        Customer customer = profileOutputMapper.toProfile(profileRepository.findProfileByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found")));
 
-        ConfirmationToken token = generateToken(profile);
+        ConfirmationToken token = generateToken(customer);
 
         String link = "http://localhost:8080/api/v1/authentication/confirm?token=" + token.getToken();
-        emailSenderService.send(profile.getEmail(), buildEmail(profile.getFirstName(), link));
+        emailSenderService.send(customer.getEmail(), buildEmail(customer.getFirstName(), link));
         return token.getToken();
 
     }
 
-    public ConfirmationToken generateToken(Profile profile) {
+    public ConfirmationToken generateToken(Customer customer) {
         String tokenValue = UUID.randomUUID().toString();
         ConfirmationToken token = ConfirmationToken.builder()
                 .token(tokenValue)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(15))
-                .profile(profile)
+                .customer(customer)
                 .build();
         confirmationTokenOutputAdapter.saveConfirmationToken(token);
         return token;
@@ -106,14 +105,14 @@ public class RegistrationProfileOutputAdapter implements RegistrationProfileOutp
             } else {
                 LocalDateTime expiredAt = confirmationToken.getExpiresAt();
                 if (expiredAt.isBefore(LocalDateTime.now())) {//is expired
-                    resendConfirmationEmail(confirmationToken.getProfile().getEmail());
+                    resendConfirmationEmail(confirmationToken.getCustomer().getEmail());
                     System.out.println("Token expired, send another one");
                     return "the token was expired so we already send you another one";
                 } else {
                     confirmationTokenOutputAdapter.setConfirmedAt(token);
-                    Profile profile = confirmationToken.getProfile();
-                    profile.setEnable(true);
-                    profileOutputMapper.toProfile(profileRepository.save(profileOutputMapper.toProfileEntity(profile)));
+                    Customer customer = confirmationToken.getCustomer();
+                    customer.setEnable(true);
+                    profileOutputMapper.toProfile(profileRepository.save(profileOutputMapper.toProfileEntity(customer)));
                     return "Email confirmed successfully";
                 }
             }

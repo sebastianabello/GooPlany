@@ -1,31 +1,24 @@
 package com.gooplanycol.gooplany.application.ports.output;
 
-import com.gooplanycol.gooplany.domain.model.Address;
-import com.gooplanycol.gooplany.domain.model.Company;
-import com.gooplanycol.gooplany.domain.model.History;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.AuthenticationRequest;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AuthenticationResponse;
+import com.gooplanycol.gooplany.domain.model.*;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CompanyOutPort {
 
-    AuthenticationResponse authenticate(AuthenticationRequest authenticationRequestDTO);
+    Company authenticate(Company authenticationCompany);
 
-    Company save(Company address);
-
-    Company getCustomerByToken(String token);
+    Company getCompanyByToken(String token);
 
     boolean removeCompany(Long id);
 
-    // Company editData(Company response, Long id);
+    Company editData(Company companyEdit, Long id);
 
-    Optional<Company> findById(Long id);
+    Company findById(Long id);
 
     List<Company> findAll(Integer offset, Integer pageSize);
 
-    History findHistory(Long id);
+    HistoryCompany findHistory(Long id);
 
     List<Address> findAddress(Long id, Integer offset, Integer pageSize);
 
@@ -36,4 +29,5 @@ public interface CompanyOutPort {
     List<Address> addAddress(Address address, Long id);
 
     boolean removeAddress(Long addressId, Long companyId);
+
 }

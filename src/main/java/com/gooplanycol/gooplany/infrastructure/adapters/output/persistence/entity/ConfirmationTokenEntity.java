@@ -25,9 +25,10 @@ public class ConfirmationTokenEntity {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
     @ManyToOne
-    @JoinColumn(
-            nullable = false,
-            name = "user_id"
-    )
+    @JoinColumn(nullable = false, name = "profile_id")
     private ProfileEntity profile;
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "company_id")
+    private CompanyEntity company;
+
 }
