@@ -3,20 +3,24 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.enti
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@Table(name = "address")
-public class AddressEntity {
+@Table(name = "history_customer")
+public class HistoryCustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String street;
-    private String country;
-    private String postalCode;
+
+    @OneToMany
+    @JoinColumn(name = "event_post_id")
+    private List<EventPostEntity> eventPosts;
+
+    private LocalDateTime updateAt;
 }

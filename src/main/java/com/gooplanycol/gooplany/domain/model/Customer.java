@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer extends Profile {
-    private HistoryCompany historyCompany;
+    private HistoryCustomer historyCustomer;
     private List<Address> address;
     private List<CreditCard> cards;
     private List<Token> tokens;

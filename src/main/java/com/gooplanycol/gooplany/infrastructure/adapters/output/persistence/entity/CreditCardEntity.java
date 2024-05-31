@@ -1,26 +1,25 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
+import com.gooplanycol.gooplany.utils.TypeCard;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "history")
-public class HistoryEntity {
+public class CreditCardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany
-    @JoinColumn(name = "event_post_id")
-    private List<EventPostEntity> eventPosts;
-
-    private LocalDate modificationDate;
+    private String holderName;
+    private String number;
+    private int monthExp;
+    private int yearExp;
+    private int cvv;
+    @Enumerated(EnumType.STRING)
+    private TypeCard typeCard;
 }

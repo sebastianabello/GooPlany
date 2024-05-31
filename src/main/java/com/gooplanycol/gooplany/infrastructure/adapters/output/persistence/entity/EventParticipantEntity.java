@@ -10,29 +10,21 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "event_registration")
-public class EventRegistrationEntity {
-
+@Table(name = "event_participant")
+public class EventParticipantEntity {
     @Id
-    @Column(name = "event_registration_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Enumerated(EnumType.STRING)
-    private StatusEventParticipant statusEventParticipant;
-
-    @Column(name = "registered_at")
+    private StatusEventParticipant statusRegistration;
     private LocalDateTime registeredAt;
-
     @ManyToOne
-    @JoinColumn(name = "profile_id", referencedColumnName = "user_id")
-    private ProfileEntity profileId;
-
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
     @ManyToOne
-    @JoinColumn(name = "event_post_id", referencedColumnName = "event_post_id")
-    private EventPostEntity eventPostId;
-
-
+    @JoinColumn(name = "credit_card_id")
+    private CreditCardEntity creditCard;
 }

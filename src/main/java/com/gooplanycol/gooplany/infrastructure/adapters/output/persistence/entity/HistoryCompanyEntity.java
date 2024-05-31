@@ -1,24 +1,25 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
+import com.gooplanycol.gooplany.domain.model.EventFinished;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-@MappedSuperclass
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ConfirmationTokenEntity {
+@Table(name = "history_company")
+public class HistoryCompanyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String token;
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-    @Column(nullable = false)
-    private LocalDateTime expiresAt;
-    private LocalDateTime confirmedAt;
+    @OneToMany
+    @JoinColumn(name = "event_id")
+    private List<EventFinishedEntity> eventPosts;
+    private LocalDateTime updateAt;
 }

@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Token {
     private Long id;
-    private String token;
+    private String tok;
     private TokenType tokenType;
     private Customer customer;
     private Company company;

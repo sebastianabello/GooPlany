@@ -20,47 +20,44 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "profile")
-public class ProfileEntity extends UserEntity implements UserDetails {
+@Table(name = "customer")
+public class CustomerEntity extends UserEntity implements UserDetails {
 
-    @Column(name = "first_name")
-    private String firstName;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "history_id")
+    private HistoryCustomerEntity historyCompany;
 
-    @Column(name = "last_name")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private List<AddressEntity> address;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private List<CreditCardEntity> cards;
+
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.PERSIST)
+    private List<TokenEntity> tokens;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
+    private List<ConfirmationTokenCustomerEntity> confirmationTokens;
+
     private String lastName;
-
     private boolean enable;
-
     @Column(unique = true)
     private String username;
-
     private String pwd;
-
-    @Column(name = "birthdate")
     private LocalDate birthdate;
-
     private String country;
-
     @Column(length = 120)
     private String description;
-
-    @Column(name = "emergency_contact")
     private String emergencyContact;
-
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    /**
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "history_id")
-    private HistoryEntity history;
-    */
-
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_picture_id", referencedColumnName = "media_id")
+    @JoinColumn(name = "customer_picture_id", referencedColumnName = "media_id")
     private MediaEntity profilePicture;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -69,7 +66,7 @@ public class ProfileEntity extends UserEntity implements UserDetails {
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(
-            name = "profile_roles",
+            name = "customer_roles",
             joinColumns = @JoinColumn(name = "profile_id"))
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
@@ -78,9 +75,7 @@ public class ProfileEntity extends UserEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> {
-            return new SimpleGrantedAuthority("ROLE_" + role.name());
-        }).collect(Collectors.toList());
+        return roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.name())).collect(Collectors.toList());
     }
 
     @Override

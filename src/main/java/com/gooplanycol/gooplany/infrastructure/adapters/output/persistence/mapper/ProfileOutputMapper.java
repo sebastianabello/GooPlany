@@ -1,7 +1,7 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper;
 
 import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.ProfileEntity;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CustomerEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.springframework.data.domain.Page;
@@ -11,11 +11,11 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ProfileOutputMapper {
 
-    ProfileEntity toProfileEntity(Customer customer);
+    CustomerEntity toProfileEntity(Customer customer);
 
-    Customer toProfile(ProfileEntity profileEntity);
+    Customer toProfile(CustomerEntity customerEntity);
 
-    List<Customer> toProfileList(List<ProfileEntity> profileEntities);
+    List<Customer> toProfileList(List<CustomerEntity> profileEntities);
 
-    Page<Customer> toProfilePage(Page<ProfileEntity> profileEntityPage);
+    Page<Customer> toProfilePage(Page<CustomerEntity> profileEntityPage);
 }

@@ -16,14 +16,14 @@ public class TokenEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String token;
+    private String tok;
 
     @Enumerated(EnumType.STRING)
     private TokenType tokenType;
 
     @ManyToOne
     @JoinColumn(name = "profile_id")
-    private ProfileEntity profile;
+    private CustomerEntity profile;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -33,18 +33,18 @@ public class TokenEntity {
 
     private boolean expired;
 
-    public TokenEntity(Long id, String token, TokenType tokenType, CompanyEntity company, boolean revoked, boolean expired) {
+    public TokenEntity(Long id, String tok, TokenType tokenType, CompanyEntity company, boolean revoked, boolean expired) {
         this.id = id;
-        this.token = token;
+        this.tok = tok;
         this.tokenType = tokenType;
         this.company = company;
         this.revoked = revoked;
         this.expired = expired;
     }
 
-    public TokenEntity(Long id, String token, TokenType tokenType, ProfileEntity profile, boolean revoked, boolean expired) {
+    public TokenEntity(Long id, String tok, TokenType tokenType, CustomerEntity profile, boolean revoked, boolean expired) {
         this.id = id;
-        this.token = token;
+        this.tok = tok;
         this.tokenType = tokenType;
         this.profile = profile;
         this.revoked = revoked;

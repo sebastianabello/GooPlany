@@ -1,7 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper;
 
 import com.gooplanycol.gooplany.domain.model.HistoryCompany;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

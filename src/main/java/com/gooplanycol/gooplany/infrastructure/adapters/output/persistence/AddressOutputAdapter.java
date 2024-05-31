@@ -35,6 +35,11 @@ public class AddressOutputAdapter implements AddressOutputPort {
     }
 
     @Override
+    public Address edit(Address address, Long id) {
+        return null;
+    }
+
+    @Override
     public boolean remove(Long id) {
         if (addressRepository.existsById(id)) {
             addressRepository.deleteById(id);
