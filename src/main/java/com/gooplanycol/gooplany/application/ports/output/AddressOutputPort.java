@@ -3,7 +3,6 @@ package com.gooplanycol.gooplany.application.ports.output;
 import com.gooplanycol.gooplany.domain.model.Address;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AddressOutputPort {
 
@@ -13,7 +12,7 @@ public interface AddressOutputPort {
 
     boolean remove(Long id);
 
-    Optional<Address> findById(Long id);
+    Address findById(Long id);
 
     List<Address> findAll(Integer offset, Integer pageSize);
 

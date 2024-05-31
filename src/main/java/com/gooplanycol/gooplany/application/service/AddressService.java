@@ -2,7 +2,6 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.AddressInputPort;
 import com.gooplanycol.gooplany.application.ports.output.AddressOutputPort;
-import com.gooplanycol.gooplany.domain.exception.AddressException;
 import com.gooplanycol.gooplany.domain.model.Address;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ public class AddressService implements AddressInputPort {
 
     private final AddressOutputPort addressOutputPort;
 
-
     @Override
     public Address save(Address address) {
         return addressOutputPort.save(address);
@@ -23,14 +21,7 @@ public class AddressService implements AddressInputPort {
 
     @Override
     public Address edit(Address address, Long id) {
-        return addressOutputPort.findById(id)
-                .map(addressFound -> {
-                    addressFound.setCountry(address.getCountry());
-                    addressFound.setStreet(address.getStreet());
-                    addressFound.setPostalCode(address.getPostalCode());
-                    return addressOutputPort.save(addressFound);
-                })
-                .orElseThrow(() -> new AddressException("The address to update doesn't exist or the request is null"));
+        return addressOutputPort.edit(address, id);
     }
 
     @Override
@@ -40,8 +31,7 @@ public class AddressService implements AddressInputPort {
 
     @Override
     public Address findById(Long id) {
-        return addressOutputPort.findById(id)
-                .orElseThrow(() -> new AddressException("The address with id " + id + " doesn't exist"));
+        return addressOutputPort.findById(id);
     }
 
     @Override

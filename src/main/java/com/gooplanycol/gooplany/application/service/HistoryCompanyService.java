@@ -2,6 +2,7 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.HistoryCompanyInputPort;
 import com.gooplanycol.gooplany.application.ports.output.HistoryCompanyOutputPort;
+import com.gooplanycol.gooplany.domain.model.EventFinished;
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.HistoryCompany;
 import lombok.RequiredArgsConstructor;
@@ -36,17 +37,18 @@ public class HistoryCompanyService implements HistoryCompanyInputPort {
     }
 
     @Override
-    public List<EventPost> findEventPosts(Long id, Integer offset, Integer pageSize) {
-        return historyCompanyOutputPort.findEventPosts(id, offset, pageSize);
+    public List<EventFinished> findEventFinished(Long id, Integer offset, Integer pageSize) {
+        return historyCompanyOutputPort.findEventFinished(id, offset, pageSize);
     }
 
     @Override
-    public List<EventPost> addEventPost(EventPost eventPost, Long id) {
-        return historyCompanyOutputPort.addEventPost(eventPost, id);
+    public List<EventFinished> addEventFinished(EventPost eventPost, Long id) {
+        return historyCompanyOutputPort.addEventFinished(eventPost, id);
     }
 
     @Override
-    public boolean removeEvenPosts(Long eventPostId, Long historyId) {
-        return historyCompanyOutputPort.removeEvenPosts(eventPostId, historyId);
+    public boolean removeEventFinished(Long eventPostId, Long historyId) {
+        return historyCompanyOutputPort.removeEventFinished(eventPostId, historyId);
     }
+
 }

@@ -16,8 +16,8 @@ public class CompanyService implements CompanyInputPort {
     private final CompanyOutPort companyOutPort;
 
     @Override
-    public Authentication authenticate(String username, String password) {
-        return companyOutPort.authenticate(username, password);
+    public Company authenticate(Company authenticationCompany) {
+        return companyOutPort.authenticate(authenticationCompany);
     }
 
     @Override
@@ -56,11 +56,6 @@ public class CompanyService implements CompanyInputPort {
     }
 
     @Override
-    public List<EventPost> findEventPost(Long id, Integer offset, Integer pageSize) {
-        return companyOutPort.findEventPost(id, offset, pageSize);
-    }
-
-    @Override
     public Company findByEmail(String email) {
         return companyOutPort.findByEmail(email);
     }
@@ -80,13 +75,4 @@ public class CompanyService implements CompanyInputPort {
         return companyOutPort.removeAddress(addressId, customerId);
     }
 
-    @Override
-    public List<EventPost> addEventPost(EventPost eventPost, Long id) {
-        return companyOutPort.addEventPost(eventPost, id);
-    }
-
-    @Override
-    public boolean removeEventPost(Long eventPostId, Long companyId) {
-        return companyOutPort.removeEventPost(eventPostId, companyId);
-    }
 }

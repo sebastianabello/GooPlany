@@ -33,4 +33,13 @@ public class Customer extends Profile {
     private Media profilePicture;
     private Media headerImage;
     private List<Role> roles;
+
+    private Level findLevel(String level){
+        return switch (level) {
+            case "private" -> Level.PRIVATE;
+            case "friends" -> Level.FRIENDS;
+            case "friends_of_friends" -> Level.FRIENDS_OF_FRIENDS;
+            default -> Level.PUBLIC;
+        };
+    }
 }

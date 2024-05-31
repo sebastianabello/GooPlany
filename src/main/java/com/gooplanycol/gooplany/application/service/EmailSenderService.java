@@ -34,5 +34,4 @@ public class EmailSenderService implements EmailInputPort {
             throw new IllegalStateException("Failed to send the email");
         }
     }
-
 }
