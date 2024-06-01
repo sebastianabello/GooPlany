@@ -1,5 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
+import com.gooplanycol.gooplany.domain.model.*;
 import com.gooplanycol.gooplany.utils.Gender;
 import com.gooplanycol.gooplany.utils.Level;
 import com.gooplanycol.gooplany.utils.Role;
@@ -39,7 +40,7 @@ public class CustomerEntity extends UserEntity implements UserDetails {
     private List<TokenEntity> tokens;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
-    private List<ConfirmationTokenCustomerEntity> confirmationTokens;
+    private List<ConfirmationTokenEntity> confirmationTokens;
 
     private String lastName;
     private boolean enable;

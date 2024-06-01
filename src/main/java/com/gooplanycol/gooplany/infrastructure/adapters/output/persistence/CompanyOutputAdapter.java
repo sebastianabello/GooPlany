@@ -67,7 +67,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
 
 
     @Override
-    public Company authenticate(Company authenticationCompany) {
+    public Authentication authenticate(Company authenticationCompany) {
         String username = authenticationCompany.getUsername();
         String pwd = authenticationCompany.getPwd();
         authenticationManager.authenticate(
@@ -80,7 +80,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         if (company != null) {
             revokeAllCompanyTokens(company);
             saveCompanyToken(company, jwtToken);
-            return new Company(jwtToken);
+            return new Authentication(jwtToken);
         } else {
             throw new CompanyException("The company fetched to authenticate doesn't exist");
         }

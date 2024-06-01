@@ -5,10 +5,12 @@ import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entit
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EventFinishedOutputMapper {
 
     EventFinishedEntity toEventFinishedEntity(EventFinished eventFinishedEntity);
 
     EventFinished toEventFinished(EventFinishedEntity eventFinishedEntity);
+
 }

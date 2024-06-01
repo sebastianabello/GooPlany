@@ -60,21 +60,4 @@ public class Utils {
         };
     }
 
-    protected StatusEventPost findStatusEventPost(String statusEventPost) {
-        return switch (statusEventPost.toLowerCase()) {
-            case "approved" -> StatusEventPost.APPROVED;
-            case "rejected" -> StatusEventPost.REJECTED;
-            case "finished" -> StatusEventPost.FINISHED;
-            default -> StatusEventPost.PENDING;
-        };
-    }
-
-    protected StatusEventParticipant StatusRegistration(String status) {
-        return switch (status.toLowerCase()) {
-            case "registered" -> StatusEventParticipant.REGISTERED;
-            case "canceled" -> StatusEventParticipant.CANCELED;
-            default -> StatusEventParticipant.UNREGISTERED;
-        };
-    }
-
 }

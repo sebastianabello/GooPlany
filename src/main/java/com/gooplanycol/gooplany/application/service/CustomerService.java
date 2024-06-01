@@ -2,6 +2,7 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.CustomerInputPort;
 import com.gooplanycol.gooplany.application.ports.output.CustomerOutputPort;
+import com.gooplanycol.gooplany.domain.model.Authentication;
 import com.gooplanycol.gooplany.domain.model.CreditCard;
 import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.domain.model.HistoryCustomer;
@@ -17,17 +18,17 @@ public class CustomerService implements CustomerInputPort {
     private final CustomerOutputPort customerOutputPort;
 
     @Override
-    public Customer authenticate(Customer authenticationCustomer) {
+    public Authentication authenticate(Customer authenticationCustomer) {
         return customerOutputPort.authenticate(authenticationCustomer);
     }
 
     @Override
-    public Customer getProfileByToken(String token) {
+    public Customer getCustomerByToken(String token) {
         return customerOutputPort.getCustomerByToken(token);
     }
 
     @Override
-    public boolean removeProfile(Long id) {
+    public boolean removeCustomer(Long id) {
         return customerOutputPort.removeCustomer(id);
     }
 

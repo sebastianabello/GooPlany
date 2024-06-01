@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CompanyOutPort {
 
-    Company authenticate(Company authenticationCompany);
+    Authentication authenticate(Company authenticationCompany);
 
     Company getCompanyByToken(String token);
 

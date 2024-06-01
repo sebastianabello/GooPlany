@@ -16,7 +16,7 @@ public class ConfirmationToken {
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
-    private Customer company;
     private Customer customer;
+    private Company company;
 }
 

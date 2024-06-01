@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
-    @Query("SELECT c.historyCompany FROM CustomerEntity c WHERE c.id= :customerId")
+    @Query("SELECT c.historyCustomer FROM CustomerEntity c WHERE c.id= :customerId")
     Optional<HistoryCustomerEntity> findCustomerHistory(@Param("customerId") Long id);
 
     @Query("SELECT c.address FROM CustomerEntity c WHERE c.id= :customerId")

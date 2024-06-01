@@ -34,11 +34,6 @@ public class Customer extends Profile {
     private Media headerImage;
     private List<Role> roles;
 
-    public Customer(String jwtToken) {
-        String token = jwtToken;
-    }
-
-
 
     private Level findLevel(String level){
         return switch (level) {
@@ -48,4 +43,6 @@ public class Customer extends Profile {
             default -> Level.PUBLIC;
         };
     }
+
+
 }

@@ -26,8 +26,8 @@ public class EventFinishedEntity {
 
     private LocalDateTime createAt;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "event_participant_id")
-    private List<EventParticipantEntity> eventParticipants;
+    private EventParticipantEntity eventParticipants;
 
 }

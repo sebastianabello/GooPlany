@@ -30,8 +30,7 @@ public class AddressOutputAdapter implements AddressOutputPort {
                     address.getCountry(),
                     address.getPostalCode()
             );
-            AddressEntity addressSaved = addressRepository.save(addressEntity);
-            return addressOutputMapper.toAddress(addressSaved);
+            return addressOutputMapper.toAddress(addressRepository.save(addressEntity));
         } else {
             throw new AddressException("The address to save is null");
         }

@@ -2,20 +2,17 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
 import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
 import com.gooplanycol.gooplany.domain.exception.EventPostException;
-import com.gooplanycol.gooplany.domain.model.Company;
 import com.gooplanycol.gooplany.domain.model.EventPost;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CompanyOutputMapper;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.AddressEntity;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventPostEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventPostOutputMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CompanyRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventPostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,42 +22,44 @@ public class EventPostOutputAdapter implements EventPostOutputPort {
     private final EventPostRepository eventPostRepository;
     private final EventPostOutputMapper eventPostOutputMapper;
 
-    private final CompanyRepository companyRepository;
-    private final CompanyOutputMapper companyOutputMapper;
-
-    private final EventRegistrationRepository eventRegistrationRepository;
-    private final EventRegistrationOutputMapper eventRegistrationOutputMapper;
-
 
     @Override
     public EventPost save(EventPost eventPost) {
         if (eventPost != null) {
-            EventPost eventPostSaved = EventPost.builder()
-                    .id(eventPost.getId())
+            EventPostEntity eventPostSaved = EventPostEntity.builder()
                     .title(eventPost.getTitle())
                     .description(eventPost.getDescription())
-                    .eventCategory(eventPost.findEventCategory(eventPost.getEventCategory()).name())
-                    .typeOfAudience(eventPost.findTypeOfAudience(eventPost.getTypeOfAudience()).name())
-                    .typeOfPlace(eventPost.findTypeOfPlace(eventPost.getTypeOfPlace()).name())
+                    .eventCategory(eventPost.findEventCategory(eventPost.getEventCategory().name()))
+                    .typeOfAudience(eventPost.findTypeOfAudience(eventPost.getTypeOfAudience().name()))
+                    .typeOfPlace(eventPost.findTypeOfPlace(eventPost.getTypeOfPlace().name()))
                     .isFree(eventPost.getIsFree())
                     .price(eventPost.getPrice())
                     .isUnlimited(eventPost.getIsUnlimited())
                     .capacity(eventPost.getCapacity())
                     .startAt(eventPost.getStartAt())
                     .finishAt(eventPost.getFinishAt())
-                    .createdAt(LocalDate.now())
-                    .statusEventPost(eventPost.findStatusEventPost(eventPost.getStatusEventPost()).name())
-                    .address(eventPost.getAddress())
-                    .company(findCompany(eventPost.getCompany().getId()))
+                    .address(new AddressEntity(null, eventPost.getAddress().getStreet(), eventPost.getAddress().getCountry(), eventPost.getAddress().getPostalCode()))
                     .build();
-            return eventPostOutputMapper.toEventPost(eventPostRepository.save(eventPostOutputMapper.toEventPostEntity(eventPostSaved)));
+            return eventPostOutputMapper.toEventPost(eventPostRepository.save(eventPostSaved));
         } else {
             throw new EventPostException("The event post to save is null");
         }
     }
 
-    private Company findCompany(Long id) {
-        return companyOutputMapper.toCompany(companyRepository.findById(id).orElse(null));
+    @Override
+    public EventPost edit(EventPost eventPost, Long id) {
+        EventPostEntity e = eventPostRepository.findById(id).orElse(null);
+        if (e != null) {
+            e.setDescription(eventPost.getDescription());
+            e.setEventCategory(eventPost.findEventCategory(eventPost.getEventCategory().name()));
+            e.setTypeOfAudience(eventPost.findTypeOfAudience(eventPost.getTypeOfAudience().name()));
+            e.setTypeOfPlace(eventPost.findTypeOfPlace(eventPost.getTypeOfPlace().name()));
+            e.setStartAt(eventPost.getStartAt());
+            e.setFinishAt(eventPost.getFinishAt());
+            return eventPostOutputMapper.toEventPost(eventPostRepository.save(e));
+        } else {
+            throw new EventPostException("The event post to update doesn't exist");
+        }
     }
 
     @Override
@@ -74,53 +73,32 @@ public class EventPostOutputAdapter implements EventPostOutputPort {
     }
 
     @Override
-    public List<EventPost> findByCompanyId(Long id) {
-        List<EventPost> eventPosts = eventPostOutputMapper.toEventPostList(eventPostRepository.findEventPostByCompanyId(id));
-        if (eventPosts != null && !eventPosts.isEmpty()) {
-            return eventPosts;
-        } else {
-            throw new EventPostException("The event post fetched by company id doesn't exist");
-        }
-    }
-
-    @Override
-    public List<EventRegistration> findProfilesByEventId(Long id) {
-        List<EventRegistration> profiles = eventRegistrationOutputMapper.toEventRegistrationList(eventRegistrationRepository.findAllByEventPostId(id));
-        if (profiles != null && !profiles.isEmpty()) {
-            return profiles;
-        } else {
-            throw new EventPostException("The profiles fetched by event id doesn't exist");
-        }
-    }
-
-
-    @Override
-    public List<EventPost> findAll(Integer offset, Integer pageSize) {
-        Page<EventPost> list = eventPostOutputMapper.toEventPostPage(eventPostRepository.findAll(PageRequest.of(offset, pageSize)));
-        if (list != null && !list.isEmpty()) {
-            return list.stream().collect(Collectors.toList());
-        } else {
-            throw new EventPostException("The list of event post is null");
-        }
-    }
-
-    @Override
-    public Optional<EventPost> findById(Long id) {
-        EventPost eventPost = eventPostOutputMapper.toEventPost(eventPostRepository.findById(id).orElse(null));
+    public EventPost findById(Long id) {
+        EventPostEntity eventPost = eventPostRepository.findById(id).orElse(null);
         if (eventPost != null) {
-            return Optional.of(eventPost);
+            return eventPostOutputMapper.toEventPost(eventPost);
         } else {
             throw new EventPostException("The event post fetched by id doesn't exist");
         }
     }
 
     @Override
-    public List<EventPost> findEventPostByStatus(Integer offset, Integer pageSize, String statusEventPost) {
-        Page<EventPost> list = eventPostOutputMapper.toEventPostPage(eventPostRepository.findEventPostByStatus(statusEventPost, PageRequest.of(offset, pageSize)));
-        if (list != null && !list.isEmpty()) {
-            return list.stream().collect(Collectors.toList());
+    public List<EventPost> findAll(Integer offset, Integer pageSize) {
+        Page<EventPostEntity> list = eventPostRepository.findAll(PageRequest.of(offset, pageSize));
+        if (!list.isEmpty()) {
+            return list.stream().map(eventPostOutputMapper::toEventPost).collect(Collectors.toList());
         } else {
-            throw new EventPostException("The list of event post fetched by status is null");
+            throw new EventPostException("The list of event post post is null");
+        }
+    }
+
+    @Override
+    public List<EventPost> findEventPostByTitle(String title, Integer offset, Integer pageSize) {
+        Page<EventPostEntity> list = eventPostRepository.findEventPostByTitle(title, PageRequest.of(offset, pageSize));
+        if (list != null) {
+            return list.stream().map(eventPostOutputMapper::toEventPost).collect(Collectors.toList());
+        } else {
+            throw new EventPostException("The list of event ost fetched by barcode is null");
         }
     }
 }

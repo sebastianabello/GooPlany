@@ -20,8 +20,8 @@ public class EventStokeService implements EventStokeInputPort {
     }
 
     @Override
-    public boolean validateNameAndAddress(String name, String address) {
-        return eventStokeOutputPort.validateNameAndAddress(name, address);
+    public boolean validateName(String name) {
+        return eventStokeOutputPort.validateName(name);
     }
 
     @Override

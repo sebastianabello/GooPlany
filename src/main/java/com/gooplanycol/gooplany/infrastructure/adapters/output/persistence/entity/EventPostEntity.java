@@ -1,15 +1,12 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
 import com.gooplanycol.gooplany.utils.EventCategory;
-import com.gooplanycol.gooplany.utils.StatusEventPost;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -50,9 +47,6 @@ public class EventPostEntity {
     private Integer capacity;
     private LocalDateTime startAt;
     private LocalDateTime finishAt;
-
-    @Enumerated(EnumType.STRING)
-    private StatusEventPost statusEventPost;
 
     @OneToOne
     @JoinColumn(referencedColumnName = "address_id")

@@ -18,4 +18,5 @@ public interface EventStokeRepository extends JpaRepository<EventStokeEntity, Lo
     Optional<EventStokeEntity> findProductStockByTitle(String barcode);
 
     boolean existsByTitle(String name);
+
 }

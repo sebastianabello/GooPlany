@@ -16,7 +16,7 @@ public class CompanyService implements CompanyInputPort {
     private final CompanyOutPort companyOutPort;
 
     @Override
-    public Company authenticate(Company authenticationCompany) {
+    public Authentication authenticate(Company authenticationCompany) {
         return companyOutPort.authenticate(authenticationCompany);
     }
 

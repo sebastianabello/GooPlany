@@ -8,7 +8,6 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AddressOutputMapper {
-    AddressEntity toAddressEntity(Address address);
 
     Address toAddress(AddressEntity address);
 }

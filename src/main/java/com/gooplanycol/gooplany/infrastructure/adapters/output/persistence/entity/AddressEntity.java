@@ -19,4 +19,5 @@ public class AddressEntity {
     private String street;
     private String country;
     private String postalCode;
+
 }

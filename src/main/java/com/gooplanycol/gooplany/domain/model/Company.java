@@ -3,7 +3,6 @@ package com.gooplanycol.gooplany.domain.model;
 import com.gooplanycol.gooplany.utils.Role;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,7 +23,4 @@ public class Company extends Profile {
     private Media headerImage;
     private List<Role> roles;
 
-    public Company(String jwtToken) {
-        String token = jwtToken;
-    }
 }

@@ -20,5 +20,5 @@ public interface EventParticipantRepository extends JpaRepository<EventParticipa
     Optional<CreditCardEntity> findCard(@Param("id") Long id);
 
     @Query("SELECT p FROM EventParticipantEntity p WHERE p.statusRegistration =:status")
-    Page<EventParticipantEntity> findPaymentsByStatus(@Param("status") StatusEventParticipant statusEventParticipant, Pageable pageable);
+    Page<EventParticipantEntity> findEventParticipantByStatus(@Param("status") StatusEventParticipant statusEventParticipant, Pageable pageable);
 }

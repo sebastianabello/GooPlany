@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
 public interface EventFinishedRepository extends JpaRepository<EventFinishedEntity, Long> {
     @Query("SELECT e.eventPosts FROM EventFinishedEntity e WHERE e.id= :eventPostsId")
@@ -23,5 +24,7 @@ public interface EventFinishedRepository extends JpaRepository<EventFinishedEnti
     List<EventFinishedEntity> findEventFinishedByCreateAt(@Param("date") LocalDateTime date);
 
     @Query("SELECT e.eventParticipants FROM EventFinishedEntity e WHERE e.id=:id")
-    Optional<EventParticipantEntity> findPaymentSale(@Param("id") Long id);
+    Optional<EventParticipantEntity> findEventParticipantEventFinished(@Param("id") Long id);
+
+
 }

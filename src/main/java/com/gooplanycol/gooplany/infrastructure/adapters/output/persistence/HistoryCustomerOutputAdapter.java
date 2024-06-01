@@ -33,11 +33,11 @@ public class HistoryCustomerOutputAdapter implements HistoryCustomerOutputPort {
     @Override
     public HistoryCustomer save(HistoryCustomer historyCustomer) {
         if (historyCustomer != null) {
-            HistoryCustomerEntity history = new HistoryCustomerEntity().builder()
+            HistoryCustomerEntity history = HistoryCustomerEntity.builder()
                     .eventPosts(new ArrayList<>())
                     .updateAt(historyCustomer.getUpdateAt())
                     .build();
-            return historyCustomerOutputMapper.toHistoryCompany(historyCustomerRepository.save(history));
+            return historyCustomerOutputMapper.toHistoryCustomer(historyCustomerRepository.save(history));
         } else {
             throw new HistoryException("The request to save is null");
         }
@@ -57,7 +57,7 @@ public class HistoryCustomerOutputAdapter implements HistoryCustomerOutputPort {
     public HistoryCustomer findById(Long id) {
         HistoryCustomerEntity history = historyCustomerRepository.findById(id).orElse(null);
         if (history != null) {
-            return historyCustomerOutputMapper.toHistoryCompany(history);
+            return historyCustomerOutputMapper.toHistoryCustomer(history);
         } else {
             throw new HistoryException("The history fetched by id doesn't exist");
         }
@@ -66,7 +66,7 @@ public class HistoryCustomerOutputAdapter implements HistoryCustomerOutputPort {
     @Override
     public List<HistoryCustomer> findAll(Integer offset, Integer pageSize) {
         Page<HistoryCustomerEntity> historyPage = historyCustomerRepository.findAll(PageRequest.of(offset, pageSize));
-        return historyPage.stream().map(historyCustomerOutputMapper::toHistoryCompany).collect(Collectors.toList());
+        return historyPage.stream().map(historyCustomerOutputMapper::toHistoryCustomer).collect(Collectors.toList());
     }
 
     @Override

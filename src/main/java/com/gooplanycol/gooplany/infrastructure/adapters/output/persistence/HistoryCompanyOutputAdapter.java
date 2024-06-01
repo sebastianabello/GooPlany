@@ -35,7 +35,7 @@ public class HistoryCompanyOutputAdapter implements HistoryCompanyOutputPort {
     @Override
     public HistoryCompany save(HistoryCompany historyCompany) {
         if (historyCompany != null) {
-            HistoryCompanyEntity history = new HistoryCompanyEntity().builder()
+            HistoryCompanyEntity history = HistoryCompanyEntity.builder()
                     .eventPosts(new ArrayList<>())
                     .updateAt(historyCompany.getUpdateAt())
                     .build();

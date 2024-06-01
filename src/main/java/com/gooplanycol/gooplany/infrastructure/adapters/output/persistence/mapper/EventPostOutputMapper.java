@@ -5,6 +5,8 @@ import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entit
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
+import java.util.List;
+
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EventPostOutputMapper {
@@ -12,5 +14,7 @@ public interface EventPostOutputMapper {
     EventPostEntity toEventPostEntity(EventPost eventPost);
 
     EventPost toEventPost(EventPostEntity eventPostEntity);
+
+    List<EventPostEntity> toEventPostEntityList(List<EventPost> eventPostList);
 
 }

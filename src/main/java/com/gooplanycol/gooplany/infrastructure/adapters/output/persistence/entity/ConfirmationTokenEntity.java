@@ -7,10 +7,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@MappedSuperclass
+@Entity
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ConfirmationTokenEntity {
+@Table(name = "confirmation_token_customer")
+public class ConfirmationTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,4 +24,10 @@ public abstract class ConfirmationTokenEntity {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "customer_id")
+    private CustomerEntity customer;
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "company_id")
+    private CompanyEntity company;
 }

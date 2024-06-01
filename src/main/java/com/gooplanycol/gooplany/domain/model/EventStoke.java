@@ -32,4 +32,21 @@ public class EventStoke {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Address address;
+
+    public EventCategory findEventCategory(String eventCategory) {
+        return EventCategory.valueOf(eventCategory);
+    }
+
+    public TypeOfAudience findTypeOfAudience(String typeOfAudience) {
+        return TypeOfAudience.valueOf(typeOfAudience);
+    }
+
+    public TypeOfPlace findTypeOfPlace(String typeOfPlace) {
+        return TypeOfPlace.valueOf(typeOfPlace);
+    }
+
+    public StatusEventPost findStatusEventPost(String statusEventPost) {
+        return StatusEventPost.valueOf(statusEventPost);
+    }
+
 }

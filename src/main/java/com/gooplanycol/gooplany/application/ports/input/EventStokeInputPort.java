@@ -8,7 +8,7 @@ public interface EventStokeInputPort {
 
     EventStoke save(EventStoke eventStoke);
 
-    boolean validateNameAndAddress(String name, String address);
+    boolean validateName(String name);
 
     boolean remove(Long id);
 

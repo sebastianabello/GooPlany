@@ -18,4 +18,14 @@ public class EventParticipant {
     private LocalDateTime registeredAt;
     private Customer customer;
     private CreditCard creditCard;
+
+    public StatusEventParticipant knowStatus(String status) {
+        return switch (status.toLowerCase()) {
+            case "registered" -> StatusEventParticipant.REGISTERED;
+            case "canceled" -> StatusEventParticipant.CANCELED;
+            case "unregistered" -> StatusEventParticipant.UNREGISTERED;
+            default -> null;
+        };
+    }
+
 }

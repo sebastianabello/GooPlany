@@ -1,6 +1,7 @@
 package com.gooplanycol.gooplany.domain.model;
 
 import com.gooplanycol.gooplany.utils.TypeCard;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter

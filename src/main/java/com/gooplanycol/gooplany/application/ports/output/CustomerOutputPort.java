@@ -1,5 +1,6 @@
 package com.gooplanycol.gooplany.application.ports.output;
 
+import com.gooplanycol.gooplany.domain.model.Authentication;
 import com.gooplanycol.gooplany.domain.model.CreditCard;
 import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.domain.model.HistoryCustomer;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface CustomerOutputPort {
 
-    Customer authenticate(Customer authenticationCustomer);
+    Authentication authenticate(Customer authenticationCustomer);
 
     Customer getCustomerByToken(String token);
 

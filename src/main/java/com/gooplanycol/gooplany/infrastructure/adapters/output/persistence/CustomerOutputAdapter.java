@@ -4,17 +4,16 @@ import com.gooplanycol.gooplany.application.ports.output.CustomerOutputPort;
 import com.gooplanycol.gooplany.application.service.JwtService;
 import com.gooplanycol.gooplany.domain.exception.CompanyException;
 import com.gooplanycol.gooplany.domain.exception.CustomerException;
+import com.gooplanycol.gooplany.domain.model.Authentication;
 import com.gooplanycol.gooplany.domain.model.CreditCard;
 import com.gooplanycol.gooplany.domain.model.Customer;
 import com.gooplanycol.gooplany.domain.model.HistoryCustomer;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCardEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CustomerEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.TokenEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.AddressOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CreditCardOutPutMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CustomerOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.HistoryCustomerOutputMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.AddressRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CreditCardRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CustomerRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
@@ -38,9 +37,6 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
 
     private final CustomerRepository customerRepository;
     private final CustomerOutputMapper customerOutputMapper;
-
-    private final AddressRepository addressRepository;
-    private final AddressOutputMapper addressOutputMapper;
 
     private final CreditCardRepository creditCardRepository;
     private final CreditCardOutPutMapper creditCardOutPutMapper;
@@ -80,7 +76,7 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
 
 
     @Override
-    public Customer authenticate(Customer authenticationCustomer) {
+    public Authentication authenticate(Customer authenticationCustomer) {
         String username = authenticationCustomer.getUsername();
         String pwd = authenticationCustomer.getPwd();
         authenticationManager.authenticate(
@@ -93,7 +89,7 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
         if (customer != null) {
             revokeAllProfileTokens(customer);
             saveProfileToken(customer, jwtToken);
-            return new Customer(jwtToken);
+            return new Authentication(jwtToken);
         } else {
             throw new CompanyException("The customer fetched by username doesn't exist");
         }

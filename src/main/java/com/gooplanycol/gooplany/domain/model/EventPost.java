@@ -1,7 +1,6 @@
 package com.gooplanycol.gooplany.domain.model;
 
 import com.gooplanycol.gooplany.utils.EventCategory;
-import com.gooplanycol.gooplany.utils.StatusEventPost;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import lombok.*;
@@ -27,7 +26,6 @@ public class EventPost extends Utils {
     private Integer capacity;
     private LocalDateTime startAt;
     private LocalDateTime finishAt;
-    private StatusEventPost statusEventPost;
     private Address address;
 
     public EventCategory findEventCategory(String eventCategory) {
@@ -40,10 +38,6 @@ public class EventPost extends Utils {
 
     public TypeOfPlace findTypeOfPlace(String typeOfPlace) {
         return TypeOfPlace.valueOf(typeOfPlace);
-    }
-
-    public StatusEventPost findStatusEventPost(String statusEventPost) {
-        return StatusEventPost.valueOf(statusEventPost);
     }
 
 

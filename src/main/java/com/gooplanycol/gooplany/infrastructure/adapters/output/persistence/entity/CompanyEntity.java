@@ -37,7 +37,7 @@ public class CompanyEntity extends UserEntity implements UserDetails {
     private List<TokenEntity> tokens;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
-    private List<ConfirmationTokenCompanyEntity> confirmationTokens;
+    private List<ConfirmationTokenEntity> confirmationTokens;
 
     private boolean enable;
 
