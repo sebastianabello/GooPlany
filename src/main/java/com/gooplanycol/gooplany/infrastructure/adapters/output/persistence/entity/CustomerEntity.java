@@ -60,7 +60,7 @@ public class CustomerEntity extends UserEntity implements UserDetails {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(
             name = "customer_roles",
-            joinColumns = @JoinColumn(name = "profile_id"))
+            joinColumns = @JoinColumn(name = "customer_id"))
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private List<Role> roles;

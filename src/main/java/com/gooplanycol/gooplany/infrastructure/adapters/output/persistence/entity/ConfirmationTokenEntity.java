@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "confirmation_token_customer")
+@Table(name = "confirmation_token")
 public class ConfirmationTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
