@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.config;
 
-import com.gooplanycol.gooplany.domain.model.Token;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.TokenEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;

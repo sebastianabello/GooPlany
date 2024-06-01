@@ -23,7 +23,7 @@ public class ConfirmationTokenOutputAdapter implements ConfirmationTokenOutputPo
     @Override
     @Transactional
     public void saveConfirmationToken(ConfirmationToken token) {
-        ConfirmationTokenEntity c = confirmationTokenRepository.save(mapper.toConfirmationTokenEntity(token));
+        confirmationTokenRepository.save(mapper.toConfirmationTokenEntity(token));
     }
 
     public Optional<ConfirmationTokenEntity> getToken(String token) {
