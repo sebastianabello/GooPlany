@@ -23,14 +23,14 @@ public class LogoutService implements LogoutHandler {
 
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        if(authHeader==null || !authHeader.startsWith("Bearer ")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return;
         }
-        jwt=authHeader.substring(7);
+        jwt = authHeader.substring(7);
 
         //cambiar a Token de modelo
         TokenEntity token = tokenRepository.findTokenByToken(jwt).orElse(null);
-        if(token!=null){
+        if (token != null) {
             token.setExpired(true);
             token.setRevoked(true);
             tokenRepository.save(token);

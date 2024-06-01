@@ -40,25 +40,25 @@ public class SecurityConfig {
                                 "api/v1/history/{id}/find/sales",
                                 "api/v1/history/{id}/add/sale",
                                 "api/v1/history/{id_history}/remove/sale/{id_sale}",
-                                "api/v1/productSold/**",
-                                "/api/v1/productStock/save",
-                                "/api/v1/productStock/{id}/remove",
-                                "/api/v1/productStock/{id}/edit",
-                                "/api/v1/productStock/find/barcode/{barCode}",
-                                "/api/v1/sale/{id}/edit",
-                                "/api/v1/sale/find/{id}",
-                                "/api/v1/sale/find",
-                                "/api/v1/sale/{id}/add/product",
-                                "/api/v1/sale/{id_sale}/remove/product/{id_product}",
-                                "/api/v1/sale/{id}/find/products",
-                                "/api/v1/sale/find/{id}/payment",
-                                "/api/v1/payment/edit/{id}",
-                                "/api/v1/payment/change/status/{status}/{id}",
-                                "/api/v1/payment/find",
-                                "/api/v1/payment/remove/{id}",
-                                "/api/v1/payment/find/status/{status}",
-                                "/api/v1/payment/find/{id}/customer",
-                                "/api/v1/payment/find/{id}/card"};
+                                "api/v1/eventPost/**",
+                                "/api/v1/eventStoke/save",
+                                "/api/v1/eventStoke/{id}/remove",
+                                "/api/v1/eventStoke/{id}/edit",
+                                "/api/v1/eventStoke/find/title/{title}",
+                                "/api/v1/eventFinished/{id}/edit",
+                                "/api/v1/eventFinished/find/{id}",
+                                "/api/v1/eventFinished/find",
+                                "/api/v1/eventFinished/{id}/add/eventPost",
+                                "/api/v1/eventFinished/{id_sale}/remove/eventPost/{id_eventPost}",
+                                "/api/v1/eventFinished/{id}/find/eventsPost",
+                                "/api/v1/eventFinished/find/{id}/payment",
+                                "/api/v1/eventParticipant/edit/{id}",
+                                "/api/v1/eventParticipant/change/status/{status}/{id}",
+                                "/api/v1/eventParticipant/find",
+                                "/api/v1/eventParticipant/remove/{id}",
+                                "/api/v1/eventParticipant/find/status/{status}",
+                                "/api/v1/eventParticipant/find/{id}/customer",
+                                "/api/v1/eventParticipant/find/{id}/card"};
     private static final String[] customersUrls =
                         {"/api/v1/customer/find/{id}",
                          "/api/v1/customer/{id}/edit",
@@ -69,15 +69,15 @@ public class SecurityConfig {
                          "/api/v1/customer/find/{id}/history",
                          "/api/v1/customer/find/{id}/address",
                          "/api/v1/customer/find/{id}/cards",
-                         "/api/v1/history/{id}/add/sale",
-                         "/api/v1/sale/save",
-                         "/api/v1/productStock/find/{id}",
-                         "/api/v1/productStock/find/enable",
-                         "/api/v1/productStock/{id}/sell/{amount}",
+                         "/api/v1/history/{id}/add/eventFinished",
+                         "/api/v1/eventFinished/save",
+                         "/api/v1/eventStoke/find/{id}",
+                         "/api/v1/eventStoke/find/enable",
+                         "/api/v1/eventStoke/{id}/sell/{amount}",
                          "/api/v1/customer/{id}/change/pwd/{pwd}",
                          "/api/v1/customer/find/by/tk/{token}",
-                         "/api/v1/payment/save",
-                         "/api/v1/payment/find/id/{id}"};
+                         "/api/v1/eventParticipant/save",
+                         "/api/v1/eventParticipant/find/id/{id}"};
     private static final String[] openUrls=
                         {
                                 "/api/v1/authentication/**",
@@ -113,9 +113,7 @@ public class SecurityConfig {
                 .headers(httpSecurityHeadersConfigurer -> {
                     httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
                 });
-
         return http.build();
-
     }
 
 }
