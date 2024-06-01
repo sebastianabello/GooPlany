@@ -49,7 +49,7 @@ public class EventPostEntity {
     private LocalDateTime finishAt;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "address_id")
+    @JoinColumn(name = "event_post_id")
     private AddressEntity address;
 
 }

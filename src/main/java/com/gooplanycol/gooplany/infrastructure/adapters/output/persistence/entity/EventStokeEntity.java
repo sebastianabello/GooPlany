@@ -54,6 +54,6 @@ public class EventStokeEntity {
     private LocalDateTime updatedAt;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "address_id")
+    @JoinColumn(name = "event_stoke_id")
     private AddressEntity address;
 }
