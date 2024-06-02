@@ -5,7 +5,6 @@ import com.gooplanycol.gooplany.domain.exception.HistoryException;
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.HistoryCustomer;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventPostEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryCustomerEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventPostOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.HistoryCustomerOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventPostRepository;

@@ -1,5 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gooplanycol.gooplany.utils.EventCategory;
 import com.gooplanycol.gooplany.utils.StatusEventPost;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
@@ -34,23 +35,21 @@ public class EventStokeEntity {
     @Enumerated(EnumType.STRING)
     private TypeOfPlace typeOfPlace;
 
-    @Column(columnDefinition = "boolean default true")
-    private Boolean isFree;
-
-    @Column(columnDefinition = "boolean default true")
-    private Double price;
-
-    @Column(columnDefinition = "boolean default true")
-    private Boolean isUnlimited;
-
-    @Column(columnDefinition = "integer default 0")
-    private Integer capacity;
-
+    private boolean isFree;
+    private double price;
+    private boolean isUnlimited;
+    private int capacity;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime finishAt;
+
     @Enumerated(EnumType.STRING)
     private StatusEventPost statusEventPost;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
     @OneToOne

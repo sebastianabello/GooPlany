@@ -1,6 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
-import com.gooplanycol.gooplany.domain.model.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gooplanycol.gooplany.utils.Gender;
 import com.gooplanycol.gooplany.utils.Level;
 import com.gooplanycol.gooplany.utils.Role;
@@ -22,34 +22,34 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customer")
-public class CustomerEntity extends UserEntity implements UserDetails {
+public class CustomerEntity extends ProfileEntity implements UserDetails {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "history_id")
-    private HistoryCustomerEntity historyCustomer;
+    private HistoryEntity history;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "profile_id")
     private List<AddressEntity> address;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private List<CreditCardEntity> cards;
 
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person",cascade = CascadeType.PERSIST)
     private List<TokenEntity> tokens;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     private List<ConfirmationTokenEntity> confirmationTokens;
 
-    private String lastName;
     private boolean enable;
     @Column(unique = true)
     private String username;
     private String pwd;
+
+    private String lastName;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
-    private String country;
-    @Column(length = 120)
     private String description;
     private String emergencyContact;
     @Enumerated(EnumType.STRING)

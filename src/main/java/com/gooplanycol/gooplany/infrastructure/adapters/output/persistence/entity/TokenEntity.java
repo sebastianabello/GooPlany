@@ -23,32 +23,9 @@ public class TokenEntity {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private CustomerEntity customer;
-
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private CompanyEntity company;
+    private ProfileEntity person;
 
     private boolean revoked;
-
     private boolean expired;
-
-    public TokenEntity(Long id, String tok, TokenType tokenType, CompanyEntity company, boolean revoked, boolean expired) {
-        this.id = id;
-        this.tok = tok;
-        this.tokenType = tokenType;
-        this.company = company;
-        this.revoked = revoked;
-        this.expired = expired;
-    }
-
-    public TokenEntity(Long id, String tok, TokenType tokenType, CustomerEntity customer, boolean revoked, boolean expired) {
-        this.id = id;
-        this.tok = tok;
-        this.tokenType = tokenType;
-        this.customer = customer;
-        this.revoked = revoked;
-        this.expired = expired;
-    }
 
 }

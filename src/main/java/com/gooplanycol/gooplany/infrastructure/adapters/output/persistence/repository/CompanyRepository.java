@@ -2,7 +2,6 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repo
 
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.AddressEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CompanyEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryCompanyEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,5 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
+import com.gooplanycol.gooplany.domain.model.*;
 import com.gooplanycol.gooplany.utils.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,24 +21,24 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "company")
-public class CompanyEntity extends UserEntity implements UserDetails {
+public class CompanyEntity extends ProfileEntity implements UserDetails {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "history_id")
-    private HistoryCompanyEntity historyCompany;
+    private HistoryEntity history;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "profile_id")
     private List<AddressEntity> address;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_id")
-    private List<EventPostEntity> eventPosts;
+    /*@OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
+    private List<EventPostEntity> eventPosts;*/
 
-    @OneToMany(mappedBy = "company",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     private List<TokenEntity> tokens;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     private List<ConfirmationTokenEntity> confirmationTokens;
 
     private boolean enable;
@@ -45,6 +47,9 @@ public class CompanyEntity extends UserEntity implements UserDetails {
     private String username;
 
     private String pwd;
+
+    @Column(unique = true)
+    private String nit;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(
@@ -57,7 +62,7 @@ public class CompanyEntity extends UserEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role ->
-                new SimpleGrantedAuthority("ROLE_" + role.name()))
+                        new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toList());
     }
 

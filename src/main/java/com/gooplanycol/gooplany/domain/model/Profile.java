@@ -15,4 +15,5 @@ public abstract class Profile {
     protected String email;
     protected LocalDateTime createAt;
     protected LocalDateTime updatedAt;
+    protected boolean enable;
 }

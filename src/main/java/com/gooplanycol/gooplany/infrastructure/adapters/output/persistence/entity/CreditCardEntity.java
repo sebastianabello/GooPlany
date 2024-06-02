@@ -16,11 +16,7 @@ public class CreditCardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String holderName;
     private String number;
-    private int monthExp;
-    private int yearExp;
-    private int cvv;
     @Enumerated(EnumType.STRING)
     private TypeCard typeCard;
 }

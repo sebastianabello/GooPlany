@@ -1,26 +1,29 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "history_customer")
-public class HistoryCustomerEntity {
+@Table(name = "history")
+public class HistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany
-    @JoinColumn(name = "event_post_id")
-    private List<EventPostEntity> eventPosts;
+    @JoinColumn(name = "even_finished_id")
+    private List<EventFinishedEntity> eventsFinished;
 
-    private LocalDateTime updateAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate modificationDate;
 }

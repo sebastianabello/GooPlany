@@ -6,7 +6,6 @@ import com.gooplanycol.gooplany.domain.model.EventFinished;
 import com.gooplanycol.gooplany.domain.model.EventPost;
 import com.gooplanycol.gooplany.domain.model.HistoryCompany;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventFinishedEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryCompanyEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventFinishedOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.HistoryCompanyOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventFinishedRepository;
