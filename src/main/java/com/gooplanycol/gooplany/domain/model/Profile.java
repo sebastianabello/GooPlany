@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Profile {
-    private Long id;
-    private String name;
-    private String cellphone;
-    private String email;
-    private LocalDateTime createAt;
-    private LocalDateTime updatedAt;
+    protected Long id;
+    protected String name;
+    protected String cellphone;
+    protected String email;
+    protected LocalDateTime createAt;
+    protected LocalDateTime updatedAt;
 }

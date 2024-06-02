@@ -13,8 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.gooplanycol.gooplany.utils.Role.ADMIN;
-import static com.gooplanycol.gooplany.utils.Role.COMPANY;
+import static com.gooplanycol.gooplany.utils.Role.*;
 
 @Configuration
 @EnableWebSecurity
@@ -97,7 +96,7 @@ public class SecurityConfig {
                     auth
                           .requestMatchers( openUrls).permitAll()
                           .requestMatchers(adminUrls).hasRole(ADMIN.name())
-                          .requestMatchers(customersUrls).hasAnyRole(COMPANY.name(), ADMIN.name())
+                          .requestMatchers(customersUrls).hasAnyRole(COMPANY.name(), ADMIN.name(), CUSTOMER.name())
                           .anyRequest().authenticated();
                 })
                 .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

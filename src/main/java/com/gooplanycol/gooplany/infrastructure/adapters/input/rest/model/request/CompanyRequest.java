@@ -1,6 +1,7 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record CompanyRequest(
         String name,
@@ -9,6 +10,6 @@ public record CompanyRequest(
         String username,
         String pwd,
         LocalDateTime createdAt,
-        AddressRequest address
+        List<AddressRequest> address
 ) {
 }

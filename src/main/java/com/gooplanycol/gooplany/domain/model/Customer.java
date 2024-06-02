@@ -6,6 +6,7 @@ import com.gooplanycol.gooplany.utils.Role;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,6 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer extends Profile {
+    protected Long id;
+    protected String name;
+    protected String cellphone;
+    protected String email;
+    protected LocalDateTime createAt;
+    protected LocalDateTime updatedAt;
     private HistoryCustomer historyCustomer;
     private List<Address> address;
     private List<CreditCard> cards;

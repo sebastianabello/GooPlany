@@ -3,6 +3,7 @@ package com.gooplanycol.gooplany.domain.model;
 import com.gooplanycol.gooplany.utils.Role;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -12,6 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Company extends Profile {
+    private Long id;
+    private String name;
+    private String cellphone;
+    private String email;
+    private LocalDateTime createAt;
+    private LocalDateTime updatedAt;
     private HistoryCompany historyCompany;
     private List<Address> address;
     private List<Token> tokens;

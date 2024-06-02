@@ -2,7 +2,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.respon
 
 import java.time.LocalDateTime;
 
-public record ProfileResponse(
+public record CustomerResponse(
         Long id,
         String firstName,
         String lastName,

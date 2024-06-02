@@ -1,16 +1,18 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public record ProfileRequestEdit(
+public record CustomerRequest(
         String cellphone,
         String email,
         String username,
+        String pwd,
         String firstName,
         String lastName,
-        String description,
-        String emergencyContact,
-        String level,
-        LocalDate updatedAt
+        LocalDate birthdate,
+        String country,
+        List<AddressRequest> address,
+        LocalDate createAt
 ) {
 }
