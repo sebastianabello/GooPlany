@@ -1,7 +1,13 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
-public record CreditCardRequest(
-        String number,
-        String type
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CreditCardRequest {
+    private String number;
+    private String type;
 }

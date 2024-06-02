@@ -1,7 +1,13 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
-public record AuthenticationRequest(
-        String username,
-        String password
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthenticationRequest {
+    private String username;
+    private String password;
 }

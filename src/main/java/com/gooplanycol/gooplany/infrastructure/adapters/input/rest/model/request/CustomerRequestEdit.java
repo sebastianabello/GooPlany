@@ -1,14 +1,20 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
-public record CustomerRequestEdit(
-        String name,
-        String lastName,
-        String cellphone,
-        String email,
-        String username,
-        String description,
-        String emergencyContact,
-        String gender,
-        String level
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CustomerRequestEdit {
+    private String name;
+    private String lastName;
+    private String cellphone;
+    private String email;
+    private String username;
+    private String description;
+    private String emergencyContact;
+    private String gender;
+    private String level;
 }

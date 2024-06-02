@@ -1,6 +1,12 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response;
 
-public record AuthenticationResponse(
-        String token
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthenticationResponse {
+    private String token;
 }

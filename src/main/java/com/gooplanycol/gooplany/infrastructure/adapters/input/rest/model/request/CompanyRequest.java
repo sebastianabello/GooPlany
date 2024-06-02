@@ -1,12 +1,18 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
-public record CompanyRequest(
-        String name,
-        String cellphone,
-        String nit,
-        String email,
-        String username,
-        String pwd,
-        AddressRequest address
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CompanyRequest {
+    private String name;
+    private String cellphone;
+    private String nit;
+    private String email;
+    private String username;
+    private String pwd;
+    private AddressRequest address;
 }

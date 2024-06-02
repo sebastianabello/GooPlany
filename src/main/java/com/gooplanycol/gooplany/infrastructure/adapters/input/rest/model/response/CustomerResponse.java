@@ -1,18 +1,24 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response;
 
+import lombok.*;
+
 import java.time.LocalDateTime;
 
-public record CustomerResponse(
-        Long id,
-        String name,
-        String lastName,
-        String username,
-        String email,
-        String cellphone,
-        LocalDateTime createdAt,
-        String description,
-        String emergencyContact,
-        String gender,
-        String level
-) {
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CustomerResponse {
+    private Long id;
+    private String name;
+    private String lastName;
+    private String username;
+    private String email;
+    private String cellphone;
+    private LocalDateTime createdAt;
+    private String description;
+    private String emergencyContact;
+    private String gender;
+    private String level;
 }

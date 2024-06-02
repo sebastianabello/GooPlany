@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Company extends Profile {
     private Long id;
+    private String nit;
     private String name;
     private String cellphone;
     private String email;

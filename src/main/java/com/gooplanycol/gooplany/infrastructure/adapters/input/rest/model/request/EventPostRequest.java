@@ -1,23 +1,28 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-public record EventPostRequest(
-        String title,
-        String description,
-        String eventCategory,
-        String typeOfAudience,
-        String typeOfPlace,
-        boolean isFree,
-        int price,
-        boolean isUnlimited,
-        int capacity,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-        LocalDateTime startAt,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-        LocalDateTime finishAt,
-        AddressRequest address
-) {
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class EventPostRequest {
+    private String title;
+    private String description;
+    private String eventCategory;
+    private String typeOfAudience;
+    private String typeOfPlace;
+    private boolean isFree;
+    private int price;
+    private boolean isUnlimited;
+    private int capacity;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime startAt;
+    private @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    LocalDateTime finishAt;
+    private AddressRequest address;
 }

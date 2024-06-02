@@ -1,9 +1,15 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response;
 
-public record AddressResponse (
-        Long id,
-        String street,
-        String country,
-        String postalCode
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AddressResponse {
+    private Long id;
+    private String street;
+    private String country;
+    private String postalCode;
 }

@@ -1,13 +1,18 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-public record EventFinishedRequest(
-        String concept,
-        EventPostRequest eventPost,
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class EventFinishedRequest {
+        private String concept;
+        private EventPostRequest eventPost;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime createAt
-) {
+        private LocalDateTime createAt;
 }

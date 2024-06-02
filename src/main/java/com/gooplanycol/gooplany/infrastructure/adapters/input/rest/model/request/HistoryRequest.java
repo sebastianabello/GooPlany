@@ -1,11 +1,16 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import java.time.LocalDate;
 
-public record HistoryRequest(
-        @JsonFormat(pattern = "yyyy-MM-dd")
-        LocalDate dateModification
-) {
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class HistoryRequest {
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateModification;
 }
