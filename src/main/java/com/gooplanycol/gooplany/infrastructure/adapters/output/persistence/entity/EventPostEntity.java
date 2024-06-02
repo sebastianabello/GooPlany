@@ -48,5 +48,4 @@ public class EventPostEntity {
     @OneToOne
     @JoinColumn(name = "address_id")
     private AddressEntity address;
-
 }

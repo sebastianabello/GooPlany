@@ -1,16 +1,14 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request;
 
-import java.time.LocalDate;
-
 public record CustomerRequestEdit(
+        String name,
+        String lastName,
         String cellphone,
         String email,
         String username,
-        String firstName,
-        String lastName,
         String description,
         String emergencyContact,
-        String level,
-        LocalDate updatedAt
+        String gender,
+        String level
 ) {
 }

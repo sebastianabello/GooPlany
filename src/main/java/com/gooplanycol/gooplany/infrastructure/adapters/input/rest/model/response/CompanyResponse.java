@@ -3,6 +3,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.respon
 public record CompanyResponse(
         Long id,
         String name,
+        String nit,
         String cellphone,
         String email,
         String username

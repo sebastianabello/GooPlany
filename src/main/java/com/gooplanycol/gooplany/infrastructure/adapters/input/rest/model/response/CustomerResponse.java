@@ -4,11 +4,15 @@ import java.time.LocalDateTime;
 
 public record CustomerResponse(
         Long id,
-        String firstName,
+        String name,
         String lastName,
         String username,
         String email,
         String cellphone,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        String description,
+        String emergencyContact,
+        String gender,
+        String level
 ) {
 }
