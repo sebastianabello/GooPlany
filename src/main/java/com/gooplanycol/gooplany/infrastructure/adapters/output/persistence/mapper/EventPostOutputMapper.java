@@ -11,10 +11,6 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EventPostOutputMapper {
 
-    EventPostEntity toEventPostEntity(EventPost eventPost);
-
     EventPost toEventPost(EventPostEntity eventPostEntity);
-
-    List<EventPostEntity> toEventPostEntityList(List<EventPost> eventPostList);
 
 }

@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "confirmation_token")
-public class ConfirmationTokenEntity {
+@Table(name = "confirmation_token_customer")
+public class ConfirmationTokenCustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,7 @@ public class ConfirmationTokenEntity {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
     @ManyToOne
-    @JoinColumn(nullable = false, name = "person_id")
-    private ProfileEntity person;
+    @JoinColumn(nullable = true, name = "customer_id")
+    private CustomerEntity customer;
 
 }

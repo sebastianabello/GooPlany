@@ -28,14 +28,17 @@ public class EventPost extends Utils {
     private LocalDateTime finishAt;
     private Address address;
 
+    @Override
     public EventCategory findEventCategory(String eventCategory) {
         return EventCategory.valueOf(eventCategory);
     }
 
+    @Override
     public TypeOfAudience findTypeOfAudience(String typeOfAudience) {
         return TypeOfAudience.valueOf(typeOfAudience);
     }
 
+    @Override
     public TypeOfPlace findTypeOfPlace(String typeOfPlace) {
         return TypeOfPlace.valueOf(typeOfPlace);
     }

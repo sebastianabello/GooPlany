@@ -22,25 +22,7 @@ public class CreditCardOutputAdapter implements CreditCardOutputPort {
     private final CreditCardRepository creditCardRepository;
     private final CreditCardOutPutMapper creditCardOutPutMapper;
 
-
-    @Override
-    public CreditCard save(CreditCard creditCard) {
-        if (creditCard != null) {
-            CreditCardEntity creditCardEntity = CreditCardEntity.builder()
-                    .number(creditCard.getNumber())
-                    .holderName(creditCard.getHolderName())
-                    .monthExp(creditCard.getMonthExp())
-                    .yearExp(creditCard.getYearExp())
-                    .cvv(creditCard.getCvv())
-                    .typeCard(typeCard(creditCard.getTypeCard().name()))
-                    .build();
-            return creditCardOutPutMapper.toCreditCard(creditCardRepository.save(creditCardEntity));
-        } else {
-            throw new CreditCardException("The credit card to save is null");
-        }
-    }
-
-    private TypeCard typeCard(String type) {
+    public TypeCard typeCard(String type) {
         return switch (type) {
             case "VISA" -> TypeCard.VISA;
             case "MASTER_CARD" -> TypeCard.MASTER_CARD;
@@ -49,16 +31,24 @@ public class CreditCardOutputAdapter implements CreditCardOutputPort {
         };
     }
 
+    @Override
+    public CreditCard save(CreditCard creditCard) {
+        if (creditCard != null) {
+            CreditCardEntity creditCardEntity = CreditCardEntity.builder()
+                    .number(creditCard.getNumber())
+                    .typeCard(typeCard(creditCard.getTypeCard().name()))
+                    .build();
+            return creditCardOutPutMapper.toCreditCard(creditCardRepository.save(creditCardEntity));
+        } else {
+            throw new CreditCardException("The credit card to save is null");
+        }
+    }
 
     @Override
     public CreditCard edit(CreditCard creditCard, Long id) {
         CreditCardEntity card = creditCardRepository.findById(id).orElse(null);
         if (card != null && creditCard != null) {
             card.setNumber(creditCard.getNumber());
-            card.setHolderName(creditCard.getHolderName());
-            card.setMonthExp(creditCard.getMonthExp());
-            card.setYearExp(creditCard.getYearExp());
-            card.setCvv(creditCard.getCvv());
             card.setTypeCard(typeCard(creditCard.getTypeCard().name()));
             return creditCardOutPutMapper.toCreditCard(creditCardRepository.save(card));
         } else {

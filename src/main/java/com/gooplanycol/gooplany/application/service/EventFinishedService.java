@@ -36,22 +36,22 @@ public class EventFinishedService implements EventFinishedInputPort {
     }
 
     @Override
-    public EventFinished addEventPost(EventPost eventPost, Long id) {
-        return eventFinishedOutputPort.addEventPost(eventPost, id);
+    public EventFinished addEventParticipant(EventParticipant eventParticipant, Long id) {
+        return eventFinishedOutputPort.addEventParticipant(eventParticipant, id);
     }
 
     @Override
-    public EventFinished removeEventPost(Long eventPostId, Long eventFinishedId) {
-        return eventFinishedOutputPort.removeEventPost(eventPostId, eventFinishedId);
+    public EventFinished removeEventParticipant(Long eventParticipantId, Long eventFinishedId) {
+        return eventFinishedOutputPort.removeEventParticipant(eventParticipantId, eventFinishedId);
     }
 
     @Override
-    public List<EventPost> findEventPosts(Long id, Integer offset, Integer pageSize) {
-        return eventFinishedOutputPort.findEventPosts(id, offset, pageSize);
+    public List<EventParticipant> findEventParticipants(Long id, Integer offset, Integer pageSize) {
+        return eventFinishedOutputPort.findEventParticipants(id, offset, pageSize);
     }
 
     @Override
-    public EventParticipant findEventParticipant(Long id) {
-        return eventFinishedOutputPort.findEventParticipant(id);
+    public EventPost findEventPost(Long id) {
+        return eventFinishedOutputPort.findEventPost(id);
     }
 }

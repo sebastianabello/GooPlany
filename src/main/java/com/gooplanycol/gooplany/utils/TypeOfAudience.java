@@ -14,7 +14,6 @@ public enum TypeOfAudience {
     LOCALS,
     FOREIGNERS;
 
-
     private String message;
 
     TypeOfAudience() {

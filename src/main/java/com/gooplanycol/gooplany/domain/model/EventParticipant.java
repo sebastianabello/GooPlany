@@ -3,7 +3,6 @@ package com.gooplanycol.gooplany.domain.model;
 import com.gooplanycol.gooplany.utils.StatusEventParticipant;
 import lombok.*;
 
-
 import java.time.LocalDateTime;
 
 @Getter

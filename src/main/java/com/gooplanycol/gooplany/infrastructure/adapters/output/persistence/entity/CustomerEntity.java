@@ -36,13 +36,13 @@ public class CustomerEntity extends ProfileEntity implements UserDetails {
     @JoinColumn(name = "customer_id")
     private List<CreditCardEntity> cards;
 
-    @OneToMany(mappedBy = "person",cascade = CascadeType.PERSIST)
-    private List<TokenEntity> tokens;
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.PERSIST)
+    private List<TokenCustomerEntity> tokens;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
-    private List<ConfirmationTokenEntity> confirmationTokens;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
+    private List<ConfirmationTokenCustomerEntity> confirmationTokens;
 
-    private boolean enable;
+    private boolean enabled;
     @Column(unique = true)
     private String username;
     private String pwd;
@@ -93,6 +93,6 @@ public class CustomerEntity extends ProfileEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enable;
+        return enabled;
     }
 }

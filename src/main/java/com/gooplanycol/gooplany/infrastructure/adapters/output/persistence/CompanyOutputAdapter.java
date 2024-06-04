@@ -17,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,10 +30,9 @@ public class CompanyOutputAdapter implements CompanyOutPort {
     private final AddressRepository addressRepository;
     private final AddressOutputMapper addressOutputMapper;
 
+    private final HistoryOutputMapper historyOutputMapper;
 
-    private final HistoryCompanyOutputMapper historyOutputMapper;
-
-    private final TokenRepository tokenRepository;
+    private final TokenCompanyRepository tokenRepository;
 
     private final AuthenticationManager authenticationManager;
 
@@ -43,7 +41,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
     private final PasswordEncoder passwordEncoder;
 
     private void saveCompanyToken(CompanyEntity company, String jwtToken) {
-        TokenEntity token = new TokenEntity(
+        TokenCompanyEntity token = new TokenCompanyEntity(
                 null,
                 jwtToken,
                 TokenType.BEARER,
@@ -55,7 +53,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
     }
 
     private void revokeAllCompanyTokens(CompanyEntity company) {
-        List<TokenEntity> validCompanyTokens = tokenRepository.findAllValidTokenByCompany(company.getId());
+        List<TokenCompanyEntity> validCompanyTokens = tokenRepository.findAllValidTokenByCompany(company.getId());
         if (validCompanyTokens.isEmpty())
             return;
         validCompanyTokens.forEach(t -> {
@@ -67,7 +65,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
 
 
     @Override
-    public Authentication authenticate(Company authenticationCompany) {
+    public Company authenticate(Company authenticationCompany) {
         String username = authenticationCompany.getUsername();
         String pwd = authenticationCompany.getPwd();
         authenticationManager.authenticate(
@@ -80,7 +78,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         if (company != null) {
             revokeAllCompanyTokens(company);
             saveCompanyToken(company, jwtToken);
-            return new Authentication(jwtToken);
+            return new Company(jwtToken);
         } else {
             throw new CompanyException("The company fetched to authenticate doesn't exist");
         }
@@ -106,7 +104,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
             if (company.getConfirmationTokens() != null) {
                 company.getConfirmationTokens().forEach(confirmationToken -> confirmationToken.setCompany(null));
             }
-            company.setHistoryCompany(null);
+            company.setHistory(null);
             companyRepository.delete(company);
             return true;
         } else {
@@ -120,8 +118,8 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         if (company != null) {
             company.setName(companyEdit.getName());
             company.setCellphone(companyEdit.getCellphone());
+            company.setNit(companyEdit.getNit());
             company.setEmail(companyEdit.getEmail());
-            company.setUpdatedAt(LocalDateTime.now());
             return companyOutputMapper.toCompany(companyRepository.save(company));
         } else {
             throw new CompanyException("The company fetched to update doesn't exist");
@@ -142,9 +140,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
     public List<Company> findAll(Integer offset, Integer pageSize) {
         Page<CompanyEntity> list = companyRepository.findAll(PageRequest.of(offset, pageSize));
         if (!list.isEmpty()) {
-            return list.getContent()
-                    .stream()
-                    .map(companyOutputMapper::toCompany).collect(Collectors.toList());
+            return list.getContent().stream().map(companyOutputMapper::toCompany).collect(Collectors.toList());
         } else {
             throw new CompanyException("The list of company is null");
         }
@@ -152,10 +148,10 @@ public class CompanyOutputAdapter implements CompanyOutPort {
 
     @Override
     @Transactional
-    public HistoryCompany findHistory(Long id) {
+    public History findHistory(Long id) {
         CompanyEntity company = companyRepository.findById(id).orElse(null);
-        if (company != null && company.getHistoryCompany() != null) {
-            return historyOutputMapper.toHistoryCompany(company.getHistoryCompany());
+        if (company != null && company.getHistory() != null) {
+            return historyOutputMapper.toHistory(company.getHistory());
         } else {
             throw new CompanyException("The company's history doesn't exist");
         }
@@ -167,9 +163,7 @@ public class CompanyOutputAdapter implements CompanyOutPort {
         CompanyEntity company = companyRepository.findById(id).orElse(null);
         if (company != null && company.getAddress() != null) {
             Page<AddressEntity> list = companyRepository.findCompanyAddress(id, PageRequest.of(offset, pageSize));
-            return list.stream()
-                    .map(addressOutputMapper::toAddress)
-                    .collect(Collectors.toList());
+            return list.stream().map(addressOutputMapper::toAddress).collect(Collectors.toList());
         } else {
             throw new CompanyException("The list of company's address is null");
         }

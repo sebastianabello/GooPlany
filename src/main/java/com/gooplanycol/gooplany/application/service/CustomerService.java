@@ -2,10 +2,7 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.CustomerInputPort;
 import com.gooplanycol.gooplany.application.ports.output.CustomerOutputPort;
-import com.gooplanycol.gooplany.domain.model.Authentication;
-import com.gooplanycol.gooplany.domain.model.CreditCard;
-import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.domain.model.HistoryCustomer;
+import com.gooplanycol.gooplany.domain.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +15,7 @@ public class CustomerService implements CustomerInputPort {
     private final CustomerOutputPort customerOutputPort;
 
     @Override
-    public Authentication authenticate(Customer authenticationCustomer) {
+    public Customer authenticate(Customer authenticationCustomer) {
         return customerOutputPort.authenticate(authenticationCustomer);
     }
 
@@ -48,8 +45,13 @@ public class CustomerService implements CustomerInputPort {
     }
 
     @Override
-    public HistoryCustomer findHistory(Long id) {
-        return null;
+    public History findHistory(Long id) {
+        return customerOutputPort.findHistory(id);
+    }
+
+    @Override
+    public List<Address> findAddress(Long id, Integer offset, Integer pageSize) {
+        return customerOutputPort.findAddress(id, offset, pageSize);
     }
 
     @Override
@@ -65,6 +67,16 @@ public class CustomerService implements CustomerInputPort {
     @Override
     public Customer changePwd(String pwd, Long id) {
         return customerOutputPort.changePwd(pwd, id);
+    }
+
+    @Override
+    public List<Address> addAddress(Address addressRequestDTO, Long id) {
+        return customerOutputPort.addAddress(addressRequestDTO, id);
+    }
+
+    @Override
+    public boolean removeAddress(Long addressId, Long customerId) {
+        return customerOutputPort.removeAddress(addressId, customerId);
     }
 
     @Override

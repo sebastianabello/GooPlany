@@ -58,7 +58,6 @@ public class EventStokeOutputAdapter implements EventStokeOutputPort {
     public boolean validateName(String name) {
         return eventStokeRepository.existsByTitle(name);
     }
-
     @Override
     public boolean remove(Long id) {
         if (eventStokeRepository.existsById(id)) {
@@ -114,8 +113,8 @@ public class EventStokeOutputAdapter implements EventStokeOutputPort {
     }
 
     @Override
-    public EventStoke findProductStockByTitle(String title) {
-        EventStokeEntity eventStoke = eventStokeRepository.findProductStockByTitle(title).orElse(null);
+    public EventStoke findEventStockByTitle(String title) {
+        EventStokeEntity eventStoke = eventStokeRepository.findEventStockByTitle(title).orElse(null);
         if(eventStoke!=null){
             return eventStokeOutputMapper.toEventStoke(eventStoke);
         }else{

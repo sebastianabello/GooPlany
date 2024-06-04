@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CompanyInputPort {
 
-    Authentication authenticate(Company authenticationCompany);
+    Company authenticate(Company authenticationCompany);
 
     Company getCompanyByToken(String token);
 
@@ -18,7 +18,7 @@ public interface CompanyInputPort {
 
     List<Company> findAll(Integer offset, Integer pageSize);
 
-    HistoryCompany findHistory(Long id);
+    History findHistory(Long id);
 
     List<Address> findAddress(Long id, Integer offset, Integer pageSize);
 

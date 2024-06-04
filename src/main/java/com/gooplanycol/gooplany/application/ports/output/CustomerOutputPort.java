@@ -1,15 +1,12 @@
 package com.gooplanycol.gooplany.application.ports.output;
 
-import com.gooplanycol.gooplany.domain.model.Authentication;
-import com.gooplanycol.gooplany.domain.model.CreditCard;
-import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.domain.model.HistoryCustomer;
+import com.gooplanycol.gooplany.domain.model.*;
 
 import java.util.List;
 
 public interface CustomerOutputPort {
 
-    Authentication authenticate(Customer authenticationCustomer);
+    Customer authenticate(Customer authenticationCustomer);
 
     Customer getCustomerByToken(String token);
 
@@ -21,13 +18,19 @@ public interface CustomerOutputPort {
 
     List<Customer> findAll(Integer offset, Integer pageSize);
 
-    HistoryCustomer findHistory(Long id);
+    History findHistory(Long id);
+
+    List<Address> findAddress(Long id, Integer offset, Integer pageSize);
 
     List<CreditCard> findCards(Long id, Integer offset, Integer pageSize);
 
     Customer findByEmail(String email);
 
     Customer changePwd(String pwd, Long id);
+
+    List<Address> addAddress(Address addressRequest, Long id);
+
+    boolean removeAddress(Long addressId, Long customerId);
 
     List<CreditCard> addCreditCard(CreditCard creditCard, Long id);
 

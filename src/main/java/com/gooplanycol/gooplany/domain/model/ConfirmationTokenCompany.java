@@ -10,13 +10,12 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConfirmationToken {
+public class ConfirmationTokenCompany {
     private Long id;
     private String token;
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
-    private Customer customer;
     private Company company;
 }
 

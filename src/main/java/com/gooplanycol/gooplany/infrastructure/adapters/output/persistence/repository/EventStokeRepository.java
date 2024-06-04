@@ -15,7 +15,8 @@ public interface EventStokeRepository extends JpaRepository<EventStokeEntity, Lo
     @Query("SELECT p FROM EventStokeEntity p WHERE p.statusEventPost=:statusEventPost")
     Page<EventStokeEntity> findEventStokesByStatusEventPost(@Param("statusEventPost") String statusEventPost, Pageable pageable);
 
-    Optional<EventStokeEntity> findProductStockByTitle(String barcode);
+    @Query("SELECT p FROM EventStokeEntity p WHERE p.title=:title")
+    Optional<EventStokeEntity> findEventStockByTitle(@Param("title") String title);
 
     boolean existsByTitle(String name);
 

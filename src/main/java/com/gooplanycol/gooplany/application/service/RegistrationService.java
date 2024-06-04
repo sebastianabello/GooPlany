@@ -2,7 +2,6 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.RegistrationInputPort;
 import com.gooplanycol.gooplany.application.ports.output.RegistrationOutputPort;
-import com.gooplanycol.gooplany.domain.model.Authentication;
 import com.gooplanycol.gooplany.domain.model.Company;
 import com.gooplanycol.gooplany.domain.model.Customer;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +14,13 @@ public class RegistrationService implements RegistrationInputPort {
     private final RegistrationOutputPort registrationOutputPort;
 
     @Override
-    public Authentication save(Customer customer) throws IllegalAccessException {
-        return registrationOutputPort.save(customer);
+    public Customer saveCustomer(Customer customer) throws IllegalAccessException {
+        return registrationOutputPort.saveCustomer(customer);
     }
 
     @Override
-    public Authentication save(Company company) throws IllegalAccessException {
-        return registrationOutputPort.save(company);
+    public Company saveCompany(Company company) throws IllegalAccessException {
+        return registrationOutputPort.saveCompany(company);
     }
 
     @Override

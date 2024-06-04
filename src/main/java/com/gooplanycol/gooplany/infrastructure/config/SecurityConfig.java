@@ -27,83 +27,84 @@ public class SecurityConfig {
     private final LogoutService logoutService;
 
     private static final String[] adminUrls =
-                        {
-                                "/api/v1/customer/{id}/remove",
-                                "/api/v1/customer/find",
-                                "/api/v1/customer/find/email/{email}",
-                                "/api/v1/address/**",
-                                "/api/v1/card/**",
-                                "api/v1/history/{id}/remove",
-                                "api/v1/history/find/{id}",
-                                "api/v1/history/find",
-                                "api/v1/history/{id}/find/sales",
-                                "api/v1/history/{id}/add/sale",
-                                "api/v1/history/{id_history}/remove/sale/{id_sale}",
-                                "api/v1/eventPost/**",
-                                "/api/v1/eventStoke/save",
-                                "/api/v1/eventStoke/{id}/remove",
-                                "/api/v1/eventStoke/{id}/edit",
-                                "/api/v1/eventStoke/find/title/{title}",
-                                "/api/v1/eventFinished/{id}/edit",
-                                "/api/v1/eventFinished/find/{id}",
-                                "/api/v1/eventFinished/find",
-                                "/api/v1/eventFinished/{id}/add/eventPost",
-                                "/api/v1/eventFinished/{id_sale}/remove/eventPost/{id_eventPost}",
-                                "/api/v1/eventFinished/{id}/find/eventsPost",
-                                "/api/v1/eventFinished/find/{id}/payment",
-                                "/api/v1/eventParticipant/edit/{id}",
-                                "/api/v1/eventParticipant/change/status/{status}/{id}",
-                                "/api/v1/eventParticipant/find",
-                                "/api/v1/eventParticipant/remove/{id}",
-                                "/api/v1/eventParticipant/find/status/{status}",
-                                "/api/v1/eventParticipant/find/{id}/customer",
-                                "/api/v1/eventParticipant/find/{id}/card"};
+            {
+                    "/api/v1/customer/{id}/remove",
+                    "/api/v1/customer/find",
+                    "/api/v1/customer/find/email/{email}",
+                    "/api/v1/address/**",
+                    "/api/v1/card/**",
+                    "api/v1/history/{id}/remove",
+                    "api/v1/history/find/{id}",
+                    "api/v1/history/find",
+                    "api/v1/history/{id}/find/eventFinished",
+                    "api/v1/history/{id}/add/eventFinished",
+                    "api/v1/history/{historyId}/remove/sale/{eventFinishedId}",
+                    "api/v1/eventPost/**",
+                    "/api/v1/eventStoke/save",
+                    "/api/v1/eventStoke/{id}/remove",
+                    "/api/v1/eventStoke/{id}/edit",
+                    "/api/v1/eventStoke/find/title/{title}",
+                    "/api/v1/eventFinished/{id}/edit",
+                    "/api/v1/eventFinished/find/{id}",
+                    "/api/v1/eventFinished/find",
+                    "/api/v1/eventFinished/{id}/add/EventParticipant",
+                    "/api/v1/eventFinished/{eventFinishedId}/remove/eventParticipant/{eventParticipantId}",
+                    "/api/v1/eventFinished/{id}/find/eventParticipants",
+                    "/api/v1/eventFinished/find/{id}/eventPost",
+                    "/api/v1/eventParticipant/edit/{id}",
+                    "/api/v1/eventParticipant/change/status/{status}/{id}",
+                    "/api/v1/eventParticipant/find",
+                    "/api/v1/eventParticipant/remove/{id}",
+                    "/api/v1/eventParticipant/find/status/{status}",
+                    "/api/v1/eventParticipant/find/{id}/customer",
+                    "/api/v1/eventParticipant/find/{id}/card"};
     private static final String[] customersUrls =
-                        {"/api/v1/customer/find/{id}",
-                         "/api/v1/customer/{id}/edit",
-                         "/api/v1/customer/{id}/add/address",
-                         "/api/v1/customer/{id_customer}/remove/address/{id_address}",
-                         "/api/v1/customer/{id}/add/card",
-                         "/api/v1/customer/{id_customer}/remove/card/{id_card}",
-                         "/api/v1/customer/find/{id}/history",
-                         "/api/v1/customer/find/{id}/address",
-                         "/api/v1/customer/find/{id}/cards",
-                         "/api/v1/history/{id}/add/eventFinished",
-                         "/api/v1/eventFinished/save",
-                         "/api/v1/eventStoke/find/{id}",
-                         "/api/v1/eventStoke/find/enable",
-                         "/api/v1/eventStoke/{id}/sell/{amount}",
-                         "/api/v1/customer/{id}/change/pwd/{pwd}",
-                         "/api/v1/customer/find/by/tk/{token}",
-                         "/api/v1/eventParticipant/save",
-                         "/api/v1/eventParticipant/find/id/{id}"};
-    private static final String[] openUrls=
-                        {
-                                "/api/v1/authentication/**",
-                                "/api/v1/productStock/find",
-                                "/api/v1/productStock/find/{offset}/{pageSize}"
-                         };
+            {
+                    "/api/v1/customer/find/{id}",
+                    "/api/v1/customer/{id}/edit",
+                    "/api/v1/customer/{id}/add/address",
+                    "/api/v1/customer/{customerId}/remove/address/{addressId}",
+                    "/api/v1/customer/{id}/add/card",
+                    "/api/v1/customer/{customerId}/remove/card/{cardId}",
+                    "/api/v1/customer/find/{id}/history",
+                    "/api/v1/customer/find/{id}/address",
+                    "/api/v1/customer/find/{id}/cards",
+                    "/api/v1/history/{id}/add/eventFinished",
+                    "/api/v1/eventFinished/save",
+                    "/api/v1/eventStoke/find/{id}",
+                    "/api/v1/eventStoke/find/status/{status}",
+                    "/api/v1/customer/{id}/change/pwd/{pwd}",
+                    "/api/v1/customer/find/by/tk/{token}",
+                    "/api/v1/eventParticipant/save",
+                    "/api/v1/eventParticipant/find/id/{id}"
+            };
+    private static final String[] openUrls =
+            {
+                    "/api/v1/authentication/**",
+                    "/api/v1/eventStock/find",
+                    "/api/v1/eventStock/find/{offset}/{pageSize}"
+            };
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
 
                 //.cors(AbstractHttpConfigurer::disable)// to get access from different url
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth->{
+                .authorizeHttpRequests(auth -> {
                     auth
-                          .requestMatchers( openUrls).permitAll()
-                          .requestMatchers(adminUrls).hasRole(ADMIN.name())
-                          .requestMatchers(customersUrls).hasAnyRole(COMPANY.name(), ADMIN.name(), CUSTOMER.name())
-                          .anyRequest().authenticated();
+                            .requestMatchers(openUrls).permitAll()
+                            .requestMatchers(adminUrls).hasRole(ADMIN.name())
+                            .requestMatchers(customersUrls).hasAnyRole(CUSTOMER.name())
+                            .anyRequest().authenticated();
                 })
-                .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout->{
-                   logout.logoutUrl("/api/v1/auth/logout")
+                .logout(logout -> {
+                    logout.logoutUrl("/api/v1/auth/logout")
                             .addLogoutHandler(logoutService)
                             .logoutSuccessHandler(
                                     (request, response, authentication) ->

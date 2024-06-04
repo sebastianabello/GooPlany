@@ -6,12 +6,18 @@ import java.util.List;
 
 public interface CreditCardOutputPort {
 
-     CreditCard save(CreditCard creditCard);
-     CreditCard edit(CreditCard creditCard, Long id);
-     CreditCard findById(Long id);
-     CreditCard findCardByNumber(String number);
-     List<CreditCard> findAll(Integer offset, Integer pageSize);
-     List<CreditCard> findCardsByType(Integer offset, Integer pageSize,String type);
-     boolean remove(Long id);
+    CreditCard save(CreditCard creditCard);
+
+    CreditCard edit(CreditCard creditCard, Long id);
+
+    CreditCard findById(Long id);
+
+    CreditCard findCardByNumber(String number);
+
+    List<CreditCard> findAll(Integer offset, Integer pageSize);
+
+    List<CreditCard> findCardsByType(Integer offset, Integer pageSize, String type);
+
+    boolean remove(Long id);
 
 }

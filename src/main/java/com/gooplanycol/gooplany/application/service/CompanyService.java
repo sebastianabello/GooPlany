@@ -16,7 +16,7 @@ public class CompanyService implements CompanyInputPort {
     private final CompanyOutPort companyOutPort;
 
     @Override
-    public Authentication authenticate(Company authenticationCompany) {
+    public Company authenticate(Company authenticationCompany) {
         return companyOutPort.authenticate(authenticationCompany);
     }
 
@@ -46,7 +46,7 @@ public class CompanyService implements CompanyInputPort {
     }
 
     @Override
-    public HistoryCompany findHistory(Long id) {
+    public History findHistory(Long id) {
         return companyOutPort.findHistory(id);
     }
 
@@ -74,5 +74,4 @@ public class CompanyService implements CompanyInputPort {
     public boolean removeAddress(Long addressId, Long customerId) {
         return companyOutPort.removeAddress(addressId, customerId);
     }
-
 }

@@ -3,6 +3,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repo
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.AddressEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCardEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CustomerEntity;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,11 +15,11 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
-    @Query("SELECT c.historyCustomer FROM CustomerEntity c WHERE c.id= :customerId")
-    Optional<HistoryCustomerEntity> findCustomerHistory(@Param("customerId") Long id);
+    @Query("SELECT c.history FROM CustomerEntity c WHERE c.id= :customerId")
+    Optional<HistoryEntity> findCustomerHistory(@Param("customerId") Long id);
 
     @Query("SELECT c.address FROM CustomerEntity c WHERE c.id= :customerId")
-    Page<AddressEntity> findCustomerAddress(@Param("customerId") Long id, Pageable pageable);
+    Page<AddressEntity> findCustomerAddresses(@Param("customerId") Long id, Pageable pageable);
 
     @Query("SELECT c.cards FROM CustomerEntity c WHERE c.id= :customerId")
     Page<CreditCardEntity> findCustomerCreditCards(@Param("customerId") Long id, Pageable pageable);
@@ -28,4 +29,5 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> 
 
     @Query("SELECT c FROM CustomerEntity c WHERE c.username = :username")
     Optional<CustomerEntity> findCustomerByUsername(String username);
+
 }

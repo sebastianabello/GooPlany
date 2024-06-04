@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
-import com.gooplanycol.gooplany.domain.model.*;
 import com.gooplanycol.gooplany.utils.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,17 +29,13 @@ public class CompanyEntity extends ProfileEntity implements UserDetails {
     @JoinColumn(name = "profile_id")
     private List<AddressEntity> address;
 
-    /*@OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
-    private List<EventPostEntity> eventPosts;*/
+    @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
+    private List<TokenCompanyEntity> tokens;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
-    private List<TokenEntity> tokens;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
+    private List<ConfirmationTokenCompanyEntity> confirmationTokens;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
-    private List<ConfirmationTokenEntity> confirmationTokens;
-
-    private boolean enable;
+    private boolean enabled;
 
     @Column(unique = true)
     private String username;
@@ -62,8 +56,7 @@ public class CompanyEntity extends ProfileEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role ->
-                        new SimpleGrantedAuthority("ROLE_" + role.name()))
-                .collect(Collectors.toList());
+                        new SimpleGrantedAuthority("ROLE_" + role.name())).toList();
     }
 
     @Override
@@ -93,6 +86,6 @@ public class CompanyEntity extends ProfileEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enable;
+        return enabled;
     }
 }

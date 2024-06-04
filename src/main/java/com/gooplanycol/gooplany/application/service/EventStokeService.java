@@ -50,8 +50,8 @@ public class EventStokeService implements EventStokeInputPort {
     }
 
     @Override
-    public EventStoke findProductStockByTitle(String title) {
-        return eventStokeOutputPort.findProductStockByTitle(title);
+    public EventStoke findEventStockByTitle(String title) {
+        return eventStokeOutputPort.findEventStockByTitle(title);
     }
 
     @Override

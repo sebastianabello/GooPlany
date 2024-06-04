@@ -8,8 +8,6 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EventStokeOutputMapper {
 
-    EventStokeEntity toEventStokeEntity(EventStoke eventParticipantEntity);
-
     EventStoke toEventStoke(EventStokeEntity eventParticipantEntity);
 
 }

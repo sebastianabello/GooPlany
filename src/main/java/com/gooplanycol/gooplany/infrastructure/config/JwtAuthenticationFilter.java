@@ -1,7 +1,8 @@
 package com.gooplanycol.gooplany.infrastructure.config;
 
 import com.gooplanycol.gooplany.application.service.JwtService;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenCompanyRepository;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenCustomerRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +27,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    private final TokenRepository tokenRepository;
+    private final TokenCustomerRepository tokenCustomerRepository;
+    private final TokenCompanyRepository tokenCompanyRepository;
 
     @Override
     protected void doFilterInternal(
@@ -44,9 +46,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         username = jwtService.extractUsername(jwt);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {//it's not in the context , or it's not validated yet
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            boolean isTokenValid = tokenRepository.findTokenByToken(jwt)
+            boolean isTokenValid = tokenCustomerRepository.findTokenByToken(jwt)
                     .map(token -> !token.isExpired() && !token.isRevoked())
-                    .orElse(false);
+                    .orElseGet(() -> tokenCompanyRepository.findTokenByToken(jwt)
+                            .map(token -> !token.isExpired() && !token.isRevoked())
+                            .orElse(false));
             if (jwtService.tokenValid(jwt, userDetails) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
@@ -61,6 +65,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         }
         filterChain.doFilter(request, response);
-     }
+    }
     }
 

@@ -17,4 +17,5 @@ public interface AddressRestMapper {
     AddressResponse toAddressResponse(Address address);
 
     List<AddressResponse> toAddressResponseList(List<Address> addressList);
+
 }

@@ -8,8 +8,6 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CreditCardOutPutMapper {
 
-    CreditCardEntity toCreditCardEntity(CreditCard creditCardEntity);
-
     CreditCard toCreditCard(CreditCardEntity creditCardEntity);
 
 }

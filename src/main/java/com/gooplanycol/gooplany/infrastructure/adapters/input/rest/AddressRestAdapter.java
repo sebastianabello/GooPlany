@@ -23,18 +23,18 @@ public class AddressRestAdapter {
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody AddressRequest addressRequest) {
         try {
-            AddressResponse addressResponse = addressRestMapper.toAddressResponse(addressInputPort.save(addressRestMapper.toAddress(addressRequest)));
-            return new ResponseEntity<>(addressResponse, HttpStatus.CREATED);
+            AddressResponse addressResponseDTO = addressRestMapper.toAddressResponse(addressInputPort.save(addressRestMapper.toAddress(addressRequest)));
+            return new ResponseEntity<>(addressResponseDTO, HttpStatus.CREATED);
         } catch (AddressException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/{id}/edit")
-    public ResponseEntity<?> edit(@RequestBody AddressRequest addressRequest, @PathVariable("id") Long id) {
+    public ResponseEntity<?> edit(@RequestBody AddressRequest addressRequestDTO, @PathVariable("id") Long id) {
         try {
-            AddressResponse addressResponse = addressRestMapper.toAddressResponse(addressInputPort.edit((addressRestMapper.toAddress(addressRequest)), id));
-            return new ResponseEntity<>(addressResponse, HttpStatus.CREATED);
+            AddressResponse addressResponseDTO = addressRestMapper.toAddressResponse(addressInputPort.edit(addressRestMapper.toAddress(addressRequestDTO), id));
+            return new ResponseEntity<>(addressResponseDTO, HttpStatus.CREATED);
         } catch (AddressException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -53,8 +53,8 @@ public class AddressRestAdapter {
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         try {
-            AddressResponse addressResponse = addressRestMapper.toAddressResponse(addressInputPort.findById(id));
-            return new ResponseEntity<>(addressResponse, HttpStatus.FOUND);
+            AddressResponse addressResponseDTO = addressRestMapper.toAddressResponse(addressInputPort.findById(id));
+            return new ResponseEntity<>(addressResponseDTO, HttpStatus.FOUND);
         } catch (AddressException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -119,4 +119,5 @@ public class AddressRestAdapter {
             return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
         }
     }
+
 }

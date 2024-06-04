@@ -8,12 +8,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Token {
+public class TokenCustomer {
     private Long id;
     private String tok;
     private TokenType tokenType;
     private Customer customer;
-    private Company company;
     private boolean revoked;
     private boolean expired;
 }

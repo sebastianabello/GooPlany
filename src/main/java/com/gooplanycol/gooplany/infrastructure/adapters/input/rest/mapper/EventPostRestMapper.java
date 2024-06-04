@@ -7,11 +7,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EventPostRestMapper {
 
-    EventPost toEventPost(EventPostRequest eventPostRequest);
+    EventPostResponse toEventPostResponse(EventPost save);
 
-    EventPostResponse toEventPostRequest(EventPost eventPost);
+    EventPost toEventPostRequest(EventPostRequest productSoldRequestDTO);
 
+    List<EventPostResponse> toEventPostResponseList(List<EventPost> all);
 }

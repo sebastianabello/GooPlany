@@ -3,6 +3,7 @@ package com.gooplanycol.gooplany.domain.model;
 import com.gooplanycol.gooplany.utils.Gender;
 import com.gooplanycol.gooplany.utils.Level;
 import com.gooplanycol.gooplany.utils.Role;
+
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,34 +16,45 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer extends Profile {
-    protected Long id;
-    protected String name;
-    protected String cellphone;
-    protected String email;
-    protected LocalDateTime createAt;
-    protected LocalDateTime updatedAt;
-    private HistoryCustomer historyCustomer;
+public class Customer {
+
+    private Long id;
+    private String name;
+    private String cellphone;
+    private String email;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private History history;
     private List<Address> address;
     private List<CreditCard> cards;
-    private List<Token> tokens;
-    private List<ConfirmationToken> confirmationTokens;
-    private String lastName;
-    private boolean enable;
+    private List<TokenCustomer> tokens;
+    private List<ConfirmationTokenCustomer> confirmationTokens;
+    private boolean enabled;
     private String username;
     private String pwd;
+    private String lastName;
     private LocalDate birthdate;
-    private String country;
     private String description;
     private String emergencyContact;
     private Gender gender;
     private Level level;
-    private Media profilePicture;
-    private Media headerImage;
     private List<Role> roles;
 
+    private String token;
+    public Customer(String token) {
+        this.token = token;
+    }
 
-    private Level findLevel(String level){
+    public Gender findGender(String gender) {
+        return switch (gender) {
+            case "male" -> Gender.MALE;
+            case "female" -> Gender.FEMALE;
+            case "non_binary" -> Gender.NON_BINARY;
+            default -> Gender.PREFER_NOT_TO_SAY;
+        };
+    }
+
+    public Level findLevel(String level){
         return switch (level) {
             case "private" -> Level.PRIVATE;
             case "friends" -> Level.FRIENDS;
@@ -50,6 +62,4 @@ public class Customer extends Profile {
             default -> Level.PUBLIC;
         };
     }
-
-
 }

@@ -14,5 +14,4 @@ public class CompanyRequest {
     private String email;
     private String username;
     private String pwd;
-    private AddressRequest address;
 }

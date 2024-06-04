@@ -17,14 +17,14 @@ import java.util.Optional;
 
 @Repository
 public interface EventFinishedRepository extends JpaRepository<EventFinishedEntity, Long> {
-    @Query("SELECT e.eventPosts FROM EventFinishedEntity e WHERE e.id= :eventPostsId")
-    Page<EventPostEntity> findEventFinishedEventsPost(@Param("eventPostsId") Long id, Pageable pageable);
+
+    @Query("SELECT e.eventParticipants FROM EventFinishedEntity e WHERE e.id=:eventFinishedId")
+    Page<EventParticipantEntity> findEventFinishedEventParticipant(@Param("eventFinishedId") Long id, Pageable pageable);
 
     @Query("SELECT e FROM EventFinishedEntity e WHERE e.createAt=:date")
     List<EventFinishedEntity> findEventFinishedByCreateAt(@Param("date") LocalDateTime date);
 
-    @Query("SELECT e.eventParticipants FROM EventFinishedEntity e WHERE e.id=:id")
-    Optional<EventParticipantEntity> findEventParticipantEventFinished(@Param("id") Long id);
-
+    @Query("SELECT e.eventPost FROM EventFinishedEntity e WHERE e.id=:id")
+    Optional<EventPostEntity> findEventPostEventFinished(@Param("id") Long id);
 
 }

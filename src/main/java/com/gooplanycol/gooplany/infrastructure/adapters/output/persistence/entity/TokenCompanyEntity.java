@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "token")
-public class TokenEntity {
+public class TokenCompanyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,8 +22,8 @@ public class TokenEntity {
     private TokenType tokenType;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private ProfileEntity person;
+    @JoinColumn(name = "company_id")
+    private CompanyEntity company;
 
     private boolean revoked;
     private boolean expired;

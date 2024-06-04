@@ -2,6 +2,7 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repo
 
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.AddressEntity;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CompanyEntity;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,8 +15,8 @@ import java.util.Optional;
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
 
-    @Query("SELECT c.historyCompany FROM CompanyEntity c WHERE c.id= :companyId")
-    Optional<HistoryCompanyEntity> findCompanyHistory(@Param("companyId") Long id);
+    @Query("SELECT c.history FROM CompanyEntity c WHERE c.id= :companyId")
+    Optional<HistoryEntity> findCompanyHistory(@Param("companyId") Long id);
 
     @Query("SELECT c.address FROM CompanyEntity c WHERE c.id= :companyId")
     Page<AddressEntity> findCompanyAddress(@Param("companyId") Long id, Pageable pageable);

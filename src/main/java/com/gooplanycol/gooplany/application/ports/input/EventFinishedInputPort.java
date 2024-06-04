@@ -15,11 +15,11 @@ public interface EventFinishedInputPort {
 
     List<EventFinished> findAll(Integer offset, Integer pageSize);
 
-    EventFinished addEventPost(EventPost eventPost, Long id);
+    EventFinished addEventParticipant(EventParticipant eventParticipant, Long id);
 
-    EventFinished removeEventPost(Long eventPostId, Long eventFinishedId);
+    EventFinished removeEventParticipant(Long eventParticipantId, Long eventFinishedId);
 
-    List<EventPost> findEventPosts(Long id, Integer offset, Integer pageSize);
+    List<EventParticipant> findEventParticipants(Long id, Integer offset, Integer pageSize);
 
-    EventParticipant findEventParticipant(Long id);
+    EventPost findEventPost(Long id);
 }
