@@ -1,38 +1,39 @@
 package com.gooplanycol.gooplany.application.ports.output;
 
-import com.gooplanycol.gooplany.domain.model.*;
+import com.gooplanycol.gooplany.domain.model.request.*;
+import com.gooplanycol.gooplany.domain.model.response.*;
 
 import java.util.List;
 
 public interface CustomerOutputPort {
 
-    Customer authenticate(Customer authenticationCustomer);
+    AuthenticationResponse authenticate(AuthenticationRequest authenticationCustomer);
 
-    Customer getCustomerByToken(String token);
+    CustomerResponse getCustomerByToken(String token);
 
     boolean removeCustomer(Long id);
 
-    Customer editData(Customer customerEdit, Long id);
+    CustomerResponse editData(CustomerRequestEdit customerEdit, Long id);
 
-    Customer findById(Long id);
+    CustomerResponse findById(Long id);
 
-    List<Customer> findAll(Integer offset, Integer pageSize);
+    List<CustomerResponse> findAll(Integer offset, Integer pageSize);
 
-    History findHistory(Long id);
+    HistoryResponse findHistory(Long id);
 
-    List<Address> findAddress(Long id, Integer offset, Integer pageSize);
+    List<AddressResponse> findAddress(Long id, Integer offset, Integer pageSize);
 
-    List<CreditCard> findCards(Long id, Integer offset, Integer pageSize);
+    List<CreditCardResponse> findCards(Long id, Integer offset, Integer pageSize);
 
-    Customer findByEmail(String email);
+    CustomerResponse findByEmail(String email);
 
-    Customer changePwd(String pwd, Long id);
+    CustomerResponse changePwd(String pwd, Long id);
 
-    List<Address> addAddress(Address addressRequest, Long id);
+    List<AddressResponse> addAddress(AddressResponse addressRequestDTO, Long id);
 
     boolean removeAddress(Long addressId, Long customerId);
 
-    List<CreditCard> addCreditCard(CreditCard creditCard, Long id);
+    List<CreditCardResponse> addCreditCard(CreditCardResponse creditCard, Long id);
 
     boolean removeCreditCard(Long creditCardId, Long customerId);
 }

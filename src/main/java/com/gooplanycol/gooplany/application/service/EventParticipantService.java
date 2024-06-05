@@ -2,9 +2,10 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.EventParticipantInputPort;
 import com.gooplanycol.gooplany.application.ports.output.EventParticipantOutputPort;
-import com.gooplanycol.gooplany.domain.model.CreditCard;
-import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.domain.model.EventParticipant;
+import com.gooplanycol.gooplany.domain.model.request.EventParticipantRequest;
+import com.gooplanycol.gooplany.domain.model.response.CreditCardResponse;
+import com.gooplanycol.gooplany.domain.model.response.CustomerResponse;
+import com.gooplanycol.gooplany.domain.model.response.EventParticipantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,27 +18,27 @@ public class EventParticipantService implements EventParticipantInputPort {
     private final EventParticipantOutputPort eventParticipantOutputPort;
 
     @Override
-    public EventParticipant save(EventParticipant eventParticipant) {
+    public EventParticipantResponse save(EventParticipantRequest eventParticipant) {
         return eventParticipantOutputPort.save(eventParticipant);
     }
 
     @Override
-    public EventParticipant edit(EventParticipant eventParticipant, Long id) {
+    public EventParticipantResponse edit(EventParticipantRequest eventParticipant, Long id) {
         return eventParticipantOutputPort.edit(eventParticipant, id);
     }
 
     @Override
-    public EventParticipant changeStatus(String status, Long id) {
+    public EventParticipantResponse changeStatus(String status, Long id) {
         return eventParticipantOutputPort.changeStatus(status, id);
     }
 
     @Override
-    public List<EventParticipant> findAll(Integer offset, Integer pageSize) {
+    public List<EventParticipantResponse> findAll(Integer offset, Integer pageSize) {
         return eventParticipantOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public EventParticipant findById(Long id) {
+    public EventParticipantResponse findById(Long id) {
         return eventParticipantOutputPort.findById(id);
     }
 
@@ -47,17 +48,18 @@ public class EventParticipantService implements EventParticipantInputPort {
     }
 
     @Override
-    public List<EventParticipant> findEventParticipantsByStatus(Integer offset, Integer pageSize, String statusEventParticipant) {
+    public List<EventParticipantResponse> findEventParticipantsByStatus(Integer offset, Integer pageSize, String statusEventParticipant) {
         return eventParticipantOutputPort.findEventParticipantsByStatus(offset, pageSize, statusEventParticipant);
     }
 
     @Override
-    public Customer findCustomerEventParticipant(Long id) {
+    public CustomerResponse findCustomerEventParticipant(Long id) {
         return eventParticipantOutputPort.findCustomerEventParticipant(id);
     }
 
     @Override
-    public CreditCard findCardEventParticipant(Long id) {
+    public CreditCardResponse findCardEventParticipant(Long id) {
         return eventParticipantOutputPort.findCardEventParticipant(id);
     }
+
 }

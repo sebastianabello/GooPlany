@@ -2,10 +2,11 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
 import com.gooplanycol.gooplany.application.ports.output.HistoryOutputPort;
 import com.gooplanycol.gooplany.domain.exception.HistoryException;
-import com.gooplanycol.gooplany.domain.model.EventFinished;
-import com.gooplanycol.gooplany.domain.model.History;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventFinishedEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.HistoryEntity;
+import com.gooplanycol.gooplany.domain.model.request.HistoryRequest;
+import com.gooplanycol.gooplany.domain.model.response.EventFinishedResponse;
+import com.gooplanycol.gooplany.domain.model.response.HistoryResponse;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventFinished;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.History;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventFinishedOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.HistoryOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventFinishedRepository;
@@ -32,13 +33,13 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
     private final EventFinishedOutputMapper eventFinishedOutputMapper;
 
     @Override
-    public History save(History history) {
+    public HistoryResponse save(HistoryRequest history) {
         if (history != null) {
-            HistoryEntity historyEntity = HistoryEntity.builder()
+            History historyEntity = History.builder()
                     .eventsFinished(new ArrayList<>())
-                    .modificationDate(history.getModificationDate())
+                    .modificationDate(history.dateModification())
                     .build();
-            return historyOutputMapper.toHistory(historyRepository.save(historyEntity));
+            return historyOutputMapper.toHistoryResponse(historyRepository.save(historyEntity));
         } else {
             throw new HistoryException("The request to save is null");
         }
@@ -55,26 +56,26 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
     }
 
     @Override
-    public History findById(Long id) {
-        HistoryEntity historyEntity = historyRepository.findById(id).orElse(null);
+    public HistoryResponse findById(Long id) {
+        History historyEntity = historyRepository.findById(id).orElse(null);
         if (historyEntity != null) {
-            return historyOutputMapper.toHistory(historyEntity);
+            return historyOutputMapper.toHistoryResponse(historyEntity);
         } else {
             throw new HistoryException("The history fetched doesn't exist");
         }
     }
 
     @Override
-    public List<History> findAll(Integer offset, Integer pageSize) {
-        Page<HistoryEntity> list = historyRepository.findAll(PageRequest.of(offset, pageSize));
-        return list.stream().map(historyOutputMapper::toHistory).collect(Collectors.toList());
+    public List<HistoryResponse> findAll(Integer offset, Integer pageSize) {
+        Page<History> list = historyRepository.findAll(PageRequest.of(offset, pageSize));
+        return list.stream().map(historyOutputMapper::toHistoryResponse).collect(Collectors.toList());
     }
 
     @Override
-    public List<EventFinished> findEventFinished(Long id, Integer offset, Integer pageSize) {
-        Page<EventFinishedEntity> list = historyRepository.findHistoryEventsFinished(id, PageRequest.of(offset, pageSize));
+    public List<EventFinishedResponse> findEventFinished(Long id, Integer offset, Integer pageSize) {
+        Page<EventFinished> list = historyRepository.findHistoryEventsFinished(id, PageRequest.of(offset, pageSize));
         if (list != null) {
-            return list.stream().map(eventFinishedOutputMapper::toEventFinished).collect(Collectors.toList());
+            return list.stream().map(eventFinishedOutputMapper::toEventFinishedResponse).collect(Collectors.toList());
         } else {
             throw new HistoryException("The list of events finished is null");
         }
@@ -82,15 +83,15 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
 
     @Override
     @Transactional
-    public List<EventFinished> addEventFinished(EventFinished eventFinished, Long id) {
-        HistoryEntity historyEntity = historyRepository.findById(id).orElse(null);
-        EventFinishedEntity eventFinishedEntity = eventFinishedRepository.findById(eventFinished.getId()).orElse(null);
+    public List<EventFinishedResponse> addEventFinished(EventFinishedResponse eventFinished, Long id) {
+        History historyEntity = historyRepository.findById(id).orElse(null);
+        EventFinished eventFinishedEntity = eventFinishedRepository.findById(eventFinished.id()).orElse(null);
         if (historyEntity != null && eventFinishedEntity != null) {
             historyEntity.getEventsFinished().add(eventFinishedEntity);
             historyEntity.setModificationDate(LocalDate.now());
             historyRepository.save(historyEntity);
-            Page<EventFinishedEntity> list = historyRepository.findHistoryEventsFinished(id, PageRequest.of(0, 10));
-            return list.getContent().stream().map(eventFinishedOutputMapper::toEventFinished).collect(Collectors.toList());
+            Page<EventFinished> list = historyRepository.findHistoryEventsFinished(id, PageRequest.of(0, 10));
+            return list.getContent().stream().map(eventFinishedOutputMapper::toEventFinishedResponse).collect(Collectors.toList());
         } else {
             throw new HistoryException("The history or event finished fetched to add doesn't exist");
         }
@@ -98,8 +99,8 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
 
     @Override
     public boolean removeEventFinished(Long eventFinishedId, Long historyId) {
-        HistoryEntity historyEntity = historyRepository.findById(historyId).orElse(null);
-        EventFinishedEntity eventFinishedEntity = eventFinishedRepository.findById(eventFinishedId).orElse(null);
+        History historyEntity = historyRepository.findById(historyId).orElse(null);
+        EventFinished eventFinishedEntity = eventFinishedRepository.findById(eventFinishedId).orElse(null);
         if (historyEntity != null && eventFinishedEntity != null) {
             historyEntity.getEventsFinished().remove(eventFinishedEntity);
             historyEntity.setModificationDate(LocalDate.now());

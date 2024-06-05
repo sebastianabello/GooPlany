@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmailSenderService implements EmailInputPort {
 
-    private final JavaMailSender mailSender;
+    private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
     private String emailUser;
@@ -23,13 +23,13 @@ public class EmailSenderService implements EmailInputPort {
     @Override
     public void send(String to, String email) {
         try {
-            MimeMessage mimeMailMessage = mailSender.createMimeMessage();
+            MimeMessage mimeMailMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMailMessage,"utf-8");
             helper.setFrom(emailUser);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
             helper.setText(email,true);
-            mailSender.send(mimeMailMessage);
+            javaMailSender.send(mimeMailMessage);
         }catch (MessagingException e){
             throw new IllegalStateException("Failed to send the email");
         }

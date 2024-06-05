@@ -3,16 +3,23 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 import com.gooplanycol.gooplany.application.ports.output.CustomerOutputPort;
 import com.gooplanycol.gooplany.application.service.JwtService;
 import com.gooplanycol.gooplany.domain.exception.CustomerException;
-import com.gooplanycol.gooplany.domain.model.*;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.*;
+import com.gooplanycol.gooplany.domain.model.request.AuthenticationRequest;
+import com.gooplanycol.gooplany.domain.model.request.CustomerRequestEdit;
+import com.gooplanycol.gooplany.domain.model.response.*;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Address;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCard;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Customer;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Token;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.AddressOutputMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CreditCardOutPutMapper;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CreditCardOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CustomerOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.HistoryOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.AddressRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CreditCardRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CustomerRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenCustomerRepository;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
+import com.gooplanycol.gooplany.utils.Gender;
+import com.gooplanycol.gooplany.utils.Level;
 import com.gooplanycol.gooplany.utils.TokenType;
 import com.gooplanycol.gooplany.utils.TypeCard;
 import jakarta.transaction.Transactional;
@@ -38,11 +45,11 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
     private final AddressOutputMapper addressMapper;
 
     private final CreditCardRepository creditCardRepository;
-    private final CreditCardOutPutMapper creditCardOutPutMapper;
+    private final CreditCardOutputMapper creditCardOutPutMapper;
 
     private final HistoryOutputMapper historyOutputMapper;
 
-    private final TokenCustomerRepository tokenRepository;
+    private final TokenRepository tokenRepository;
 
     private final AuthenticationManager authenticationManager;
 
@@ -50,8 +57,9 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
 
     private final PasswordEncoder passwordEncoder;
 
-    private void saveProfileToken(CustomerEntity customer, String jwtToken) {
-        TokenCustomerEntity token = new TokenCustomerEntity(
+
+    private void saveCustomerToken(Customer customer, String jwtToken) {
+        Token token = new Token(
                 null,
                 jwtToken,
                 TokenType.BEARER,
@@ -62,44 +70,40 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
         tokenRepository.save(token);
     }
 
-    private void revokeAllProfileTokens(CustomerEntity customer) {
-        List<TokenCustomerEntity> validProfileTokens = tokenRepository.findAllValidTokenByCustomer(customer.getId());
-        if (validProfileTokens.isEmpty())
+    private void revokeAllCustomerTokens(Customer customer) {
+        List<Token> validCustomerTokens = tokenRepository.findAllValidTokenByCustomer(customer.getId());
+        if (validCustomerTokens.isEmpty())
             return;
-        validProfileTokens.forEach(t -> {
+        validCustomerTokens.forEach(t -> {
             t.setExpired(true);
             t.setRevoked(true);
         });
-        tokenRepository.saveAll(validProfileTokens);
+        tokenRepository.saveAll(validCustomerTokens);
     }
 
-
     @Override
-    public Customer authenticate(Customer authenticationCustomer) {
-        String username = authenticationCustomer.getUsername();
-        String pwd = authenticationCustomer.getPwd();
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
+        String username = authenticationRequest.username();
+        String pwd = authenticationRequest.password();
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         username, pwd
                 )
         );
-        CustomerEntity customer = customerRepository.findCustomerByUsername(username).orElse(null);
+        Customer customer = customerRepository.findCustomerByUsername(username).orElse(null);
         String jwtToken = jwtService.generateToken(customer);
         if (customer != null) {
-            revokeAllProfileTokens(customer);
-            saveProfileToken(customer, jwtToken);
-            return new Customer(jwtToken);
-        } else {
-            throw new CustomerException("The customer fetched by username doesn't exist");
+            revokeAllCustomerTokens(customer);
         }
-
+        saveCustomerToken(customer, jwtToken);
+        return new AuthenticationResponse(jwtToken);
     }
 
     @Override
-    public Customer getCustomerByToken(String token) {
-        CustomerEntity customer = tokenRepository.getCustomerByToken(token);
+    public CustomerResponse getCustomerByToken(String token) {
+        Customer customer = tokenRepository.getCustomerByToken(token);
         if (customer != null) {
-            return customerOutputMapper.toCustomer(customer);
+            return customerOutputMapper.toCustomerResponse(customer);
         } else {
             throw new CustomerException("The customer fetched by token doesn't exist");
         }
@@ -107,7 +111,7 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
 
     @Override
     public boolean removeCustomer(Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
+        Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
             if (customer.getTokens() != null) {
                 customer.getTokens().forEach(token -> token.setCustomer(null));
@@ -116,7 +120,6 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
                 customer.getConfirmationTokens().forEach(confirmationToken -> confirmationToken.setCustomer(null));
             }
             customer.setHistory(null);
-            customer.setAddress(null);
             customerRepository.delete(customer);
             return true;
         } else {
@@ -125,93 +128,113 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
     }
 
     @Override
-    public Customer editData(Customer customerEdit, Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
+    public CustomerResponse editData(CustomerRequestEdit response, Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
-            customer.setName(customerEdit.getName());
-            customer.setLastName(customerEdit.getLastName());
-            customer.setCellphone(customerEdit.getCellphone());
-            customer.setEmail(customerEdit.getEmail());
-            customer.setDescription(customerEdit.getDescription());
-            customer.setEmergencyContact(customerEdit.getEmergencyContact());
-            customer.setGender(customerEdit.findGender(customerEdit.getGender().name()));
-            customer.setLevel(customerEdit.findLevel(customerEdit.getLevel().name()));
-            return customerOutputMapper.toCustomer(customerRepository.save(customer));
+            customer.setName(response.name());
+            customer.setLastName(response.lastName());
+            customer.setCellphone(response.cellphone());
+            customer.setEmail(response.email());
+            customer.setDescription(response.description());
+            customer.setEmergencyContact(response.emergencyContact());
+            customer.setGender(typeGender(response.gender()));
+            customer.setLevel(typeLevel(response.level()));
+            return customerOutputMapper.toCustomerResponse(customerRepository.save(customer));
         } else {
-            throw new CustomerException("The customer fetched to edit its data doesn't exist");
+            throw new CustomerException("The customer fetched to update doesn't exist");
+        }
+    }
+
+    private Gender typeGender(String gender) {
+        return switch (gender) {
+            case "male" -> Gender.MALE;
+            case "female" -> Gender.FEMALE;
+            case "not binary" -> Gender.NON_BINARY;
+            case "prefer not to say" -> Gender.PREFER_NOT_TO_SAY;
+            default -> null;
+        };
+    }
+
+    private Level typeLevel(String level) {
+        return switch (level) {
+            case "private" -> Level.PRIVATE;
+            case "friends" -> Level.FRIENDS;
+            case "friends of friends" -> Level.FRIENDS_OF_FRIENDS;
+            default -> Level.PUBLIC;
+        };
+    }
+
+
+    @Override
+    public CustomerResponse findById(Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer != null) {
+            return customerOutputMapper.toCustomerResponse(customer);
+        } else {
+            throw new CustomerException("The customer fetched by id doesn't exist");
         }
     }
 
     @Override
-    public Customer findById(Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
-        if (customer != null) {
-            return customerOutputMapper.toCustomer(customer);
-        } else {
-            throw new CustomerException("The profile fetched by id doesn't exist");
-        }
-    }
-
-    @Override
-    public List<Customer> findAll(Integer offset, Integer pageSize) {
-        Page<CustomerEntity> list = customerRepository.findAll(PageRequest.of(offset, pageSize));
+    public List<CustomerResponse> findAll(Integer offset, Integer pageSize) {
+        Page<Customer> list = customerRepository.findAll(PageRequest.of(offset, pageSize));
         if (!list.isEmpty()) {
-            return list.getContent().stream().map(customerOutputMapper::toCustomer).toList();
+            return list.getContent().stream().map(customerOutputMapper::toCustomerResponse).collect(Collectors.toList());
         } else {
-            throw new CustomerException("The list of companies is null");
+            throw new CustomerException("The list of customers is null");
         }
     }
 
     @Override
     @Transactional
-    public History findHistory(Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
+    public HistoryResponse findHistory(Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null && customer.getHistory() != null) {
-            return historyOutputMapper.toHistory(customer.getHistory());
+            return historyOutputMapper.toHistoryResponse(customer.getHistory());
         } else {
             throw new CustomerException("The customer's history doesn't exist");
         }
     }
 
     @Override
-    public List<Address> findAddress(Long id, Integer offset, Integer pageSize) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
+    public List<AddressResponse> findAddress(Long id, Integer offset, Integer pageSize) {
+        Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null && customer.getAddress() != null) {
-            Page<AddressEntity> list = customerRepository.findCustomerAddresses(id, PageRequest.of(offset, pageSize));
-            return list.stream().map(addressMapper::toAddress).collect(Collectors.toList());
+            Page<Address> list = customerRepository.findCustomerAddress(id, PageRequest.of(offset, pageSize));
+            return list.stream().map(addressMapper::toAddressResponse).collect(Collectors.toList());
         } else {
-            throw new CustomerException("The list of customer's addresses is null");
+            throw new CustomerException("The list of customer's address is null");
         }
     }
 
     @Override
     @Transactional
-    public List<CreditCard> findCards(Long id, Integer offset, Integer pageSize) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
+    public List<CreditCardResponse> findCards(Long id, Integer offset, Integer pageSize) {
+        Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null && customer.getCards() != null) {
-            Page<CreditCardEntity> list = customerRepository.findCustomerCreditCards(id, PageRequest.of(offset, pageSize));
-            return list.stream().map(creditCardOutPutMapper::toCreditCard).collect(Collectors.toList());
+            Page<CreditCard> list = customerRepository.findCustomerCreditCards(id, PageRequest.of(offset, pageSize));
+            return list.stream().map(creditCardOutPutMapper::toCreditCardResponse).collect(Collectors.toList());
         } else {
             throw new CustomerException("The list of customer's cards is null");
         }
     }
 
     @Override
-    public Customer findByEmail(String email) {
-        CustomerEntity customer = customerRepository.findCustomerByEmail(email).orElse(null);
+    public CustomerResponse findByEmail(String email) {
+        Customer customer = customerRepository.findCustomerByEmail(email).orElse(null);
         if (customer != null) {
-            return customerOutputMapper.toCustomer(customer);
+            return customerOutputMapper.toCustomerResponse(customer);
         } else {
             throw new CustomerException("The customer fetched by email doesn't exist");
         }
     }
 
     @Override
-    public Customer changePwd(String pwd, Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
+    public CustomerResponse changePwd(String pwd, Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
             customer.setPwd(passwordEncoder.encode(pwd));
-            return customerOutputMapper.toCustomer(customerRepository.save(customer));
+            return customerOutputMapper.toCustomerResponse(customerRepository.save(customer));
         } else {
             throw new CustomerException("The customer fetched to change its pwd doesn't exist");
         }
@@ -219,12 +242,12 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
 
     @Override
     @Transactional
-    public List<Address> addAddress(Address addressRequest, Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
-        if (customer != null && addressRequest != null) {
-            if (addressRequest.getId() != null) {
+    public List<AddressResponse> addAddress(AddressResponse addressResponse, Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer != null && addressResponse != null) {
+            if (addressResponse.id() != null) {
                 //the address exist
-                AddressEntity addressFound = addressRepository.findById(addressRequest.getId()).orElse(null);
+                Address addressFound = addressRepository.findById(addressResponse.id()).orElse(null);
                 if (addressFound != null) {
                     customer.getAddress().add(addressFound);
                 } else {
@@ -232,12 +255,13 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
                 }
             } else {
                 //the address doesn't exist
-                AddressEntity a = new AddressEntity(null, addressRequest.getStreet(), addressRequest.getCountry(), addressRequest.getPostalCode());
+                Address a = new Address(null, addressResponse.street(), addressResponse.country(), addressResponse.postalCode());
                 customer.getAddress().add(a);
             }
             customerRepository.save(customer);
-            Page<AddressEntity> list = customerRepository.findCustomerAddresses(id, PageRequest.of(0, 10));
-            return list.getContent().stream().map(addressMapper::toAddress).collect(Collectors.toList());
+            Page<Address> list = customerRepository.findCustomerAddress(id, PageRequest.of(0, 10));
+            return list.getContent().stream().map(addressMapper::toAddressResponse).collect(Collectors.toList());
+
         } else {
             throw new CustomerException("The customer or the address to add doesn't exist");
         }
@@ -246,8 +270,8 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
     @Override
     @Transactional
     public boolean removeAddress(Long addressId, Long customerId) {
-        AddressEntity address = addressRepository.findById(addressId).orElse(null);
-        CustomerEntity customer = customerRepository.findById(customerId).orElse(null);
+        Address address = addressRepository.findById(addressId).orElse(null);
+        Customer customer = customerRepository.findById(customerId).orElse(null);
         if (customer != null && address != null) {
             customer.getAddress().remove(address);
             customerRepository.save(customer);
@@ -259,34 +283,31 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
 
     @Override
     @Transactional
-    public List<CreditCard> addCreditCard(CreditCard creditCard, Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
-        if (customer != null && creditCard != null) {
-            if (creditCard.getId() != null) {
+    public List<CreditCardResponse> addCreditCard(CreditCardResponse creditCardResponseDTO, Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer != null && creditCardResponseDTO != null) {
+            if (creditCardResponseDTO.id() != null) {
                 //card exist
-                CreditCardEntity cardFound = creditCardRepository.findById(creditCard.getId()).orElse(null);
+                CreditCard cardFound = creditCardRepository.findById(creditCardResponseDTO.id()).orElse(null);
                 if (cardFound != null) {
                     customer.getCards().add(cardFound);
                 } else {
                     throw new CustomerException("The card to add doesn't exist");
                 }
             } else {
-
-                CreditCardEntity newCard = CreditCardEntity.builder()
-                        .number(creditCard.getNumber())
-                        .typeCard(typeCard(creditCard.getTypeCard().name()))
-                        .build();
+                //card doesn't exist
+                CreditCard newCard = new CreditCard(null, creditCardResponseDTO.number(), typeCard(creditCardResponseDTO.typeCard()));
                 customer.getCards().add(newCard);
             }
             customerRepository.save(customer);
-            Page<CreditCardEntity> list = customerRepository.findCustomerCreditCards(customer.getId(), PageRequest.of(0, 10));
-            return list.stream().map(creditCardOutPutMapper::toCreditCard).collect(Collectors.toList());
+            Page<CreditCard> list = customerRepository.findCustomerCreditCards(customer.getId(), PageRequest.of(0, 10));
+            return list.stream().map(creditCardOutPutMapper::toCreditCardResponse).collect(Collectors.toList());
         } else {
             throw new CustomerException("The customer or the card to add doesn't exist");
         }
     }
 
-    private TypeCard typeCard(String type){
+    private TypeCard typeCard(String type) {
         return switch (type) {
             case "VISA" -> TypeCard.VISA;
             case "MASTER_CARD" -> TypeCard.MASTER_CARD;
@@ -298,13 +319,13 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
     @Override
     @Transactional
     public boolean removeCreditCard(Long creditCardId, Long customerId) {
-        CreditCardEntity card = creditCardRepository.findById(creditCardId).orElse(null);
-        CustomerEntity customer = customerRepository.findById(customerId).orElse(null);
-        if(customer!=null && card!=null){
+        CreditCard card = creditCardRepository.findById(creditCardId).orElse(null);
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+        if (customer != null && card != null) {
             customer.getCards().remove(card);
             customerRepository.save(customer);
             return true;
-        }else{
+        } else {
             throw new CustomerException("The customer or the card to remove doesn't exist");
         }
     }

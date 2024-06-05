@@ -1,25 +1,27 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
-import com.gooplanycol.gooplany.domain.model.EventFinished;
-import com.gooplanycol.gooplany.domain.model.EventParticipant;
-import com.gooplanycol.gooplany.domain.model.EventPost;
+import com.gooplanycol.gooplany.domain.model.request.EventFinishedRequest;
+import com.gooplanycol.gooplany.domain.model.request.EventParticipantRequest;
+import com.gooplanycol.gooplany.domain.model.response.EventFinishedResponse;
+import com.gooplanycol.gooplany.domain.model.response.EventParticipantResponse;
+import com.gooplanycol.gooplany.domain.model.response.EventPostResponse;
 
 import java.util.List;
 
 public interface EventFinishedInputPort {
-    EventFinished save(EventFinished eventFinished);
+    EventFinishedResponse save(EventFinishedRequest eventFinished);
 
-    EventFinished edit(EventFinished eventFinished, Long id);
+    EventFinishedResponse edit(EventFinishedRequest eventFinished, Long id);
 
-    EventFinished findById(Long id);
+    EventFinishedResponse findById(Long id);
 
-    List<EventFinished> findAll(Integer offset, Integer pageSize);
+    List<EventFinishedResponse> findAll(Integer offset, Integer pageSize);
 
-    EventFinished addEventParticipant(EventParticipant eventParticipant, Long id);
+    EventFinishedResponse addEventParticipant(EventParticipantRequest eventParticipant, Long id);
 
-    EventFinished removeEventParticipant(Long eventParticipantId, Long eventFinishedId);
+    EventFinishedResponse removeEventParticipant(Long eventParticipantId, Long eventFinishedId);
 
-    List<EventParticipant> findEventParticipants(Long id, Integer offset, Integer pageSize);
+    List<EventParticipantResponse> findEventParticipants(Long id, Integer offset, Integer pageSize);
 
-    EventPost findEventPost(Long id);
+    EventPostResponse findEventPost(Long id);
 }

@@ -2,12 +2,11 @@ package com.gooplanycol.gooplany.infrastructure.adapters.input.rest;
 
 import com.gooplanycol.gooplany.application.ports.input.CustomerInputPort;
 import com.gooplanycol.gooplany.domain.exception.CustomerException;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.mapper.CustomerRestMapper;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.request.CustomerRequestEdit;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.AddressResponse;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.CreditCardResponse;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.CustomerResponse;
-import com.gooplanycol.gooplany.infrastructure.adapters.input.rest.model.response.HistoryResponse;
+import com.gooplanycol.gooplany.domain.model.request.CustomerRequestEdit;
+import com.gooplanycol.gooplany.domain.model.response.AddressResponse;
+import com.gooplanycol.gooplany.domain.model.response.CreditCardResponse;
+import com.gooplanycol.gooplany.domain.model.response.CustomerResponse;
+import com.gooplanycol.gooplany.domain.model.response.HistoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import java.util.List;
 public class CustomerRestAdapter {
 
     private final CustomerInputPort customerInputPort;
-    private final CustomerRestMapper customerRestMapper;
 
     @DeleteMapping("/{id}/remove")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
@@ -36,7 +34,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/edit")
     public ResponseEntity<?> edit(@RequestBody CustomerRequestEdit customerRequestEditDTO, @PathVariable("id") Long id) {
         try {
-            CustomerResponse responseDTO = customerRestMapper.toCustomerResponse(customerInputPort.editData(customerRestMapper.toCustomer(customerRequestEditDTO), id));
+            CustomerResponse responseDTO = customerInputPort.editData(customerRequestEditDTO, id);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -46,7 +44,7 @@ public class CustomerRestAdapter {
     @GetMapping("find/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         try {
-            CustomerResponse responseDTO = customerRestMapper.toCustomerResponse(customerInputPort.findById(id));
+            CustomerResponse responseDTO = customerInputPort.findById(id);
             return new ResponseEntity<>(responseDTO, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -56,7 +54,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     public ResponseEntity<?> findAll(@PathVariable Integer offset, @PathVariable Integer pageSize) {
         try {
-            List<CustomerResponse> list = customerRestMapper.toCustomerResponseList(customerInputPort.findAll(offset, pageSize));
+            List<CustomerResponse> list = customerInputPort.findAll(offset, pageSize);
             return new ResponseEntity<>(list, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -66,7 +64,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find")
     public ResponseEntity<?> findAllByDefault() {
         try {
-            List<CustomerResponse> list = customerRestMapper.toCustomerResponseList(customerInputPort.findAll(0, 10));
+            List<CustomerResponse> list = customerInputPort.findAll(0, 10);
             return new ResponseEntity<>(list, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -76,7 +74,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/history")
     public ResponseEntity<?> findHistory(@PathVariable("id") Long id) {
         try {
-            HistoryResponse historyResponseDTO = customerRestMapper.toHistoryResponse(customerInputPort.findHistory(id));
+            HistoryResponse historyResponseDTO = customerInputPort.findHistory(id);
             return new ResponseEntity<>(historyResponseDTO, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -86,7 +84,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/address/{offset}/{pageSize}")
     public ResponseEntity<?> findAddress(@PathVariable("id") Long id, @PathVariable Integer offset, @PathVariable Integer pageSize) {
         try {
-            List<AddressResponse> addressResponseDTO = customerRestMapper.toAddressResponseList(customerInputPort.findAddress(id, offset, pageSize));
+            List<AddressResponse> addressResponseDTO = customerInputPort.findAddress(id, offset, pageSize);
             return new ResponseEntity<>(addressResponseDTO, HttpStatus.OK);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -96,7 +94,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/address")
     public ResponseEntity<?> findAddressByDefault(@PathVariable("id") Long id) {
         try {
-            List<AddressResponse> addressResponseDTO = customerRestMapper.toAddressResponseList(customerInputPort.findAddress(id, 0, 10));
+            List<AddressResponse> addressResponseDTO = customerInputPort.findAddress(id, 0, 10);
             return new ResponseEntity<>(addressResponseDTO, HttpStatus.OK);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -106,7 +104,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/cards/{offset}/{pageSize}")
     public ResponseEntity<?> findCards(@PathVariable("id") Long id, @PathVariable Integer offset, @PathVariable Integer pageSize) {
         try {
-            List<CreditCardResponse> list = customerRestMapper.toCreditCardResponseList(customerInputPort.findCards(id, offset, pageSize));
+            List<CreditCardResponse> list = customerInputPort.findCards(id, offset, pageSize);
             return new ResponseEntity<>(list, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -116,7 +114,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/cards")
     public ResponseEntity<?> findCardsByDefault(@PathVariable("id") Long id) {
         try {
-            List<CreditCardResponse> list = customerRestMapper.toCreditCardResponseList(customerInputPort.findCards(id, 0, 10));
+            List<CreditCardResponse> list = customerInputPort.findCards(id, 0, 10);
             return new ResponseEntity<>(list, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -126,7 +124,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/email/{email}")
     public ResponseEntity<?> findByEmail(@PathVariable("email") String email) {
         try {
-            CustomerResponse responseDTO = customerRestMapper.toCustomerResponse(customerInputPort.findByEmail(email));
+            CustomerResponse responseDTO = customerInputPort.findByEmail(email);
             return new ResponseEntity<>(responseDTO, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -136,7 +134,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/change/pwd/{pwd}")
     public ResponseEntity<?> changePwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
         try {
-            CustomerResponse customerResponseDTO = customerRestMapper.toCustomerResponse(customerInputPort.changePwd(pwd, id));
+            CustomerResponse customerResponseDTO = customerInputPort.changePwd(pwd, id);
             return new ResponseEntity<>(customerResponseDTO, HttpStatus.OK);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -147,7 +145,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/add/address")
     public ResponseEntity<?> addAddress(@RequestBody AddressResponse addressResponseDTO, @PathVariable("id") Long id) {
         try {
-            List<AddressResponse> list = customerRestMapper.toAddressResponseList(customerInputPort.addAddress(customerRestMapper.toAddress(addressResponseDTO), id));
+            List<AddressResponse> list = customerInputPort.addAddress(addressResponseDTO, id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -167,7 +165,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/add/card")
     public ResponseEntity<?> addCreditCard(@RequestBody CreditCardResponse creditCardResponseDTO, @PathVariable("id") Long id) {
         try {
-            List<CreditCardResponse> list = customerRestMapper.toCreditCardResponseList(customerInputPort.addCreditCard(customerRestMapper.toCreditCard(creditCardResponseDTO), id));
+            List<CreditCardResponse> list = customerInputPort.addCreditCard(creditCardResponseDTO, id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -187,7 +185,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/by/tk/{token}")
     public ResponseEntity<?> findCustomerByToken(@PathVariable("token") String token) {
         try {
-            CustomerResponse responseDTO = customerRestMapper.toCustomerResponse(customerInputPort.getCustomerByToken(token));
+            CustomerResponse responseDTO = customerInputPort.getCustomerByToken(token);
             return new ResponseEntity<>(responseDTO, HttpStatus.FOUND);
         } catch (CustomerException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);

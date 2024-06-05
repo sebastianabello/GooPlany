@@ -26,58 +26,57 @@ public class SecurityConfig {
 
     private final LogoutService logoutService;
 
-    private static final String[] adminUrls =
+
+    private static final String[] companyUrls =
             {
-                    "/api/v1/customer/{id}/remove",
+                    "/api/v1/company/{companyId}/remove/address/{addressId}",
+                    "/api/v1/company/{id}/add/address",
+                    "/api/v1/company/{id}/change/pwd/{pwd}",
+                    "/api/v1/company/{id}/edit",
                     "/api/v1/customer/find",
-                    "/api/v1/customer/find/email/{email}",
-                    "/api/v1/address/**",
-                    "/api/v1/card/**",
-                    "api/v1/history/{id}/remove",
-                    "api/v1/history/find/{id}",
-                    "api/v1/history/find",
-                    "api/v1/history/{id}/find/eventFinished",
-                    "api/v1/history/{id}/add/eventFinished",
-                    "api/v1/history/{historyId}/remove/sale/{eventFinishedId}",
-                    "api/v1/eventPost/**",
-                    "/api/v1/eventStoke/save",
-                    "/api/v1/eventStoke/{id}/remove",
-                    "/api/v1/eventStoke/{id}/edit",
-                    "/api/v1/eventStoke/find/title/{title}",
-                    "/api/v1/eventFinished/{id}/edit",
-                    "/api/v1/eventFinished/find/{id}",
-                    "/api/v1/eventFinished/find",
-                    "/api/v1/eventFinished/{id}/add/EventParticipant",
-                    "/api/v1/eventFinished/{eventFinishedId}/remove/eventParticipant/{eventParticipantId}",
-                    "/api/v1/eventFinished/{id}/find/eventParticipants",
-                    "/api/v1/eventFinished/find/{id}/eventPost",
-                    "/api/v1/eventParticipant/edit/{id}",
-                    "/api/v1/eventParticipant/change/status/{status}/{id}",
+                    "/api/v1/history/{id}/add/eventFinished",
+                    "/api/v1/history/{id}/find/eventFinished",
                     "/api/v1/eventParticipant/find",
-                    "/api/v1/eventParticipant/remove/{id}",
                     "/api/v1/eventParticipant/find/status/{status}",
-                    "/api/v1/eventParticipant/find/{id}/customer",
-                    "/api/v1/eventParticipant/find/{id}/card"};
+                    "/api/v1/eventParticipant/find/{{id}}/customer",
+                    "/api/v1/eventParticipant/save",
+                    "/api/v1/eventStock/change/status/{{status}}/{{id}}",
+                    "/api/v1/eventStock/find/title/{{title}}",
+                    "/api/v1/eventStock/find/{{id}}",
+                    "/api/v1/eventStock/save",
+                    "/api/v1/eventStock/{{id}}/edit",
+                    "/api/v1/eventStock/{{id}}/remove",
+                    "/api/v1/eventFinished/find",
+                    "/api/v1/eventPost/save",
+                    "/api/v1/eventPost/{{id}}/edit",
+                    "/api/v1/eventPost/{{id}}/remove",
+            };
+
     private static final String[] customersUrls =
             {
+                    "/api/v1/customer/find",
+                    "/api/v1/customer/find/by/tk/{token}",
                     "/api/v1/customer/find/{id}",
-                    "/api/v1/customer/{id}/edit",
-                    "/api/v1/customer/{id}/add/address",
-                    "/api/v1/customer/{customerId}/remove/address/{addressId}",
-                    "/api/v1/customer/{id}/add/card",
-                    "/api/v1/customer/{customerId}/remove/card/{cardId}",
-                    "/api/v1/customer/find/{id}/history",
                     "/api/v1/customer/find/{id}/address",
                     "/api/v1/customer/find/{id}/cards",
-                    "/api/v1/history/{id}/add/eventFinished",
-                    "/api/v1/eventFinished/save",
-                    "/api/v1/eventStoke/find/{id}",
-                    "/api/v1/eventStoke/find/status/{status}",
+                    "/api/v1/customer/find/{id}/history",
+                    "/api/v1/customer/{customerId}/remove/address/{addressId}",
+                    "/api/v1/customer/{customerId}/remove/card/{cardId}",
+                    "/api/v1/customer/{id}/add/address",
+                    "/api/v1/customer/{id}/add/card",
                     "/api/v1/customer/{id}/change/pwd/{pwd}",
-                    "/api/v1/customer/find/by/tk/{token}",
+                    "/api/v1/customer/{id}/edit",
+                    "/api/v1/history/{id}/add/eventFinished",
+                    "/api/v1/history/{id}/find/eventFinished",
+                    "/api/v1/eventParticipant/change/status/{status}/{id}",
+                    "/api/v1/eventFinished/save",
+                    "/api/v1/eventStock/find/status/{status}",
+                    "/api/v1/eventStock/find/title/{title}",
                     "/api/v1/eventParticipant/save",
-                    "/api/v1/eventParticipant/find/id/{id}"
+                    "/api/v1/eventParticipant/find/id/{id}",
+                    "/api/v1/company/find",
             };
+
     private static final String[] openUrls =
             {
                     "/api/v1/authentication/**",
@@ -89,15 +88,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
-                //.cors(AbstractHttpConfigurer::disable)// to get access from different url
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth
                             .requestMatchers(openUrls).permitAll()
-                            .requestMatchers(adminUrls).hasRole(ADMIN.name())
-                            .requestMatchers(customersUrls).hasAnyRole(CUSTOMER.name())
+                            .requestMatchers(companyUrls).hasRole(CUSTOMER.name())
+                            .requestMatchers(customersUrls).hasAnyRole(CUSTOMER.name(), COMPANY.name())
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -113,7 +110,9 @@ public class SecurityConfig {
                 .headers(httpSecurityHeadersConfigurer -> {
                     httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
                 });
+
         return http.build();
+
     }
 
 }

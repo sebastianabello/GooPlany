@@ -1,7 +1,7 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper;
 
-import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CustomerEntity;
+import com.gooplanycol.gooplany.domain.model.response.CustomerResponse;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
@@ -9,6 +9,5 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CustomerOutputMapper {
 
-    Customer toCustomer(CustomerEntity entity);
-
+    CustomerResponse toCustomerResponse(Customer customer);
 }

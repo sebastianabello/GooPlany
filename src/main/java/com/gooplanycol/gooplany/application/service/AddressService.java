@@ -2,7 +2,8 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.AddressInputPort;
 import com.gooplanycol.gooplany.application.ports.output.AddressOutputPort;
-import com.gooplanycol.gooplany.domain.model.Address;
+import com.gooplanycol.gooplany.domain.model.request.AddressRequest;
+import com.gooplanycol.gooplany.domain.model.response.AddressResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,13 @@ public class AddressService implements AddressInputPort {
     private final AddressOutputPort addressOutputPort;
 
     @Override
-    public Address save(Address address) {
-        return addressOutputPort.save(address);
+    public AddressResponse save(AddressRequest addressRequest) {
+        return addressOutputPort.save(addressRequest);
     }
 
     @Override
-    public Address edit(Address address, Long id) {
-        return addressOutputPort.edit(address, id);
+    public AddressResponse edit(AddressRequest addressRequest, Long id) {
+        return addressOutputPort.edit(addressRequest, id);
     }
 
     @Override
@@ -30,22 +31,22 @@ public class AddressService implements AddressInputPort {
     }
 
     @Override
-    public Address findById(Long id) {
+    public AddressResponse findById(Long id) {
         return addressOutputPort.findById(id);
     }
 
     @Override
-    public List<Address> findAll(Integer offset, Integer pageSize) {
+    public List<AddressResponse> findAll(Integer offset, Integer pageSize) {
         return addressOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public List<Address> findAddressesByPostalCode(Integer offset, Integer pageSize, String postalCode) {
+    public List<AddressResponse> findAddressesByPostalCode(Integer offset, Integer pageSize, String postalCode) {
         return addressOutputPort.findAddressesByPostalCode(offset, pageSize, postalCode);
     }
 
     @Override
-    public List<Address> findAddressesByCountry(Integer offset, Integer pageSize, String country) {
+    public List<AddressResponse> findAddressesByCountry(Integer offset, Integer pageSize, String country) {
         return addressOutputPort.findAddressesByCountry(offset, pageSize, country);
     }
 }

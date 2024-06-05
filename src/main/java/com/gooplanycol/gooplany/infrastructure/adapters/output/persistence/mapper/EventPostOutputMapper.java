@@ -1,16 +1,14 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper;
 
-import com.gooplanycol.gooplany.domain.model.EventPost;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventPostEntity;
+import com.gooplanycol.gooplany.domain.model.response.EventPostResponse;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventPost;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-
-import java.util.List;
 
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EventPostOutputMapper {
 
-    EventPost toEventPost(EventPostEntity eventPostEntity);
+    EventPostResponse toEventPostResponse(EventPost eventPost);
 
 }

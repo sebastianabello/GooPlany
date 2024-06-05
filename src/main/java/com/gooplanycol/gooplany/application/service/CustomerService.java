@@ -2,7 +2,8 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.CustomerInputPort;
 import com.gooplanycol.gooplany.application.ports.output.CustomerOutputPort;
-import com.gooplanycol.gooplany.domain.model.*;
+import com.gooplanycol.gooplany.domain.model.request.*;
+import com.gooplanycol.gooplany.domain.model.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,12 @@ public class CustomerService implements CustomerInputPort {
     private final CustomerOutputPort customerOutputPort;
 
     @Override
-    public Customer authenticate(Customer authenticationCustomer) {
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationCustomer) {
         return customerOutputPort.authenticate(authenticationCustomer);
     }
 
     @Override
-    public Customer getCustomerByToken(String token) {
+    public CustomerResponse getCustomerByToken(String token) {
         return customerOutputPort.getCustomerByToken(token);
     }
 
@@ -30,47 +31,47 @@ public class CustomerService implements CustomerInputPort {
     }
 
     @Override
-    public Customer editData(Customer response, Long id) {
+    public CustomerResponse editData(CustomerRequestEdit response, Long id) {
         return customerOutputPort.editData(response, id);
     }
 
     @Override
-    public Customer findById(Long id) {
+    public CustomerResponse findById(Long id) {
         return customerOutputPort.findById(id);
     }
 
     @Override
-    public List<Customer> findAll(Integer offset, Integer pageSize) {
+    public List<CustomerResponse> findAll(Integer offset, Integer pageSize) {
         return customerOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public History findHistory(Long id) {
+    public HistoryResponse findHistory(Long id) {
         return customerOutputPort.findHistory(id);
     }
 
     @Override
-    public List<Address> findAddress(Long id, Integer offset, Integer pageSize) {
+    public List<AddressResponse> findAddress(Long id, Integer offset, Integer pageSize) {
         return customerOutputPort.findAddress(id, offset, pageSize);
     }
 
     @Override
-    public List<CreditCard> findCards(Long id, Integer offset, Integer pageSize) {
+    public List<CreditCardResponse> findCards(Long id, Integer offset, Integer pageSize) {
         return customerOutputPort.findCards(id, offset, pageSize);
     }
 
     @Override
-    public Customer findByEmail(String email) {
+    public CustomerResponse findByEmail(String email) {
         return customerOutputPort.findByEmail(email);
     }
 
     @Override
-    public Customer changePwd(String pwd, Long id) {
+    public CustomerResponse changePwd(String pwd, Long id) {
         return customerOutputPort.changePwd(pwd, id);
     }
 
     @Override
-    public List<Address> addAddress(Address addressRequestDTO, Long id) {
+    public List<AddressResponse> addAddress(AddressResponse addressRequestDTO, Long id) {
         return customerOutputPort.addAddress(addressRequestDTO, id);
     }
 
@@ -80,7 +81,7 @@ public class CustomerService implements CustomerInputPort {
     }
 
     @Override
-    public List<CreditCard> addCreditCard(CreditCard creditCard, Long id) {
+    public List<CreditCardResponse> addCreditCard(CreditCardResponse creditCard, Long id) {
         return customerOutputPort.addCreditCard(creditCard, id);
     }
 

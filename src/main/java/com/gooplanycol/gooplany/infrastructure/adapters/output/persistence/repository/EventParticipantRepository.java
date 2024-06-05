@@ -1,8 +1,8 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository;
 
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCardEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CustomerEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventParticipantEntity;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCard;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Customer;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventParticipant;
 import com.gooplanycol.gooplany.utils.StatusEventParticipant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface EventParticipantRepository extends JpaRepository<EventParticipantEntity, Long> {
-    @Query("SELECT p.customer FROM EventParticipantEntity p WHERE p.id=:id")
-    Optional<CustomerEntity> findCustomer(@Param("id") Long id);
+public interface EventParticipantRepository extends JpaRepository<EventParticipant, Long> {
+    @Query("SELECT p.customer FROM EventParticipant p WHERE p.id=:id")
+    Optional<Customer> findCustomer(@Param("id") Long id);
 
-    @Query("SELECT p.creditCard FROM EventParticipantEntity p WHERE p.id=:id")
-    Optional<CreditCardEntity> findCard(@Param("id") Long id);
+    @Query("SELECT p.creditCard FROM EventParticipant p WHERE p.id=:id")
+    Optional<CreditCard> findCard(@Param("id") Long id);
 
-    @Query("SELECT p FROM EventParticipantEntity p WHERE p.statusRegistration =:status")
-    Page<EventParticipantEntity> findEventParticipantByStatus(@Param("status") StatusEventParticipant statusEventParticipant, Pageable pageable);
+    @Query("SELECT p FROM EventParticipant p WHERE p.statusRegistration =:status")
+    Page<EventParticipant> findEventParticipantByStatus(@Param("status") StatusEventParticipant statusEventParticipant, Pageable pageable);
 }

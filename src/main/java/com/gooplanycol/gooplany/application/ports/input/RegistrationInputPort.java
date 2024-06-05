@@ -1,13 +1,14 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
-import com.gooplanycol.gooplany.domain.model.Company;
-import com.gooplanycol.gooplany.domain.model.Customer;
+import com.gooplanycol.gooplany.domain.model.request.CompanyRequest;
+import com.gooplanycol.gooplany.domain.model.request.CustomerRequest;
+import com.gooplanycol.gooplany.domain.model.response.AuthenticationResponse;
 
 public interface RegistrationInputPort {
 
-    Customer saveCustomer(Customer company) throws IllegalAccessException;
+    AuthenticationResponse saveCustomer(CustomerRequest customerRequest) throws IllegalAccessException;
 
-    Company saveCompany(Company company) throws IllegalAccessException;
+    AuthenticationResponse saveCompany(CompanyRequest companyRequest) throws IllegalAccessException;
 
     String confirmToken(String token);
 

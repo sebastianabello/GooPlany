@@ -1,22 +1,24 @@
 package com.gooplanycol.gooplany.application.ports.output;
 
-import com.gooplanycol.gooplany.domain.model.Address;
+import com.gooplanycol.gooplany.domain.model.request.AddressRequest;
+import com.gooplanycol.gooplany.domain.model.response.AddressResponse;
 
 import java.util.List;
 
 public interface AddressOutputPort {
 
-    Address save(Address address);
+    AddressResponse save(AddressRequest addressRequest);
 
-    Address edit(Address address, Long id);
+    AddressResponse edit(AddressRequest addressRequest, Long id);
 
     boolean remove(Long id);
 
-    Address findById(Long id);
+    AddressResponse findById(Long id);
 
-    List<Address> findAll(Integer offset, Integer pageSize);
+    List<AddressResponse> findAll(Integer offset, Integer pageSize);
 
-    List<Address> findAddressesByPostalCode(Integer offset, Integer pageSize,String postalCode);
+    List<AddressResponse> findAddressesByPostalCode(Integer offset, Integer pageSize,String postalCode);
 
-    List<Address> findAddressesByCountry(Integer offset, Integer pageSize,String country);
+    List<AddressResponse> findAddressesByCountry(Integer offset, Integer pageSize,String country);
+
 }

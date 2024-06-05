@@ -2,13 +2,14 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
 import com.gooplanycol.gooplany.application.ports.output.EventParticipantOutputPort;
 import com.gooplanycol.gooplany.domain.exception.EventParticipantException;
-import com.gooplanycol.gooplany.domain.model.CreditCard;
-import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.domain.model.EventParticipant;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCardEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CustomerEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventParticipantEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CreditCardOutPutMapper;
+import com.gooplanycol.gooplany.domain.model.request.EventParticipantRequest;
+import com.gooplanycol.gooplany.domain.model.response.CreditCardResponse;
+import com.gooplanycol.gooplany.domain.model.response.CustomerResponse;
+import com.gooplanycol.gooplany.domain.model.response.EventParticipantResponse;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCard;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Customer;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.EventParticipant;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CreditCardOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.CustomerOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventParticipantOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CreditCardRepository;
@@ -35,19 +36,19 @@ public class EventParticipantOutputAdapter implements EventParticipantOutputPort
     private final CustomerOutputMapper customerOutputMapper;
 
     private final CreditCardRepository creditCardRepository;
-    private final CreditCardOutPutMapper creditCardOutPutMapper;
+    private final CreditCardOutputMapper creditCardOutPutMapper;
 
 
     @Override
-    public EventParticipant save(EventParticipant eventParticipant) {
+    public EventParticipantResponse save(EventParticipantRequest eventParticipant) {
         if (eventParticipant != null) {
-            EventParticipantEntity e = EventParticipantEntity.builder()
-                    .statusRegistration(knowStatus(eventParticipant.getStatusRegistration().name()))
+            EventParticipant e = EventParticipant.builder()
+                    .statusRegistration(knowStatus(eventParticipant.statusRegistration()))
                     .registeredAt(LocalDateTime.now())
-                    .customer(findCustomer(eventParticipant.getCustomer().getId()))
-                    .creditCard(findCreditCard(eventParticipant.getCreditCard().getId()))
+                    .customer(findCustomer(eventParticipant.customer().id()))
+                    .creditCard(findCreditCard(eventParticipant.card().id()))
                     .build();
-            return eventParticipantOutputMapper.toEventParticipant(eventParticipantRepository.save(e));
+            return eventParticipantOutputMapper.toEventParticipantResponse(eventParticipantRepository.save(e));
         } else {
             throw new EventParticipantException("The request to save is null");
         }
@@ -61,52 +62,52 @@ public class EventParticipantOutputAdapter implements EventParticipantOutputPort
         };
     }
 
-    public CustomerEntity findCustomer(Long id) {
+    private Customer findCustomer(Long id) {
         return customerRepository.findById(id).orElse(null);
     }
 
-    private CreditCardEntity findCreditCard(Long id) {
+    private CreditCard findCreditCard(Long id) {
         return creditCardRepository.findById(id).orElse(null);
     }
 
     @Override
-    public EventParticipant edit(EventParticipant eventParticipant, Long id) {
-        EventParticipantEntity e = eventParticipantRepository.findById(id).orElse(null);
+    public EventParticipantResponse edit(EventParticipantRequest eventParticipant, Long id) {
+        EventParticipant e = eventParticipantRepository.findById(id).orElse(null);
         if (e != null && eventParticipant != null) {
-            e.setStatusRegistration(knowStatus(eventParticipant.getStatusRegistration().name()));
+            e.setStatusRegistration(knowStatus(eventParticipant.statusRegistration()));
             e.setRegisteredAt(LocalDateTime.now());
-            e.setCustomer(findCustomer(eventParticipant.getCustomer().getId()));
-            e.setCreditCard(findCreditCard(eventParticipant.getCreditCard().getId()));
+            e.setCustomer(findCustomer(eventParticipant.customer().id()));
+            e.setCreditCard(findCreditCard(eventParticipant.card().id()));
             e = eventParticipantRepository.save(e);
-            return eventParticipantOutputMapper.toEventParticipant(e);
+            return eventParticipantOutputMapper.toEventParticipantResponse(e);
         } else {
             throw new EventParticipantException("The event participant fetched to update doesn't exist or the request is null");
         }
     }
 
     @Override
-    public EventParticipant changeStatus(String status, Long id) {
-        EventParticipantEntity e = eventParticipantRepository.findById(id).orElse(null);
+    public EventParticipantResponse changeStatus(String status, Long id) {
+        EventParticipant e = eventParticipantRepository.findById(id).orElse(null);
         if (e != null) {
             e.setStatusRegistration(knowStatus(status));
             e = eventParticipantRepository.save(e);
-            return eventParticipantOutputMapper.toEventParticipant(e);
+            return eventParticipantOutputMapper.toEventParticipantResponse(e);
         } else {
             throw new EventParticipantException("The event participant fetched to update doesn't exist or the request is null");
         }
     }
 
     @Override
-    public List<EventParticipant> findAll(Integer offset, Integer pageSize) {
-        Page<EventParticipantEntity> list = eventParticipantRepository.findAll(PageRequest.of(offset, pageSize));
-        return list.stream().map(eventParticipantOutputMapper::toEventParticipant).collect(Collectors.toList());
+    public List<EventParticipantResponse> findAll(Integer offset, Integer pageSize) {
+        Page<EventParticipant> list = eventParticipantRepository.findAll(PageRequest.of(offset, pageSize));
+        return list.stream().map(eventParticipantOutputMapper::toEventParticipantResponse).collect(Collectors.toList());
     }
 
     @Override
-    public EventParticipant findById(Long id) {
-        EventParticipantEntity e = eventParticipantRepository.findById(id).orElse(null);
+    public EventParticipantResponse findById(Long id) {
+        EventParticipant e = eventParticipantRepository.findById(id).orElse(null);
         if (e != null) {
-            return eventParticipantOutputMapper.toEventParticipant(e);
+            return eventParticipantOutputMapper.toEventParticipantResponse(e);
         } else {
             throw new EventParticipantException("The event participant fetched by id doesn't exist");
         }
@@ -114,7 +115,7 @@ public class EventParticipantOutputAdapter implements EventParticipantOutputPort
 
     @Override
     public boolean remove(Long id) {
-        EventParticipantEntity e = eventParticipantRepository.findById(id).orElse(null);
+        EventParticipant e = eventParticipantRepository.findById(id).orElse(null);
         if (e != null) {
             eventParticipantRepository.delete(e);
             return true;
@@ -124,30 +125,30 @@ public class EventParticipantOutputAdapter implements EventParticipantOutputPort
     }
 
     @Override
-    public List<EventParticipant> findEventParticipantsByStatus(Integer offset, Integer pageSize, String statusEventParticipant) {
-        Page<EventParticipantEntity> list = eventParticipantRepository.findEventParticipantByStatus(knowStatus(statusEventParticipant), PageRequest.of(offset, pageSize));
+    public List<EventParticipantResponse> findEventParticipantsByStatus(Integer offset, Integer pageSize, String statusEventParticipant) {
+        Page<EventParticipant> list = eventParticipantRepository.findEventParticipantByStatus(knowStatus(statusEventParticipant), PageRequest.of(offset, pageSize));
         if (list != null) {
-            return list.stream().map(eventParticipantOutputMapper::toEventParticipant).collect(Collectors.toList());
+            return list.stream().map(eventParticipantOutputMapper::toEventParticipantResponse).collect(Collectors.toList());
         } else {
             throw new EventParticipantException("The list of event participant is null");
         }
     }
 
     @Override
-    public Customer findCustomerEventParticipant(Long id) {
-        CustomerEntity customer = eventParticipantRepository.findCustomer(id).orElse(null);
+    public CustomerResponse findCustomerEventParticipant(Long id) {
+        Customer customer = eventParticipantRepository.findCustomer(id).orElse(null);
         if (customer != null) {
-            return customerOutputMapper.toCustomer(customer);
+            return customerOutputMapper.toCustomerResponse(customer);
         } else {
             throw new EventParticipantException("The event participant's customer doesn't exist");
         }
     }
 
     @Override
-    public CreditCard findCardEventParticipant(Long id) {
-        CreditCardEntity card = eventParticipantRepository.findCard(id).orElse(null);
+    public CreditCardResponse findCardEventParticipant(Long id) {
+        CreditCard card = eventParticipantRepository.findCard(id).orElse(null);
         if (card != null) {
-            return creditCardOutPutMapper.toCreditCard(card);
+            return creditCardOutPutMapper.toCreditCardResponse(card);
         } else {
             throw new EventParticipantException("The event participant's card doesn't exist");
         }

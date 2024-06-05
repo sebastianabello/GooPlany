@@ -1,9 +1,13 @@
 package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.CompanyInputPort;
-
-import com.gooplanycol.gooplany.application.ports.output.*;
-import com.gooplanycol.gooplany.domain.model.*;
+import com.gooplanycol.gooplany.application.ports.output.CompanyOutputPort;
+import com.gooplanycol.gooplany.domain.model.request.AuthenticationRequest;
+import com.gooplanycol.gooplany.domain.model.request.CompanyRequestEdit;
+import com.gooplanycol.gooplany.domain.model.response.AddressResponse;
+import com.gooplanycol.gooplany.domain.model.response.AuthenticationResponse;
+import com.gooplanycol.gooplany.domain.model.response.CompanyResponse;
+import com.gooplanycol.gooplany.domain.model.response.HistoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +17,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyService implements CompanyInputPort {
 
-    private final CompanyOutPort companyOutPort;
+    private final CompanyOutputPort companyOutPort;
 
     @Override
-    public Company authenticate(Company authenticationCompany) {
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationCompany) {
         return companyOutPort.authenticate(authenticationCompany);
     }
 
     @Override
-    public Company getCompanyByToken(String token) {
+    public CompanyResponse getCompanyByToken(String token) {
         return companyOutPort.getCompanyByToken(token);
     }
 
@@ -31,42 +35,42 @@ public class CompanyService implements CompanyInputPort {
     }
 
     @Override
-    public Company editData(Company companyEdit, Long id) {
+    public CompanyResponse editData(CompanyRequestEdit companyEdit, Long id) {
         return companyOutPort.editData(companyEdit, id);
     }
 
     @Override
-    public Company findById(Long id) {
+    public CompanyResponse findById(Long id) {
         return companyOutPort.findById(id);
     }
 
     @Override
-    public List<Company> findAll(Integer offset, Integer pageSize) {
+    public List<CompanyResponse> findAll(Integer offset, Integer pageSize) {
         return companyOutPort.findAll(offset, pageSize);
     }
 
     @Override
-    public History findHistory(Long id) {
+    public HistoryResponse findHistory(Long id) {
         return companyOutPort.findHistory(id);
     }
 
     @Override
-    public List<Address> findAddress(Long id, Integer offset, Integer pageSize) {
+    public List<AddressResponse> findAddress(Long id, Integer offset, Integer pageSize) {
         return companyOutPort.findAddress(id, offset, pageSize);
     }
 
     @Override
-    public Company findByEmail(String email) {
+    public CompanyResponse findByEmail(String email) {
         return companyOutPort.findByEmail(email);
     }
 
     @Override
-    public Company changePwd(String pwd, Long id) {
+    public CompanyResponse changePwd(String pwd, Long id) {
         return companyOutPort.changePwd(pwd, id);
     }
 
     @Override
-    public List<Address> addAddress(Address address, Long id) {
+    public List<AddressResponse> addAddress(AddressResponse address, Long id) {
         return companyOutPort.addAddress(address, id);
     }
 

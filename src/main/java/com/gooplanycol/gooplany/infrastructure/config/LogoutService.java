@@ -1,9 +1,7 @@
 package com.gooplanycol.gooplany.infrastructure.config;
 
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.TokenCompanyEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.TokenCustomerEntity;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenCompanyRepository;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenCustomerRepository;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Token;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogoutService implements LogoutHandler {
 
-    private final TokenCustomerRepository tokenCustomerRepository;
-    private final TokenCompanyRepository tokenCompanyRepository;
+    private final TokenRepository tokenRepository;
 
     @Override
     public void logout(
@@ -26,22 +23,15 @@ public class LogoutService implements LogoutHandler {
 
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if(authHeader==null || !authHeader.startsWith("Bearer ")){
             return;
         }
-        jwt = authHeader.substring(7);
-
-        TokenCustomerEntity tokenCustomer = tokenCustomerRepository.findTokenByToken(jwt).orElse(null);
-        TokenCompanyEntity tokenCompany = tokenCompanyRepository.findTokenByToken(jwt).orElse(null);
-
-        if (tokenCustomer != null) {
-            tokenCustomer.setExpired(true);
-            tokenCustomer.setRevoked(true);
-            tokenCustomerRepository.save(tokenCustomer);
-        } else if (tokenCompany != null) {
-            tokenCompany.setExpired(true);
-            tokenCompany.setRevoked(true);
-            tokenCompanyRepository.save(tokenCompany);
+        jwt=authHeader.substring(7);
+        Token token = tokenRepository.findTokenByToken(jwt).orElse(null);
+        if(token!=null){
+            token.setExpired(true);
+            token.setRevoked(true);
+            tokenRepository.save(token);
         }
     }
 }

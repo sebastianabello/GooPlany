@@ -2,8 +2,9 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.HistoryInputPort;
 import com.gooplanycol.gooplany.application.ports.output.HistoryOutputPort;
-import com.gooplanycol.gooplany.domain.model.EventFinished;
-import com.gooplanycol.gooplany.domain.model.History;
+import com.gooplanycol.gooplany.domain.model.request.HistoryRequest;
+import com.gooplanycol.gooplany.domain.model.response.EventFinishedResponse;
+import com.gooplanycol.gooplany.domain.model.response.HistoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class HistoryService implements HistoryInputPort {
     private final HistoryOutputPort historyOutputPort;
 
     @Override
-    public History save(History historyCustomer) {
+    public HistoryResponse save(HistoryRequest historyCustomer) {
         return historyOutputPort.save(historyCustomer);
     }
 
@@ -26,22 +27,22 @@ public class HistoryService implements HistoryInputPort {
     }
 
     @Override
-    public History findById(Long id) {
+    public HistoryResponse findById(Long id) {
         return historyOutputPort.findById(id);
     }
 
     @Override
-    public List<History> findAll(Integer offset, Integer pageSize) {
+    public List<HistoryResponse> findAll(Integer offset, Integer pageSize) {
         return historyOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public List<EventFinished> findEventFinished(Long id, Integer offset, Integer pageSize) {
+    public List<EventFinishedResponse> findEventFinished(Long id, Integer offset, Integer pageSize) {
         return historyOutputPort.findEventFinished(id, offset, pageSize);
     }
 
     @Override
-    public List<EventFinished> addEventFinished(EventFinished eventFinished, Long id) {
+    public List<EventFinishedResponse> addEventFinished(EventFinishedResponse eventFinished, Long id) {
         return historyOutputPort.addEventFinished(eventFinished, id);
     }
 

@@ -18,11 +18,5 @@ public enum TypeOfPlace {
     STADIUM,
     UNIVERSITY,
     SCHOOL,
-    CHURCH;
-
-    private String message;
-
-    TypeOfPlace() {
-        this.message = this.name().toLowerCase();
-    }
+    CHURCH
 }

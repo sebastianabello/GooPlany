@@ -1,32 +1,37 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
-import com.gooplanycol.gooplany.domain.model.*;
+import com.gooplanycol.gooplany.domain.model.request.AuthenticationRequest;
+import com.gooplanycol.gooplany.domain.model.request.CompanyRequestEdit;
+import com.gooplanycol.gooplany.domain.model.response.AddressResponse;
+import com.gooplanycol.gooplany.domain.model.response.AuthenticationResponse;
+import com.gooplanycol.gooplany.domain.model.response.CompanyResponse;
+import com.gooplanycol.gooplany.domain.model.response.HistoryResponse;
 
 import java.util.List;
 
 public interface CompanyInputPort {
 
-    Company authenticate(Company authenticationCompany);
+    AuthenticationResponse authenticate(AuthenticationRequest authenticationCompany);
 
-    Company getCompanyByToken(String token);
+    CompanyResponse getCompanyByToken(String token);
 
     boolean removeCompany(Long id);
 
-    Company editData(Company companyEdit, Long id);
+    CompanyResponse editData(CompanyRequestEdit companyEdit, Long id);
 
-    Company findById(Long id);
+    CompanyResponse findById(Long id);
 
-    List<Company> findAll(Integer offset, Integer pageSize);
+    List<CompanyResponse> findAll(Integer offset, Integer pageSize);
 
-    History findHistory(Long id);
+    HistoryResponse findHistory(Long id);
 
-    List<Address> findAddress(Long id, Integer offset, Integer pageSize);
+    List<AddressResponse> findAddress(Long id, Integer offset, Integer pageSize);
 
-    Company findByEmail(String email);
+    CompanyResponse findByEmail(String email);
 
-    Company changePwd(String pwd, Long id);
+    CompanyResponse changePwd(String pwd, Long id);
 
-    List<Address> addAddress(Address address, Long id);
+    List<AddressResponse> addAddress(AddressResponse address, Long id);
 
     boolean removeAddress(Long addressId, Long companyId);
 

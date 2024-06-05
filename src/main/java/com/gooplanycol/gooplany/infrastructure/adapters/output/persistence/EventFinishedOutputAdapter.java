@@ -2,12 +2,16 @@ package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence;
 
 import com.gooplanycol.gooplany.application.ports.output.EventFinishedOutputPort;
 import com.gooplanycol.gooplany.domain.exception.EventFinishedException;
-import com.gooplanycol.gooplany.domain.model.*;
+import com.gooplanycol.gooplany.domain.model.request.EventFinishedRequest;
+import com.gooplanycol.gooplany.domain.model.request.EventParticipantRequest;
+import com.gooplanycol.gooplany.domain.model.request.EventPostRequest;
+import com.gooplanycol.gooplany.domain.model.response.*;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.*;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.*;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventFinishedOutputMapper;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventParticipantOutputMapper;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventPostOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.*;
-
-import com.gooplanycol.gooplany.utils.*;
+import com.gooplanycol.gooplany.utils.StatusEventParticipant;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,28 +34,20 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
 
     private final CreditCardRepository creditCardRepository;
 
-    private final AddressRepository addressRepository;
-
     private final EventParticipantRepository eventParticipantRepository;
     private final EventParticipantOutputMapper eventParticipantOutputMapper;
 
     private final EventPostOutputMapper eventPostOutputMapper;
 
-    private EventPostEntity existEventPost(EventPost eventPost) {
+    private EventPost existEventPost(EventPostRequest eventPost) {
         if (eventPost != null) {
-            return EventPostEntity.builder()
-                    .title(eventPost.getTitle())
-                    .description(eventPost.getDescription())
-                    .eventCategory(eventPost.findEventCategory(eventPost.getEventCategory().name()))
-                    .typeOfAudience(eventPost.findTypeOfAudience(eventPost.getTypeOfAudience().name()))
-                    .typeOfPlace(eventPost.findTypeOfPlace(eventPost.getTypeOfPlace().name()))
-                    .isFree(eventPost.getIsFree())
-                    .price(eventPost.getPrice())
-                    .isUnlimited(eventPost.getIsUnlimited())
-                    .capacity(eventPost.getCapacity())
-                    .startAt(eventPost.getStartAt())
-                    .finishAt(eventPost.getFinishAt())
-                    .address(findAddress(eventPost.getAddress().getId()))
+            return EventPost.builder()
+                    .isFree(eventPost.isFree())
+                    .price(eventPost.price())
+                    .isUnlimited(eventPost.isUnlimited())
+                    .capacity(eventPost.capacity())
+                    .startAt(eventPost.startAt())
+                    .finishAt(eventPost.finishAt())
                     .build();
         }
         return null;
@@ -65,26 +61,22 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
         };
     }
 
-    private CustomerEntity findCustomer(Long id) {
+    private Customer findCustomer(Long id) {
         return customerRepository.findById(id).orElse(null);
     }
 
-    private CreditCardEntity findCard(Long id) {
+    private CreditCard findCard(Long id) {
         return creditCardRepository.findById(id).orElse(null);
     }
 
-    private AddressEntity findAddress(Long id) {
-        return addressRepository.findById(id).orElse(null);
-    }
-
-    private List<EventParticipantEntity> eventParticipants(List<EventParticipant> list) {
+    private List<EventParticipant> eventParticipant(List<EventParticipantRequest> list) {
         if (list != null) {
-            return list.stream().map(eventParticipant -> new EventParticipantEntity(
+            return list.stream().map(eventParticipant -> new EventParticipant(
                     null,
-                    knowStatusParticipant(eventParticipant.getStatusRegistration().name()),
-                    eventParticipant.getRegisteredAt(),
-                    findCustomer(eventParticipant.getCustomer().getId()),
-                    findCard(eventParticipant.getCreditCard().getId())
+                    knowStatusParticipant(eventParticipant.statusRegistration()),
+                    eventParticipant.registeredAt(),
+                    findCustomer(eventParticipant.customer().id()),
+                    findCard(eventParticipant.card().id())
             )).collect(Collectors.toList());
         } else {
             return new ArrayList<>();
@@ -92,73 +84,73 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
     }
 
     @Override
-    public EventFinished save(EventFinished eventFinished) {
+    public EventFinishedResponse save(EventFinishedRequest eventFinished) {
         if (eventFinished != null) {
-            EventFinishedEntity eventFinishedEntity;
-            if (eventFinished.getEventParticipants() != null) {
-                eventFinishedEntity = EventFinishedEntity.builder()
-                        .concept(eventFinished.getConcept())
+            EventFinished eventFinishedEntity;
+            if (eventFinished.eventParticipants() != null) {
+                eventFinishedEntity = EventFinished.builder()
+                        .concept(eventFinished.concept())
                         .createAt(LocalDateTime.now())
-                        .eventParticipants(eventParticipants(eventFinished.getEventParticipants()))
+                        .eventParticipants(eventParticipant(eventFinished.eventParticipants()))
                         .build();
             } else {
-                eventFinishedEntity = EventFinishedEntity.builder()
-                        .concept(eventFinished.getConcept())
+                eventFinishedEntity = EventFinished.builder()
+                        .concept(eventFinished.concept())
                         .eventParticipants(new ArrayList<>())
                         .createAt(LocalDateTime.now())
                         .build();
             }
 
-            EventPostEntity eventPostEntity = existEventPost(eventFinished.getEventPost());
+            EventPost eventPostEntity = existEventPost(eventFinished.eventPost());
             eventFinishedEntity.setEventPost(eventPostEntity);
-            return eventFinishedOutputMapper.toEventFinished(eventFinishedRepository.save(eventFinishedEntity));
+            return eventFinishedOutputMapper.toEventFinishedResponse(eventFinishedRepository.save(eventFinishedEntity));
         } else {
             throw new EventFinishedException("The request to save is null");
         }
     }
 
     @Override
-    public EventFinished edit(EventFinished eventFinished, Long id) {
-        EventFinishedEntity eventFinishedEntity = eventFinishedRepository.findById(id).orElse(null);
+    public EventFinishedResponse edit(EventFinishedRequest eventFinished, Long id) {
+        EventFinished eventFinishedEntity = eventFinishedRepository.findById(id).orElse(null);
         if (eventFinishedEntity != null && eventFinished != null) {
-            eventFinishedEntity.setConcept(eventFinished.getConcept());
-            eventFinishedEntity.setEventPost(existEventPost(eventFinished.getEventPost()));
-            eventFinishedEntity.setEventParticipants(eventParticipants(eventFinished.getEventParticipants()));
-            return eventFinishedOutputMapper.toEventFinished(eventFinishedRepository.save(eventFinishedEntity));
+            eventFinishedEntity.setConcept(eventFinished.concept());
+            eventFinishedEntity.setEventPost(existEventPost(eventFinished.eventPost()));
+            eventFinishedEntity.setEventParticipants(eventParticipant(eventFinished.eventParticipants()));
+            return eventFinishedOutputMapper.toEventFinishedResponse(eventFinishedRepository.save(eventFinishedEntity));
         } else {
             throw new EventFinishedException("The request to edit is null");
         }
     }
 
     @Override
-    public EventFinished findById(Long id) {
+    public EventFinishedResponse findById(Long id) {
         if (eventFinishedRepository.existsById(id)) {
-            return eventFinishedOutputMapper.toEventFinished(eventFinishedRepository.findById(id).orElse(null));
+            return eventFinishedOutputMapper.toEventFinishedResponse(eventFinishedRepository.findById(id).orElse(null));
         } else {
             throw new EventFinishedException("The event finished with id " + id + " not found");
         }
     }
 
     @Override
-    public List<EventFinished> findAll(Integer offset, Integer pageSize) {
-        Page<EventFinishedEntity> list = eventFinishedRepository.findAll(PageRequest.of(offset, pageSize));
-        return list.stream().map(eventFinishedOutputMapper::toEventFinished).collect(Collectors.toList());
+    public List<EventFinishedResponse> findAll(Integer offset, Integer pageSize) {
+        Page<EventFinished> list = eventFinishedRepository.findAll(PageRequest.of(offset, pageSize));
+        return list.stream().map(eventFinishedOutputMapper::toEventFinishedResponse).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public EventFinished addEventParticipant(EventParticipant eventParticipant, Long id) {
-        EventFinishedEntity eventFinishedEntity = eventFinishedRepository.findById(id).orElse(null);
+    public EventFinishedResponse addEventParticipant(EventParticipantRequest eventParticipant, Long id) {
+        EventFinished eventFinishedEntity = eventFinishedRepository.findById(id).orElse(null);
         if (eventFinishedEntity != null) {
-            EventParticipantEntity eventParticipantEntity = new EventParticipantEntity(
+            EventParticipant eventParticipantEntity = new EventParticipant(
                     null,
-                    knowStatusParticipant(eventParticipant.getStatusRegistration().name()),
-                    eventParticipant.getRegisteredAt(),
-                    findCustomer(eventParticipant.getCustomer().getId()),
-                    findCard(eventParticipant.getCreditCard().getId())
+                    knowStatusParticipant(eventParticipant.statusRegistration()),
+                    eventParticipant.registeredAt(),
+                    findCustomer(eventParticipant.customer().id()),
+                    findCard(eventParticipant.card().id())
             );
             eventFinishedEntity.getEventParticipants().add(eventParticipantEntity);
-            return eventFinishedOutputMapper.toEventFinished(eventFinishedRepository.save(eventFinishedEntity));
+            return eventFinishedOutputMapper.toEventFinishedResponse(eventFinishedRepository.save(eventFinishedEntity));
         } else {
             throw new EventFinishedException("The Event finished fetched to add it a new participant doesn't exist");
         }
@@ -166,23 +158,23 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
 
     @Override
     @Transactional
-    public EventFinished removeEventParticipant(Long eventParticipantId, Long eventFinishedId) {
-        EventFinishedEntity eventFinishedEntity = eventFinishedRepository.findById(eventFinishedId).orElse(null);
-        EventParticipantEntity eventParticipantEntity = eventParticipantRepository.findById(eventParticipantId).orElse(null);
+    public EventFinishedResponse removeEventParticipant(Long eventParticipantId, Long eventFinishedId) {
+        EventFinished eventFinishedEntity = eventFinishedRepository.findById(eventFinishedId).orElse(null);
+        EventParticipant eventParticipantEntity = eventParticipantRepository.findById(eventParticipantId).orElse(null);
         if (eventFinishedEntity != null && eventParticipantEntity != null) {
             eventFinishedEntity.getEventParticipants().remove(eventParticipantEntity);
-            return eventFinishedOutputMapper.toEventFinished(eventFinishedRepository.save(eventFinishedEntity));
+            return eventFinishedOutputMapper.toEventFinishedResponse(eventFinishedRepository.save(eventFinishedEntity));
         } else {
             throw new EventFinishedException("The event finished fetched to remove a participant doesn't exist");
         }
     }
 
     @Override
-    public List<EventParticipant> findEventParticipants(Long id, Integer offset, Integer pageSize) {
+    public List<EventParticipantResponse> findEventParticipants(Long id, Integer offset, Integer pageSize) {
         if (eventFinishedRepository.existsById(id)) {
-        Page<EventParticipantEntity> list = eventFinishedRepository.findEventFinishedEventParticipant(id, PageRequest.of(offset, pageSize));
+        Page<EventParticipant> list = eventFinishedRepository.findEventFinishedEventParticipant(id, PageRequest.of(offset, pageSize));
         if (list != null) {
-            return list.stream().map(eventParticipantOutputMapper::toEventParticipant).collect(Collectors.toList());
+            return list.stream().map(eventParticipantOutputMapper::toEventParticipantResponse).collect(Collectors.toList());
         } else {
             throw new EventFinishedException("The list of participants is null");
         }
@@ -193,10 +185,10 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
     }
 
     @Override
-    public EventPost findEventPost(Long id) {
-        EventPostEntity eventPostEntity = eventFinishedRepository.findEventPostEventFinished(id).orElse(null);
+    public EventPostResponse findEventPost(Long id) {
+        EventPost eventPostEntity = eventFinishedRepository.findEventPostEventFinished(id).orElse(null);
         if (eventPostEntity != null) {
-            return eventPostOutputMapper.toEventPost(eventPostEntity);
+            return eventPostOutputMapper.toEventPostResponse(eventPostEntity);
         } else {
             throw new EventFinishedException("The event post fetched by id doesn't exist");
         }

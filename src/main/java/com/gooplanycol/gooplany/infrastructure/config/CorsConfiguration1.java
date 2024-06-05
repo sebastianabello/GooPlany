@@ -10,10 +10,10 @@ public class CorsConfiguration1 {
     @Bean
     public WebMvcConfigurer corsConfiguration(){
         return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry){
-                registry.addMapping("/**");
-            }
+         @Override
+         public void addCorsMappings(CorsRegistry registry){
+             registry.addMapping("/**");
+         }
         };
     }
 }

@@ -1,8 +1,9 @@
 package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.EventPostInputPort;
-import com.gooplanycol.gooplany.application.ports.output.*;
-import com.gooplanycol.gooplany.domain.model.*;
+import com.gooplanycol.gooplany.application.ports.output.EventPostOutputPort;
+import com.gooplanycol.gooplany.domain.model.request.EventPostRequest;
+import com.gooplanycol.gooplany.domain.model.response.EventPostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,12 @@ public class EventPostService implements EventPostInputPort {
     private final EventPostOutputPort eventPostOutputPort;
 
     @Override
-    public EventPost save(EventPost eventPost) {
+    public EventPostResponse save(EventPostRequest eventPost) {
         return eventPostOutputPort.save(eventPost);
     }
 
     @Override
-    public EventPost edit(EventPost eventPost, Long id) {
+    public EventPostResponse edit(EventPostRequest eventPost, Long id) {
         return eventPostOutputPort.edit(eventPost, id);
     }
 
@@ -29,19 +30,18 @@ public class EventPostService implements EventPostInputPort {
         return eventPostOutputPort.remove(id);
     }
 
-
     @Override
-    public List<EventPost> findAll(Integer offset, Integer pageSize) {
+    public List<EventPostResponse> findAll(Integer offset, Integer pageSize) {
         return eventPostOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public List<EventPost> findEventPostByTitle(String title, Integer offset, Integer pageSize) {
+    public List<EventPostResponse> findEventPostByTitle(String title, Integer offset, Integer pageSize) {
         return eventPostOutputPort.findEventPostByTitle(title, offset, pageSize);
     }
 
     @Override
-    public EventPost findById(Long id) {
+    public EventPostResponse findById(Long id) {
         return eventPostOutputPort.findById(id);
     }
 

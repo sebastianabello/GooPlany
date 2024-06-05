@@ -1,7 +1,6 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository;
 
-
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCardEntity;
+import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.CreditCard;
 import com.gooplanycol.gooplany.utils.TypeCard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +13,9 @@ import java.util.Optional;
 
 
 @Repository
-public interface CreditCardRepository extends JpaRepository<CreditCardEntity,Long> {
-    @Query("SELECT c FROM CreditCardEntity c WHERE c.typeCard =:typeCard")
-    Page<CreditCardEntity> findCreditCardsByTypeCard(Pageable pageable, @Param("typeCard") TypeCard typeCard);
-    @Query("SELECT c FROM CreditCardEntity c WHERE c.number =:number")
-    Optional<CreditCardEntity> findCreditCardByNumber(@Param("number") String number);
+public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
+    @Query("SELECT c FROM CreditCard c WHERE c.typeCard =:typeCard")
+    Page<CreditCard> findCreditCardsByTypeCard(Pageable pageable, @Param("typeCard") TypeCard typeCard);
+
+    Optional<CreditCard> findCreditCardByNumber(String number);
 }

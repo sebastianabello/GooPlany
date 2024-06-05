@@ -13,10 +13,4 @@ public enum TypeOfAudience {
     TOURISTS,
     LOCALS,
     FOREIGNERS;
-
-    private String message;
-
-    TypeOfAudience() {
-        this.message = this.name().toLowerCase();
-    }
 }

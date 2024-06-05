@@ -2,9 +2,11 @@ package com.gooplanycol.gooplany.application.service;
 
 import com.gooplanycol.gooplany.application.ports.input.EventFinishedInputPort;
 import com.gooplanycol.gooplany.application.ports.output.EventFinishedOutputPort;
-import com.gooplanycol.gooplany.domain.model.EventFinished;
-import com.gooplanycol.gooplany.domain.model.EventParticipant;
-import com.gooplanycol.gooplany.domain.model.EventPost;
+import com.gooplanycol.gooplany.domain.model.request.EventFinishedRequest;
+import com.gooplanycol.gooplany.domain.model.request.EventParticipantRequest;
+import com.gooplanycol.gooplany.domain.model.response.EventFinishedResponse;
+import com.gooplanycol.gooplany.domain.model.response.EventParticipantResponse;
+import com.gooplanycol.gooplany.domain.model.response.EventPostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,45 +15,46 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EventFinishedService implements EventFinishedInputPort {
+
     private final EventFinishedOutputPort eventFinishedOutputPort;
 
     @Override
-    public EventFinished save(EventFinished eventFinished) {
+    public EventFinishedResponse save(EventFinishedRequest eventFinished) {
         return eventFinishedOutputPort.save(eventFinished);
     }
 
     @Override
-    public EventFinished edit(EventFinished eventFinished, Long id) {
+    public EventFinishedResponse edit(EventFinishedRequest eventFinished, Long id) {
         return eventFinishedOutputPort.edit(eventFinished, id);
     }
 
     @Override
-    public EventFinished findById(Long id) {
+    public EventFinishedResponse findById(Long id) {
         return eventFinishedOutputPort.findById(id);
     }
 
     @Override
-    public List<EventFinished> findAll(Integer offset, Integer pageSize) {
+    public List<EventFinishedResponse> findAll(Integer offset, Integer pageSize) {
         return eventFinishedOutputPort.findAll(offset, pageSize);
     }
 
     @Override
-    public EventFinished addEventParticipant(EventParticipant eventParticipant, Long id) {
+    public EventFinishedResponse addEventParticipant(EventParticipantRequest eventParticipant, Long id) {
         return eventFinishedOutputPort.addEventParticipant(eventParticipant, id);
     }
 
     @Override
-    public EventFinished removeEventParticipant(Long eventParticipantId, Long eventFinishedId) {
+    public EventFinishedResponse removeEventParticipant(Long eventParticipantId, Long eventFinishedId) {
         return eventFinishedOutputPort.removeEventParticipant(eventParticipantId, eventFinishedId);
     }
 
     @Override
-    public List<EventParticipant> findEventParticipants(Long id, Integer offset, Integer pageSize) {
+    public List<EventParticipantResponse> findEventParticipants(Long id, Integer offset, Integer pageSize) {
         return eventFinishedOutputPort.findEventParticipants(id, offset, pageSize);
     }
 
     @Override
-    public EventPost findEventPost(Long id) {
+    public EventPostResponse findEventPost(Long id) {
         return eventFinishedOutputPort.findEventPost(id);
     }
 }

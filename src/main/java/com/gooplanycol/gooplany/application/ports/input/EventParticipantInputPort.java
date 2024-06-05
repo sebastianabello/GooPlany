@@ -1,28 +1,29 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
-import com.gooplanycol.gooplany.domain.model.CreditCard;
-import com.gooplanycol.gooplany.domain.model.Customer;
-import com.gooplanycol.gooplany.domain.model.EventParticipant;
+import com.gooplanycol.gooplany.domain.model.request.EventParticipantRequest;
+import com.gooplanycol.gooplany.domain.model.response.CreditCardResponse;
+import com.gooplanycol.gooplany.domain.model.response.CustomerResponse;
+import com.gooplanycol.gooplany.domain.model.response.EventParticipantResponse;
 
 import java.util.List;
 
 public interface EventParticipantInputPort {
 
-    EventParticipant save(EventParticipant eventParticipant);
+    EventParticipantResponse save(EventParticipantRequest eventParticipant);
 
-    EventParticipant edit(EventParticipant eventParticipant, Long id);
+    EventParticipantResponse edit(EventParticipantRequest eventParticipant, Long id);
 
-    EventParticipant changeStatus(String status, Long id);
+    EventParticipantResponse changeStatus(String status, Long id);
 
-    List<EventParticipant> findAll(Integer offset, Integer pageSize);
+    List<EventParticipantResponse> findAll(Integer offset, Integer pageSize);
 
-    EventParticipant findById(Long id);
+    EventParticipantResponse findById(Long id);
 
     boolean remove(Long id);
 
-    List<EventParticipant> findEventParticipantsByStatus(Integer offset, Integer pageSize, String statusEventParticipant);
+    List<EventParticipantResponse> findEventParticipantsByStatus(Integer offset, Integer pageSize, String statusEventParticipant);
 
-    Customer findCustomerEventParticipant(Long id);
+    CustomerResponse findCustomerEventParticipant(Long id);
 
-    CreditCard findCardEventParticipant(Long id);
+    CreditCardResponse findCardEventParticipant(Long id);
 }

@@ -1,23 +1,23 @@
 package com.gooplanycol.gooplany.application.ports.input;
 
-import com.gooplanycol.gooplany.domain.model.EventPost;
+import com.gooplanycol.gooplany.domain.model.request.EventPostRequest;
+import com.gooplanycol.gooplany.domain.model.response.EventPostResponse;
 
 import java.util.List;
 
-
 public interface EventPostInputPort {
 
-    EventPost save(EventPost eventPost);
+    EventPostResponse save(EventPostRequest eventPost);
 
-    EventPost edit(EventPost eventPost, Long id);
+    EventPostResponse edit(EventPostRequest eventPost, Long id);
 
     boolean remove(Long id);
 
-    EventPost findById(Long id);
+    EventPostResponse findById(Long id);
 
-    List<EventPost> findAll(Integer offset, Integer pageSize);
+    List<EventPostResponse> findAll(Integer offset, Integer pageSize);
 
-    List<EventPost> findEventPostByTitle(String title, Integer offset, Integer pageSize);
+    List<EventPostResponse> findEventPostByTitle(String title, Integer offset, Integer pageSize);
 
 
 }

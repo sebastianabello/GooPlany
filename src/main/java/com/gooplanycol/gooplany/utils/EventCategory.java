@@ -14,11 +14,4 @@ public enum EventCategory {
     RELIGIOUS,
     CHARITY,
     OTHER;
-
-    private String message;
-
-    EventCategory() {
-        this.message = this.name().toLowerCase();
-    }
-
 }

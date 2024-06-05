@@ -4,11 +4,5 @@ public enum StatusEventPost {
     PENDING,
     APPROVED,
     REJECTED,
-    FINISHED;
-
-    private String message;
-
-    StatusEventPost() {
-        this.message = this.name().toLowerCase();
-    }
+    FINISHED
 }
