@@ -13,13 +13,13 @@ public interface EventParticipantOutputPort {
 
     EventParticipantResponse edit(EventParticipantRequest eventParticipant, Long id);
 
+    boolean remove(Long id);
+
     EventParticipantResponse changeStatus(String status, Long id);
 
     List<EventParticipantResponse> findAll(Integer offset, Integer pageSize);
 
     EventParticipantResponse findById(Long id);
-
-    boolean remove(Long id);
 
     List<EventParticipantResponse> findEventParticipantsByStatus(Integer offset, Integer pageSize, String statusEventParticipant);
 

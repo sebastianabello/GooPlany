@@ -1,4 +1,4 @@
-package com.gooplanycol.gooplany.infrastructure.config;
+package com.gooplanycol.gooplany.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

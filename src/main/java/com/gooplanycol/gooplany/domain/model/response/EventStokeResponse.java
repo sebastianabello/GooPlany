@@ -1,5 +1,7 @@
 package com.gooplanycol.gooplany.domain.model.response;
 
+import com.gooplanycol.gooplany.domain.model.request.AddressRequest;
+
 import java.time.LocalDateTime;
 
 public record EventStokeResponse(
@@ -9,15 +11,14 @@ public record EventStokeResponse(
         String eventCategory,
         String typeOfAudience,
         String typeOfPlace,
-        boolean isFree,
+        boolean free,
         double price,
-        boolean isUnlimited,
         int capacity,
         LocalDateTime startAt,
         LocalDateTime finishAt,
-        String statusEventPost,
+        boolean enableEvent,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        AddressResponse address
+        AddressRequest address
 ) {
 }

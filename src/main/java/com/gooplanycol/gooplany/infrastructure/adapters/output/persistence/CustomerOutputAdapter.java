@@ -18,8 +18,6 @@ import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repos
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CreditCardRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CustomerRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
-import com.gooplanycol.gooplany.utils.Gender;
-import com.gooplanycol.gooplany.utils.Level;
 import com.gooplanycol.gooplany.utils.TokenType;
 import com.gooplanycol.gooplany.utils.TypeCard;
 import jakarta.transaction.Transactional;
@@ -56,7 +54,6 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
     private final JwtService jwtService;
 
     private final PasswordEncoder passwordEncoder;
-
 
     private void saveCustomerToken(Customer customer, String jwtToken) {
         Token token = new Token(
@@ -135,35 +132,11 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
             customer.setLastName(response.lastName());
             customer.setCellphone(response.cellphone());
             customer.setEmail(response.email());
-            customer.setDescription(response.description());
-            customer.setEmergencyContact(response.emergencyContact());
-            customer.setGender(typeGender(response.gender()));
-            customer.setLevel(typeLevel(response.level()));
             return customerOutputMapper.toCustomerResponse(customerRepository.save(customer));
         } else {
             throw new CustomerException("The customer fetched to update doesn't exist");
         }
     }
-
-    private Gender typeGender(String gender) {
-        return switch (gender) {
-            case "male" -> Gender.MALE;
-            case "female" -> Gender.FEMALE;
-            case "not binary" -> Gender.NON_BINARY;
-            case "prefer not to say" -> Gender.PREFER_NOT_TO_SAY;
-            default -> null;
-        };
-    }
-
-    private Level typeLevel(String level) {
-        return switch (level) {
-            case "private" -> Level.PRIVATE;
-            case "friends" -> Level.FRIENDS;
-            case "friends of friends" -> Level.FRIENDS_OF_FRIENDS;
-            default -> Level.PUBLIC;
-        };
-    }
-
 
     @Override
     public CustomerResponse findById(Long id) {
@@ -296,7 +269,7 @@ public class CustomerOutputAdapter implements CustomerOutputPort {
                 }
             } else {
                 //card doesn't exist
-                CreditCard newCard = new CreditCard(null, creditCardResponseDTO.number(), typeCard(creditCardResponseDTO.typeCard()));
+                CreditCard newCard = new CreditCard(null, creditCardResponseDTO.number(), typeCard(creditCardResponseDTO.type()));
                 customer.getCards().add(newCard);
             }
             customerRepository.save(customer);

@@ -21,13 +21,13 @@ public class EventParticipant {
     @Enumerated(EnumType.STRING)
     private StatusEventParticipant statusRegistration;
 
-    private LocalDateTime registeredAt;
+    private LocalDateTime createAt;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private Customer customerId;
 
     @ManyToOne
     @JoinColumn(name = "credit_card_id")
-    private CreditCard creditCard;
+    private CreditCard creditCardId;
 }

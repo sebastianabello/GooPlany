@@ -19,10 +19,10 @@ public interface EventStokeInputPort {
 
     EventStokeResponse findEventPostById(Long id);
 
-    List<EventStokeResponse> findEventStokesByStatusEventPost(String status, Integer offset, Integer pageSize);
+    List<EventStokeResponse> findEventStokesByEnableEventPost(String status, Integer offset, Integer pageSize);
 
     EventStokeResponse findEventStockByTitle(String title);
 
-    EventStokeResponse changeStatus(String status, Long id);
+    EventStokeResponse participateEvent(int amount, Long id);
 
 }

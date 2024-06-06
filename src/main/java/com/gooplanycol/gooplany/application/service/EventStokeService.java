@@ -46,8 +46,8 @@ public class EventStokeService implements EventStokeInputPort {
     }
 
     @Override
-    public List<EventStokeResponse> findEventStokesByStatusEventPost(String status, Integer offset, Integer pageSize) {
-        return eventStokeOutputPort.findEventStokesByStatusEventPost(status, offset, pageSize);
+    public List<EventStokeResponse> findEventStokesByEnableEventPost(String status, Integer offset, Integer pageSize) {
+        return eventStokeOutputPort.findEventStokesByEnableEventPost(status, offset, pageSize);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class EventStokeService implements EventStokeInputPort {
     }
 
     @Override
-    public EventStokeResponse changeStatus(String status, Long id) {
-        return eventStokeOutputPort.changeStatus(status, id);
+    public EventStokeResponse participateEvent(int amount, Long id) {
+        return eventStokeOutputPort.participateEvent(amount, id);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.gooplanycol.gooplany.application.service;
 
-import com.gooplanycol.gooplany.application.ports.input.EmailInputPort;
+import com.gooplanycol.gooplany.application.ports.output.EmailInputPort;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

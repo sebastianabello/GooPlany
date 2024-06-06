@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface CustomerOutputPort {
 
-    AuthenticationResponse authenticate(AuthenticationRequest authenticationCustomer);
+    AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest);
 
     CustomerResponse getCustomerByToken(String token);
 
     boolean removeCustomer(Long id);
 
-    CustomerResponse editData(CustomerRequestEdit customerEdit, Long id);
+    CustomerResponse editData(CustomerRequestEdit responseDTO, Long id);
 
     CustomerResponse findById(Long id);
 
@@ -31,9 +31,9 @@ public interface CustomerOutputPort {
 
     List<AddressResponse> addAddress(AddressResponse addressRequestDTO, Long id);
 
-    boolean removeAddress(Long addressId, Long customerId);
+    boolean removeAddress(Long idAddress, Long idCustomer);
 
-    List<CreditCardResponse> addCreditCard(CreditCardResponse creditCard, Long id);
+    List<CreditCardResponse> addCreditCard(CreditCardResponse creditCardResponse, Long id);
 
-    boolean removeCreditCard(Long creditCardId, Long customerId);
+    boolean removeCreditCard(Long idCreditCard, Long idCustomer);
 }

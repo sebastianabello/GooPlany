@@ -1,7 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
-import com.gooplanycol.gooplany.utils.Gender;
-import com.gooplanycol.gooplany.utils.Level;
 import com.gooplanycol.gooplany.utils.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,15 +37,6 @@ public class Customer extends Profile implements UserDetails {
     private String username;
     private String pwd;
 
-    private String lastName;
-    private LocalDate birthdate;
-    private String description;
-    private String emergencyContact;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-    @Enumerated(EnumType.STRING)
-    private Level level;
-
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(
             name = "customer_roles",
@@ -60,10 +48,7 @@ public class Customer extends Profile implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        Collection<? extends GrantedAuthority> collect = roles.stream().map(role -> {
-            return new SimpleGrantedAuthority("ROLE_"+role.name());
-        }).collect(Collectors.toList());
-        return collect;
+        return roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_"+role.name())).collect(Collectors.toList());
     }
 
     @Override

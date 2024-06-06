@@ -25,16 +25,9 @@ public class ConfirmationToken {
     private LocalDateTime confirmedAt;
     @ManyToOne
     @JoinColumn(
-            nullable = true,
+            nullable = false,
             name = "customer_id"
     )
     private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(
-            nullable = true,
-            name = "company_id"
-    )
-    private Company company;
 
 }

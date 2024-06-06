@@ -43,11 +43,12 @@ public class EventParticipantOutputAdapter implements EventParticipantOutputPort
     public EventParticipantResponse save(EventParticipantRequest eventParticipant) {
         if (eventParticipant != null) {
             EventParticipant e = EventParticipant.builder()
-                    .statusRegistration(knowStatus(eventParticipant.statusRegistration()))
-                    .registeredAt(LocalDateTime.now())
-                    .customer(findCustomer(eventParticipant.customer().id()))
-                    .creditCard(findCreditCard(eventParticipant.card().id()))
+                    .statusRegistration(StatusEventParticipant.PENDING)
+                    .createAt(LocalDateTime.now())
+                    .customerId(findCustomer(eventParticipant.customer().id()))
+                    .creditCardId(findCreditCard(eventParticipant.card().id()))
                     .build();
+            e = eventParticipantRepository.save(e);
             return eventParticipantOutputMapper.toEventParticipantResponse(eventParticipantRepository.save(e));
         } else {
             throw new EventParticipantException("The request to save is null");
@@ -58,7 +59,7 @@ public class EventParticipantOutputAdapter implements EventParticipantOutputPort
         return switch (status.toLowerCase()) {
             case "registered" -> StatusEventParticipant.REGISTERED;
             case "canceled" -> StatusEventParticipant.CANCELED;
-            default -> StatusEventParticipant.UNREGISTERED;
+            default -> StatusEventParticipant.PENDING;
         };
     }
 
@@ -75,9 +76,9 @@ public class EventParticipantOutputAdapter implements EventParticipantOutputPort
         EventParticipant e = eventParticipantRepository.findById(id).orElse(null);
         if (e != null && eventParticipant != null) {
             e.setStatusRegistration(knowStatus(eventParticipant.statusRegistration()));
-            e.setRegisteredAt(LocalDateTime.now());
-            e.setCustomer(findCustomer(eventParticipant.customer().id()));
-            e.setCreditCard(findCreditCard(eventParticipant.card().id()));
+            e.setCreateAt(LocalDateTime.now());
+            e.setCustomerId(findCustomer(eventParticipant.customer().id()));
+            e.setCreditCardId(findCreditCard(eventParticipant.card().id()));
             e = eventParticipantRepository.save(e);
             return eventParticipantOutputMapper.toEventParticipantResponse(e);
         } else {

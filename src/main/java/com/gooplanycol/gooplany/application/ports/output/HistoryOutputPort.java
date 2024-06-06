@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface HistoryOutputPort {
 
-    HistoryResponse save(HistoryRequest history);
+    HistoryResponse save(HistoryRequest historyRequest);
 
     boolean remove(Long id);
 
@@ -20,6 +20,6 @@ public interface HistoryOutputPort {
 
     List<EventFinishedResponse> addEventFinished(EventFinishedResponse eventFinished, Long id);
 
-    boolean removeEventFinished(Long eventFinishedId, Long historyId);
+    boolean removeEventFinished(Long idEventFinished, Long idHistory);
 
 }

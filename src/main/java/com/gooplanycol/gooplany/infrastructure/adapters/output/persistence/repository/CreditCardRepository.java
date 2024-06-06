@@ -11,10 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-
 @Repository
 public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
-    @Query("SELECT c FROM CreditCard c WHERE c.typeCard =:typeCard")
+    @Query("SELECT c FROM CreditCard c WHERE c.type =:typeCard")
     Page<CreditCard> findCreditCardsByTypeCard(Pageable pageable, @Param("typeCard") TypeCard typeCard);
 
     Optional<CreditCard> findCreditCardByNumber(String number);

@@ -1,4 +1,4 @@
-package com.gooplanycol.gooplany.infrastructure.config;
+package com.gooplanycol.gooplany.config;
 
 import com.gooplanycol.gooplany.application.service.JwtService;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;
@@ -61,6 +61,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         }
         filterChain.doFilter(request, response);
+     }
     }
-}
 

@@ -28,7 +28,7 @@ public class CreditCardOutputAdapter implements CreditCardOutputPort {
         if (request != null) {
             CreditCard creditCard = CreditCard.builder()
                     .number(request.number())
-                    .typeCard(typeCard(request.typeCard()))
+                    .type(typeCard(request.type()))
                     .build();
             return creditCardOutPutMapper.toCreditCardResponse(creditCardRepository.save(creditCard));
         } else {
@@ -50,7 +50,7 @@ public class CreditCardOutputAdapter implements CreditCardOutputPort {
         CreditCard card = creditCardRepository.findById(id).orElse(null);
         if (card != null && request != null) {
             card.setNumber(request.number());
-            card.setTypeCard(typeCard(request.typeCard()));
+            card.setType(typeCard(request.type()));
             return creditCardOutPutMapper.toCreditCardResponse(creditCardRepository.save(card));
         } else {
             throw new CreditCardException("The card to update doesn't exist or the request is null");
@@ -80,10 +80,8 @@ public class CreditCardOutputAdapter implements CreditCardOutputPort {
     @Override
     public List<CreditCardResponse> findAll(Integer offset, Integer pageSize) {
         Page<CreditCard> cards = creditCardRepository.findAll(PageRequest.of(offset, pageSize));
-        if (cards != null && !cards.isEmpty()) {
-            return cards.getContent().stream().map(creditCard -> {
-                return creditCardOutPutMapper.toCreditCardResponse(creditCard);
-            }).collect(Collectors.toList());
+        if (!cards.isEmpty()) {
+            return cards.getContent().stream().map(creditCardOutPutMapper::toCreditCardResponse).collect(Collectors.toList());
         } else {
             throw new CreditCardException("The list of card is null");
         }
@@ -93,9 +91,7 @@ public class CreditCardOutputAdapter implements CreditCardOutputPort {
     public List<CreditCardResponse> findCardsByType(Integer offset, Integer pageSize, String type) {
         Page<CreditCard> cards = creditCardRepository.findCreditCardsByTypeCard(PageRequest.of(offset, pageSize), typeCard(type));
         if (cards != null) {
-            return cards.getContent().stream().map(creditCard -> {
-                return creditCardOutPutMapper.toCreditCardResponse(creditCard);
-            }).collect(Collectors.toList());
+            return cards.getContent().stream().map(creditCardOutPutMapper::toCreditCardResponse).collect(Collectors.toList());
         } else {
             throw new CreditCardException("The list of card is null");
         }

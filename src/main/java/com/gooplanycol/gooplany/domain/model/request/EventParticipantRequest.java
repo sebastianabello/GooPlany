@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public record EventParticipantRequest(
         String statusRegistration,
-        LocalDateTime registeredAt,
+        LocalDateTime createAt,
         CustomerResponse customer,
         CreditCardResponse card
 ) {

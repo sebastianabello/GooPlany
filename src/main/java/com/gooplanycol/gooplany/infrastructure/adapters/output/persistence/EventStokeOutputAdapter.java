@@ -8,7 +8,6 @@ import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entit
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.mapper.EventStokeOutputMapper;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.EventStokeRepository;
 import com.gooplanycol.gooplany.utils.EventCategory;
-import com.gooplanycol.gooplany.utils.StatusEventPost;
 import com.gooplanycol.gooplany.utils.TypeOfAudience;
 import com.gooplanycol.gooplany.utils.TypeOfPlace;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +38,14 @@ public class EventStokeOutputAdapter implements EventStokeOutputPort {
                         .eventCategory(typeEventCategory(eventStoke.eventCategory()))
                         .typeOfAudience(typeOfAudience(eventStoke.typeOfAudience()))
                         .typeOfPlace(typeOfPlace(eventStoke.typeOfPlace()))
-                        .isFree(eventStoke.isFree())
+                        .free(eventStoke.free())
                         .price(eventStoke.price())
-                        .isUnlimited(eventStoke.isUnlimited())
                         .capacity(eventStoke.capacity())
                         .startAt(eventStoke.startAt())
                         .finishAt(eventStoke.finishAt())
-                        .statusEventPost(statusEventPost(eventStoke.statusEventPost()))
+                        .enableEvent(true)
                         .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
                         .build();
                 return eventStokeOutputMapper.toEventStokeResponse(eventStokeRepository.save(e));
             }
@@ -55,14 +54,7 @@ public class EventStokeOutputAdapter implements EventStokeOutputPort {
         }
     }
 
-    private StatusEventPost statusEventPost(String status) {
-        return switch (status.toLowerCase()) {
-            case "approved" -> StatusEventPost.APPROVED;
-            case "rejected" -> StatusEventPost.REJECTED;
-            case "finished" -> StatusEventPost.FINISHED;
-            default -> StatusEventPost.PENDING;
-        };
-    }
+
 
     private EventCategory typeEventCategory(String evenCategory) {
         return switch (evenCategory) {
@@ -145,7 +137,7 @@ public class EventStokeOutputAdapter implements EventStokeOutputPort {
             eventStokeEdit.setTypeOfPlace(typeOfPlace(eventStoke.typeOfPlace()));
             eventStokeEdit.setStartAt(eventStoke.startAt());
             eventStokeEdit.setFinishAt(eventStoke.finishAt());
-            eventStokeEdit.setStatusEventPost(statusEventPost(eventStoke.statusEventPost()));
+            eventStokeEdit.setEnableEvent(eventStoke.enableEvent());
             eventStokeEdit.setUpdatedAt(LocalDateTime.now());
             return eventStokeOutputMapper.toEventStokeResponse(eventStokeRepository.save(eventStokeEdit));
         } else {
@@ -170,14 +162,15 @@ public class EventStokeOutputAdapter implements EventStokeOutputPort {
     }
 
     @Override
-    public List<EventStokeResponse> findEventStokesByStatusEventPost(String status, Integer offset, Integer pageSize) {
-        Page<EventStoke> list = eventStokeRepository.findEventStokesByStatusEventPost(status, PageRequest.of(offset, pageSize));
+    public List<EventStokeResponse> findEventStokesByEnableEventPost(String status, Integer offset, Integer pageSize) {
+        Page<EventStoke> list = eventStokeRepository.findEventStokesByEnableEventPost(PageRequest.of(offset, pageSize));
         if (list != null) {
             return list.stream().map(eventStokeOutputMapper::toEventStokeResponse).collect(Collectors.toList());
         } else {
-            throw new EventStokeException("The list of event is null");
+            throw new EventStokeException("The list of events is null");
         }
     }
+
 
     @Override
     public EventStokeResponse findEventStockByTitle(String title) {
@@ -190,23 +183,19 @@ public class EventStokeOutputAdapter implements EventStokeOutputPort {
     }
 
     @Override
-    public EventStokeResponse changeStatus(String status, Long id) {
+    public EventStokeResponse participateEvent(int amount, Long id) {
         EventStoke eventStoke = eventStokeRepository.findById(id).orElse(null);
-        if (eventStoke != null) {
-            eventStoke.setStatusEventPost(knowStatus(status));
-            eventStoke.setUpdatedAt(LocalDateTime.now());
-            return eventStokeOutputMapper.toEventStokeResponse(eventStokeRepository.save(eventStoke));
+        if ( eventStoke != null) {
+            int stockCapacity = eventStoke.getCapacity();
+            if (stockCapacity >= amount) {
+                eventStoke.setCapacity(stockCapacity - amount);
+                return eventStokeOutputMapper.toEventStokeResponse(eventStokeRepository.save(eventStoke));
+            } else {
+                throw new EventStokeException("The amount of participants is greater than the capacity of the event");
+            }
         } else {
-            throw new EventStokeException("The event fetched to change its status doesn't exist");
+            throw new EventStokeException("The event to participate doesn't exist");
         }
     }
 
-    public StatusEventPost knowStatus(String status) {
-        return switch (status.toLowerCase()) {
-            case "approved" -> StatusEventPost.APPROVED;
-            case "rejected" -> StatusEventPost.REJECTED;
-            case "finished" -> StatusEventPost.FINISHED;
-            default -> StatusEventPost.PENDING;
-        };
-    }
 }

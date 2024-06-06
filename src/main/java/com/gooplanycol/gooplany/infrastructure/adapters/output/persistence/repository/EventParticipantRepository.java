@@ -15,10 +15,10 @@ import java.util.Optional;
 
 @Repository
 public interface EventParticipantRepository extends JpaRepository<EventParticipant, Long> {
-    @Query("SELECT p.customer FROM EventParticipant p WHERE p.id=:id")
+    @Query("SELECT p.customerId FROM EventParticipant p WHERE p.id=:id")
     Optional<Customer> findCustomer(@Param("id") Long id);
 
-    @Query("SELECT p.creditCard FROM EventParticipant p WHERE p.id=:id")
+    @Query("SELECT p.creditCardId FROM EventParticipant p WHERE p.id=:id")
     Optional<CreditCard> findCard(@Param("id") Long id);
 
     @Query("SELECT p FROM EventParticipant p WHERE p.statusRegistration =:status")

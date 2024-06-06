@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.domain.model.response;
 
-
 import java.time.LocalDate;
 import java.util.List;
 

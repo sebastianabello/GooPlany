@@ -1,4 +1,4 @@
-package com.gooplanycol.gooplany.infrastructure.config;
+package com.gooplanycol.gooplany.config;
 
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
+
     private final CustomerRepository customerRepository;
+
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> customerRepository.findCustomerByUsername(username)
@@ -37,4 +40,5 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

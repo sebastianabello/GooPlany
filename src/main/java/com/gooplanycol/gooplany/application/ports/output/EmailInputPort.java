@@ -1,4 +1,4 @@
-package com.gooplanycol.gooplany.application.ports.input;
+package com.gooplanycol.gooplany.application.ports.output;
 
 
 public interface EmailInputPort {

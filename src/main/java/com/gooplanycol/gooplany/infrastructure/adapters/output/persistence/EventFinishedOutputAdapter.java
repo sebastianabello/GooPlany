@@ -42,9 +42,10 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
     private EventPost existEventPost(EventPostRequest eventPost) {
         if (eventPost != null) {
             return EventPost.builder()
-                    .isFree(eventPost.isFree())
+                    .title(eventPost.title())
+                    .description(eventPost.description())
+                    .free(eventPost.free())
                     .price(eventPost.price())
-                    .isUnlimited(eventPost.isUnlimited())
                     .capacity(eventPost.capacity())
                     .startAt(eventPost.startAt())
                     .finishAt(eventPost.finishAt())
@@ -57,7 +58,7 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
         return switch (status.toLowerCase()) {
             case "registered" -> StatusEventParticipant.REGISTERED;
             case "canceled" -> StatusEventParticipant.CANCELED;
-            default -> StatusEventParticipant.UNREGISTERED;
+            default -> StatusEventParticipant.PENDING;
         };
     }
 
@@ -74,7 +75,7 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
             return list.stream().map(eventParticipant -> new EventParticipant(
                     null,
                     knowStatusParticipant(eventParticipant.statusRegistration()),
-                    eventParticipant.registeredAt(),
+                    eventParticipant.createAt(),
                     findCustomer(eventParticipant.customer().id()),
                     findCard(eventParticipant.card().id())
             )).collect(Collectors.toList());
@@ -89,13 +90,11 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
             EventFinished eventFinishedEntity;
             if (eventFinished.eventParticipants() != null) {
                 eventFinishedEntity = EventFinished.builder()
-                        .concept(eventFinished.concept())
                         .createAt(LocalDateTime.now())
                         .eventParticipants(eventParticipant(eventFinished.eventParticipants()))
                         .build();
             } else {
                 eventFinishedEntity = EventFinished.builder()
-                        .concept(eventFinished.concept())
                         .eventParticipants(new ArrayList<>())
                         .createAt(LocalDateTime.now())
                         .build();
@@ -113,7 +112,6 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
     public EventFinishedResponse edit(EventFinishedRequest eventFinished, Long id) {
         EventFinished eventFinishedEntity = eventFinishedRepository.findById(id).orElse(null);
         if (eventFinishedEntity != null && eventFinished != null) {
-            eventFinishedEntity.setConcept(eventFinished.concept());
             eventFinishedEntity.setEventPost(existEventPost(eventFinished.eventPost()));
             eventFinishedEntity.setEventParticipants(eventParticipant(eventFinished.eventParticipants()));
             return eventFinishedOutputMapper.toEventFinishedResponse(eventFinishedRepository.save(eventFinishedEntity));
@@ -145,7 +143,7 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
             EventParticipant eventParticipantEntity = new EventParticipant(
                     null,
                     knowStatusParticipant(eventParticipant.statusRegistration()),
-                    eventParticipant.registeredAt(),
+                    eventParticipant.createAt(),
                     findCustomer(eventParticipant.customer().id()),
                     findCard(eventParticipant.card().id())
             );

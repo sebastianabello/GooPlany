@@ -37,7 +37,7 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
         if (history != null) {
             History historyEntity = History.builder()
                     .eventsFinished(new ArrayList<>())
-                    .modificationDate(history.dateModification())
+                    .dateModification(history.dateModification())
                     .build();
             return historyOutputMapper.toHistoryResponse(historyRepository.save(historyEntity));
         } else {
@@ -88,7 +88,7 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
         EventFinished eventFinishedEntity = eventFinishedRepository.findById(eventFinished.id()).orElse(null);
         if (historyEntity != null && eventFinishedEntity != null) {
             historyEntity.getEventsFinished().add(eventFinishedEntity);
-            historyEntity.setModificationDate(LocalDate.now());
+            historyEntity.setDateModification(LocalDate.now());
             historyRepository.save(historyEntity);
             Page<EventFinished> list = historyRepository.findHistoryEventsFinished(id, PageRequest.of(0, 10));
             return list.getContent().stream().map(eventFinishedOutputMapper::toEventFinishedResponse).collect(Collectors.toList());
@@ -103,7 +103,7 @@ public class HistoryOutputAdapter implements HistoryOutputPort {
         EventFinished eventFinishedEntity = eventFinishedRepository.findById(eventFinishedId).orElse(null);
         if (historyEntity != null && eventFinishedEntity != null) {
             historyEntity.getEventsFinished().remove(eventFinishedEntity);
-            historyEntity.setModificationDate(LocalDate.now());
+            historyEntity.setDateModification(LocalDate.now());
             historyRepository.save(historyEntity);
             return true;
         } else {

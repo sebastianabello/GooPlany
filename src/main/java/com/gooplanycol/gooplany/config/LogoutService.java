@@ -1,4 +1,4 @@
-package com.gooplanycol.gooplany.infrastructure.config;
+package com.gooplanycol.gooplany.config;
 
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Token;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.TokenRepository;

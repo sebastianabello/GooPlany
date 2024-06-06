@@ -1,16 +1,13 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.registration;
 
-import com.gooplanycol.gooplany.application.ports.input.EmailInputPort;
+import com.gooplanycol.gooplany.application.ports.output.EmailInputPort;
 import com.gooplanycol.gooplany.application.ports.output.RegistrationOutputPort;
 import com.gooplanycol.gooplany.application.service.EmailValidator;
-import com.gooplanycol.gooplany.domain.model.request.CompanyRequest;
 import com.gooplanycol.gooplany.domain.model.request.CustomerRequest;
 import com.gooplanycol.gooplany.domain.model.response.AuthenticationResponse;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Company;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.ConfirmationToken;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.Customer;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity.History;
-import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CompanyRepository;
 import com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.repository.CustomerRepository;
 import com.gooplanycol.gooplany.utils.Role;
 import jakarta.transaction.Transactional;
@@ -22,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,13 +30,12 @@ import java.util.UUID;
 public class RegistrationOutputAdapter implements RegistrationOutputPort {
 
     private final CustomerRepository customerRepository;
-    private final CompanyRepository companyRepository;
     private final EmailValidator emailValidator;
     private final EmailInputPort iEmailSender;
     private final PasswordEncoder passwordEncoder;
     private final ConfirmationTokenOutputAdapter confirmationTokenService;
 
-    public ConfirmationToken generateTokenCustomer(Customer customer) {
+    public ConfirmationToken generateToken(Customer customer) {
         String tokenValue = UUID.randomUUID().toString();
         ConfirmationToken token = ConfirmationToken.builder()
                 .token(tokenValue)
@@ -50,19 +47,17 @@ public class RegistrationOutputAdapter implements RegistrationOutputPort {
         return token;
     }
 
-    public String resendConfirmationEmailCustomer(String email) {
+    public String resendConfirmationEmail(String email) {
         Customer customer = customerRepository.findCustomerByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-
-        ConfirmationToken token = generateTokenCustomer(customer);
-
+        ConfirmationToken token = generateToken(customer);
         String link = "http://localhost:8080/api/v1/authentication/confirm?token=" + token.getToken();
         iEmailSender.send(customer.getEmail(), buildEmail(customer.getName(), link));
         return token.getToken();
     }
 
     @Override
-    public AuthenticationResponse saveCustomer(CustomerRequest customerRequest) throws IllegalAccessException {
+    public AuthenticationResponse save(CustomerRequest customerRequest) throws IllegalAccessException {
         if (customerRequest != null) {
             boolean customerExist = customerRepository.findCustomerByEmail(customerRequest.email()).isPresent();
             boolean isValidEmail = emailValidator.test(customerRequest.email());
@@ -72,74 +67,20 @@ public class RegistrationOutputAdapter implements RegistrationOutputPort {
                 Customer customer = Customer.builder()
                         .address(new ArrayList<>())
                         .cards(new ArrayList<>())
-                        .history(new History(null, new ArrayList<>(), LocalDate.now()))
-                        .roles(List.of(Role.CUSTOMER))
+                        .history(new History(null,new ArrayList<>(), LocalDate.now()))
+                        .roles(Arrays.asList(Role.CUSTOMER))
                         .tokens(new ArrayList<>())
                         .confirmationTokens(new ArrayList<>())
                         .enable(false)
                         .build();
                 customer.setName(customerRequest.name());
                 customer.setLastName(customerRequest.lastName());
-                customer.setBirthdate(customerRequest.birthdate());
                 customer.setCellphone(customerRequest.cellphone());
                 customer.setEmail(customerRequest.email());
                 customer.setUsername(customerRequest.username());
                 customer.setPwd(passwordEncoder.encode(customerRequest.pwd()));
                 customerRepository.save(customer);
-                return new AuthenticationResponse(resendConfirmationEmailCustomer(customer.getEmail()));
-            }
-        } else {
-            return null;
-        }
-    }
-
-    public ConfirmationToken generateTokenCompany(Company company) {
-        String tokenValue = UUID.randomUUID().toString();
-        ConfirmationToken token = ConfirmationToken.builder()
-                .token(tokenValue)
-                .createdAt(LocalDateTime.now())
-                .expiresAt(LocalDateTime.now().plusMinutes(15))
-                .company(company)
-                .build();
-        confirmationTokenService.saveConfirmationToken(token);
-        return token;
-    }
-
-    public String resendConfirmationEmailCompany(String email) {
-        Company company = companyRepository.findCompanyByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-
-        ConfirmationToken token = generateTokenCompany(company);
-
-        String link = "http://localhost:8080/api/v1/authentication/confirm?token=" + token.getToken();
-        iEmailSender.send(company.getEmail(), buildEmail(company.getName(), link));
-        return token.getToken();
-    }
-
-    @Override
-    public AuthenticationResponse saveCompany(CompanyRequest companyRequest) throws IllegalAccessException {
-        if (companyRequest != null) {
-            boolean customerExist = companyRepository.findCompanyByEmail(companyRequest.email()).isPresent();
-            boolean isValidEmail = emailValidator.test(companyRequest.email());
-            if (customerExist || !isValidEmail) {
-                throw new IllegalAccessException("email already taken or  email not valid");
-            } else {
-                Company company = Company.builder()
-                        .address(new ArrayList<>())
-                        .history(new History(null, new ArrayList<>(), LocalDate.now()))
-                        .roles(List.of(Role.COMPANY))
-                        .tokens(new ArrayList<>())
-                        .confirmationTokens(new ArrayList<>())
-                        .enable(false)
-                        .build();
-                company.setName(companyRequest.name());
-                company.setNit(companyRequest.nit());
-                company.setCellphone(companyRequest.cellphone());
-                company.setEmail(companyRequest.email());
-                company.setUsername(companyRequest.username());
-                company.setPwd(passwordEncoder.encode(companyRequest.pwd()));
-                companyRepository.save(company);
-                return new AuthenticationResponse(resendConfirmationEmailCompany(company.getEmail()));
+                return new AuthenticationResponse(resendConfirmationEmail(customer.getEmail()));
             }
         } else {
             return null;
@@ -151,35 +92,24 @@ public class RegistrationOutputAdapter implements RegistrationOutputPort {
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token).orElse(null);
-        if (confirmationToken != null) {
-            if (confirmationToken.getConfirmedAt() != null) {
+        if(confirmationToken!=null){
+            if(confirmationToken.getConfirmedAt()!=null){
                 return "Email already confirmed";
-            } else {
+            }else{
                 LocalDateTime expiredAt = confirmationToken.getExpiresAt();
-                if (expiredAt.isBefore(LocalDateTime.now())) {//is expired
-                    if (confirmationToken.getCustomer() != null) {
-                        resendConfirmationEmailCustomer(confirmationToken.getCustomer().getEmail());
-                    } else if (confirmationToken.getCompany() != null) {
-                        resendConfirmationEmailCompany(confirmationToken.getCompany().getEmail());
-                    }
-                    log.info("Token expired, send another one");
+                if(expiredAt.isBefore(LocalDateTime.now())){//is expired
+                    resendConfirmationEmail(confirmationToken.getCustomer().getEmail());
+                    System.out.println("Token expired, send another one");
                     return "the token was expired so we already send you another one";
-                } else {
+                }else{
                     confirmationTokenService.setConfirmedAt(token);
-
-                    if (confirmationToken.getCustomer() != null) {
-                        Customer customer = confirmationToken.getCustomer();
-                        customer.setEnable(true);
-                        customerRepository.save(customer);
-                    } else if (confirmationToken.getCompany() != null) {
-                        Company company = confirmationToken.getCompany();
-                        company.setEnable(true);
-                        companyRepository.save(company);
-                    }
-                    return "Email Confirmed successfully";
+                    Customer customer = confirmationToken.getCustomer();
+                    customer.setEnable(true);
+                    customerRepository.save(customer);
+                    return "Email confirmed successfully";
                 }
             }
-        } else {
+        }else{
             return "Error confirmation token null";
         }
     }

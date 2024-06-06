@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface AddressOutputPort {
 
-    AddressResponse save(AddressRequest addressRequest);
+    AddressResponse save(AddressRequest address);
 
-    AddressResponse edit(AddressRequest addressRequest, Long id);
+    AddressResponse edit(AddressRequest address, Long id);
 
     boolean remove(Long id);
 

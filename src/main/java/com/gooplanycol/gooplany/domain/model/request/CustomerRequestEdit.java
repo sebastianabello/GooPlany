@@ -5,11 +5,7 @@ public record CustomerRequestEdit(
         String lastName,
         String cellphone,
         String email,
-        String username,
-        String description,
-        String emergencyContact,
-        String gender,
-        String level
+        String username
 ) {
 
 }

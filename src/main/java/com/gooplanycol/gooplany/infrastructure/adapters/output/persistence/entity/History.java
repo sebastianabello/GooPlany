@@ -1,6 +1,5 @@
 package com.gooplanycol.gooplany.infrastructure.adapters.output.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +22,5 @@ public class History {
     @JoinColumn(name = "even_finished_id")
     private List<EventFinished> eventsFinished;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate modificationDate;
+    private LocalDate dateModification;
 }

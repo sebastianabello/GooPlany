@@ -17,5 +17,5 @@ public class CreditCard {
     private Long id;
     private String number;
     @Enumerated(EnumType.STRING)
-    private TypeCard typeCard;
+    private TypeCard type;
 }

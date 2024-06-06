@@ -12,8 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface EventStokeRepository extends JpaRepository<EventStoke, Long> {
-    @Query("SELECT p FROM EventStoke p WHERE p.statusEventPost=:statusEventPost")
-    Page<EventStoke> findEventStokesByStatusEventPost(@Param("statusEventPost") String statusEventPost, Pageable pageable);
+    @Query("SELECT p FROM EventStoke p WHERE p.enableEvent =true")
+    Page<EventStoke> findEventStokesByEnableEventPost(Pageable pageable);
 
     @Query("SELECT p FROM EventStoke p WHERE p.title=:title")
     Optional<EventStoke> findEventStockByTitle(@Param("title") String title);

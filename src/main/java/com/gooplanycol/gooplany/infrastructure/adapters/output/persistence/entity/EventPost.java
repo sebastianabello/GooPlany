@@ -16,9 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventPost {
-
     @Id
-    @Column(name = "event_post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -34,15 +32,17 @@ public class EventPost {
     @Enumerated(EnumType.STRING)
     private TypeOfPlace typeOfPlace;
 
-    private boolean isFree;
+    private boolean free;
     private double price;
-    private boolean isUnlimited;
     private int capacity;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startAt;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime finishAt;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @OneToOne
     @JoinColumn(name = "address_id")

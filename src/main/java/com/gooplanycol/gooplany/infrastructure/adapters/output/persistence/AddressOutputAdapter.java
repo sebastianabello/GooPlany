@@ -74,10 +74,8 @@ public class AddressOutputAdapter implements AddressOutputPort {
     @Override
     public List<AddressResponse> findAll(Integer offset, Integer pageSize) {
         Page<Address> list = addressRepository.findAll(PageRequest.of(offset, pageSize));
-        if (list != null && !list.isEmpty()) {
-            return list.getContent().stream().map(address -> {
-                return addressOutputMapper.toAddressResponse(address);
-            }).collect(Collectors.toList());
+        if (!list.isEmpty()) {
+            return list.getContent().stream().map(addressOutputMapper::toAddressResponse).collect(Collectors.toList());
         } else {
             throw new AddressException("The list of addresses fetched is null");
         }
@@ -88,9 +86,7 @@ public class AddressOutputAdapter implements AddressOutputPort {
         Page<Address> list = addressRepository.findAddressesByPostalCode(PageRequest.of(offset, pageSize), postalCode);
         if (list != null && !list.isEmpty()) {
             return list.getContent()
-                    .stream().map(address -> {
-                        return addressOutputMapper.toAddressResponse(address);
-                    }).collect(Collectors.toList());
+                    .stream().map(addressOutputMapper::toAddressResponse).collect(Collectors.toList());
         } else {
             throw new AddressException("The list of addresses fetched by postal code is null");
         }
@@ -101,9 +97,7 @@ public class AddressOutputAdapter implements AddressOutputPort {
         Page<Address> list = addressRepository.findAddressesByCountry(PageRequest.of(offset, pageSize), country);
         if (list != null) {
             return list
-                    .stream().map(address -> {
-                        return addressOutputMapper.toAddressResponse(address);
-                    }).collect(Collectors.toList());
+                    .stream().map(addressOutputMapper::toAddressResponse).collect(Collectors.toList());
         } else {
             throw new AddressException("The list of addresses fetched by country code is null");
         }

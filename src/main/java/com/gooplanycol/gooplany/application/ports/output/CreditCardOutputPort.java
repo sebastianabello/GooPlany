@@ -11,14 +11,14 @@ public interface CreditCardOutputPort {
 
     CreditCardResponse edit(CreditCardRequest creditCard, Long id);
 
-    CreditCardResponse findById(Long id);
+    boolean remove(Long id);
 
-    CreditCardResponse findCardByNumber(String number);
+    CreditCardResponse findById(Long id);
 
     List<CreditCardResponse> findAll(Integer offset, Integer pageSize);
 
-    List<CreditCardResponse> findCardsByType(Integer offset, Integer pageSize, String type);
+    CreditCardResponse findCardByNumber(String number);
 
-    boolean remove(Long id);
+    List<CreditCardResponse> findCardsByType(Integer offset, Integer pageSize, String type);
 
 }

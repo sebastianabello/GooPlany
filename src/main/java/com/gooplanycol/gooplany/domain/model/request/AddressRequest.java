@@ -5,5 +5,4 @@ public record AddressRequest(
         String country,
         String postalCode
 ) {
-
 }

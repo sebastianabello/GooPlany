@@ -18,8 +18,6 @@ public class EventFinished {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String concept;
-
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "event_post_id")
     private EventPost eventPost;

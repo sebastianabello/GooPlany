@@ -10,14 +10,13 @@ public record EventPostRequest(
         String eventCategory,
         String typeOfAudience,
         String typeOfPlace,
-        boolean isFree,
-        int price,
-        boolean isUnlimited,
+        boolean free,
+        double price,
         int capacity,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
         LocalDateTime startAt,
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
         LocalDateTime finishAt,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         AddressRequest address
 ) {
 }

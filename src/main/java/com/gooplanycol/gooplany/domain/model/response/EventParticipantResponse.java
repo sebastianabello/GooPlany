@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record EventParticipantResponse(
         Long id,
         String statusRegistration,
-        LocalDateTime registeredAt,
+        LocalDateTime createAt,
         Long customerId,
         Long creditCardId
 ) {
