@@ -13,6 +13,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     @Query("SELECT a FROM Address a WHERE a.postalCode=:postalCode")
     Page<Address> findAddressesByPostalCode(Pageable pageable, @Param("postalCode") String postalCode);
 
-    @Query("SELECT a FROM Address a WHERE a.postalCode=:country")
+    @Query("SELECT a FROM Address a WHERE a.country=:country")
     Page<Address> findAddressesByCountry(Pageable pageable, @Param("country") String country);
 }

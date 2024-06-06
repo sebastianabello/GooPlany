@@ -27,7 +27,7 @@ public class EventFinishedRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Guarda un evento finalizado en el sistema",
-            description = "Este endpoint permite a los usuarios guardar un evento finalizado en el sistema. Se requiere un cuerpo de solicitud con los detalles del evento finalizado a guardar. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado guardado.",
+            description = "Este endpoint permite guardar un evento finalizado en el sistema. Se requiere un cuerpo de solicitud con los detalles del evento finalizado a guardar. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado guardado.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -60,7 +60,7 @@ public class EventFinishedRestAdapter {
     @PostMapping("/{id}/edit")
     @Operation(
             summary = "Edita un evento finalizado en el sistema",
-            description = "Este endpoint permite a los usuarios editar un evento finalizado en el sistema utilizando su ID. Se requiere el ID del evento en la ruta de la URL y un cuerpo de solicitud con los detalles del evento finalizado a editar. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado editado.",
+            description = "Este endpoint permite editar un evento finalizado en el sistema utilizando su ID. Se requiere el ID del evento en la ruta de la URL y un cuerpo de solicitud con los detalles del evento finalizado a editar. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado editado.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -101,7 +101,7 @@ public class EventFinishedRestAdapter {
     @GetMapping("/find/{id}")
     @Operation(
             summary = "Encuentra un evento finalizado en el sistema por su ID",
-            description = "Este endpoint permite a los usuarios buscar un evento finalizado en el sistema utilizando su ID. Se requiere el ID del evento en la ruta de la URL. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado encontrado.",
+            description = "Este endpoint permite buscar un evento finalizado en el sistema utilizando su ID. Se requiere el ID del evento en la ruta de la URL. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado encontrado.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -144,7 +144,7 @@ public class EventFinishedRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Encuentra todos los eventos finalizados en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar todos los eventos finalizados en el sistema utilizando la paginación. Se requieren los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados encontrados.",
+            description = "Este endpoint permite buscar todos los eventos finalizados en el sistema utilizando la paginación. Se requieren los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados encontrados.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -177,7 +177,7 @@ public class EventFinishedRestAdapter {
     @PostMapping("/{id}/add/EventParticipant")
     @Operation(
             summary = "Agrega un participante a un evento finalizado en el sistema",
-            description = "Este endpoint permite a los usuarios agregar un participante a un evento finalizado en el sistema utilizando el ID del evento. Se requiere el ID del evento en la ruta de la URL y un cuerpo de solicitud con los detalles del participante a agregar. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado actualizado.",
+            description = "Este endpoint permite agregar un participante a un evento finalizado en el sistema utilizando el ID del evento. Se requiere el ID del evento en la ruta de la URL y un cuerpo de solicitud con los detalles del participante a agregar. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado actualizado.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -218,7 +218,7 @@ public class EventFinishedRestAdapter {
     @DeleteMapping("/{eventFinishedId}/remove/eventParticipant/{eventParticipantId}")
     @Operation(
             summary = "Elimina un participante de un evento finalizado en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar un participante de un evento finalizado en el sistema utilizando el ID del evento y el ID del participante. Se requiere el ID del evento y el ID del participante en la ruta de la URL. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado actualizado.",
+            description = "Este endpoint permite eliminar un participante de un evento finalizado en el sistema utilizando el ID del evento y el ID del participante. Se requiere el ID del evento y el ID del participante en la ruta de la URL. Devuelve un objeto EventFinishedResponse con los detalles del evento finalizado actualizado.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -259,7 +259,7 @@ public class EventFinishedRestAdapter {
     @GetMapping("/{id}/find/eventParticipants/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra los participantes de un evento finalizado en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar los participantes de un evento finalizado en el sistema utilizando el ID del evento y la paginación. Se requiere el ID del evento y los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes encontrados.",
+            description = "Este endpoint permite buscar los participantes de un evento finalizado en el sistema utilizando el ID del evento y la paginación. Se requiere el ID del evento y los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes encontrados.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -292,7 +292,7 @@ public class EventFinishedRestAdapter {
     @GetMapping("/{id}/find/eventParticipants")
     @Operation(
             summary = "Encuentra los participantes de un evento finalizado en el sistema con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar los participantes de un evento finalizado en el sistema utilizando el ID del evento y la paginación por defecto. Se requiere el ID del evento en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes encontrados.",
+            description = "Este endpoint permite buscar los participantes de un evento finalizado en el sistema utilizando el ID del evento y la paginación por defecto. Se requiere el ID del evento en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes encontrados.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -325,7 +325,7 @@ public class EventFinishedRestAdapter {
     @GetMapping("/find/{id}/eventPost")
     @Operation(
             summary = "Encuentra el post de un evento finalizado en el sistema",
-            description = "Este endpoint permite a los usuarios buscar el post de un evento finalizado en el sistema utilizando el ID del evento. Se requiere el ID del evento en la ruta de la URL. Devuelve un objeto EventPostResponse con los detalles del post del evento finalizado encontrado.",
+            description = "Este endpoint permite buscar el post de un evento finalizado en el sistema utilizando el ID del evento. Se requiere el ID del evento en la ruta de la URL. Devuelve un objeto EventPostResponse con los detalles del post del evento finalizado encontrado.",
             tags = {"EventFinished"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

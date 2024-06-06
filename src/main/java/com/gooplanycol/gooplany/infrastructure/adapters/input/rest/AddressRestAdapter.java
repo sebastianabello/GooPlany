@@ -25,7 +25,7 @@ public class AddressRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Crea una nueva dirección en el sistema",
-            description = "Este endpoint permite a los usuarios crear una nueva dirección. Se requiere un objeto AddressRequest en el cuerpo de la solicitud que contiene los detalles de la dirección a guardar. Devuelve un objeto AddressResponse con los detalles de la dirección guardada.",
+            description = "Este endpoint permite crear una nueva dirección. Se requiere un objeto AddressRequest en el cuerpo de la solicitud que contiene los detalles de la dirección a guardar. Devuelve un objeto AddressResponse con los detalles de la dirección guardada.",
             tags = {"Address"},
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Objeto AddressRequest que contiene los detalles de la dirección a guardar",
@@ -66,7 +66,7 @@ public class AddressRestAdapter {
     @PostMapping("/{id}/edit")
     @Operation(
             summary = "Edita una dirección existente en el sistema",
-            description = "Este endpoint permite a los usuarios editar una dirección existente. Se requiere un objeto AddressRequest en el cuerpo de la solicitud que contiene los nuevos detalles de la dirección a editar y el ID de la dirección en la ruta de la URL. Devuelve un objeto AddressResponse con los detalles de la dirección editada.",
+            description = "Este endpoint permite editar una dirección existente. Se requiere un objeto AddressRequest en el cuerpo de la solicitud que contiene los nuevos detalles de la dirección a editar y el ID de la dirección en la ruta de la URL. Devuelve un objeto AddressResponse con los detalles de la dirección editada.",
             tags = {"Address"},
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Objeto AddressRequest que contiene los nuevos detalles de la dirección a editar",
@@ -115,7 +115,7 @@ public class AddressRestAdapter {
     @DeleteMapping("/{id}/remove")
     @Operation(
             summary = "Elimina una dirección existente en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar una dirección existente. Se requiere el ID de la dirección en la ruta de la URL. Devuelve un estado HTTP 200 si la dirección se eliminó correctamente.",
+            description = "Este endpoint permite eliminar una dirección existente. Se requiere el ID de la dirección en la ruta de la URL. Devuelve un estado HTTP 200 si la dirección se eliminó correctamente.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -146,7 +146,7 @@ public class AddressRestAdapter {
     @GetMapping("/find/{id}")
     @Operation(
             summary = "Busca una dirección en el sistema por su ID",
-            description = "Este endpoint permite a los usuarios buscar una dirección existente por su ID. Se requiere el ID de la dirección en la ruta de la URL. Devuelve un objeto AddressResponse con los detalles de la dirección encontrada.",
+            description = "Este endpoint permite buscar una dirección existente por su ID. Se requiere el ID de la dirección en la ruta de la URL. Devuelve un objeto AddressResponse con los detalles de la dirección encontrada.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -179,7 +179,7 @@ public class AddressRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Obtiene una lista de direcciones en el sistema",
-            description = "Este endpoint permite a los usuarios obtener una lista de direcciones existentes en el sistema. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas. Por defecto, devuelve las primeras 10 direcciones.",
+            description = "Este endpoint permite obtener una lista de direcciones existentes en el sistema. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas. Por defecto, devuelve las primeras 10 direcciones.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -212,7 +212,7 @@ public class AddressRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     @Operation(
             summary = "Obtiene una lista paginada de direcciones en el sistema",
-            description = "Este endpoint permite a los usuarios obtener una lista paginada de direcciones existentes en el sistema. Se requiere el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
+            description = "Este endpoint obtener una lista paginada de direcciones existentes en el sistema. Se requiere el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -245,7 +245,7 @@ public class AddressRestAdapter {
     @GetMapping("/find/pc/{postalCode}/{offset}/{pageSize}")
     @Operation(
             summary = "Obtiene una lista paginada de direcciones en el sistema por código postal",
-            description = "Este endpoint permite a los usuarios obtener una lista paginada de direcciones existentes en el sistema por código postal. Se requiere el código postal, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
+            description = "Este endpoint permite obtener una lista paginada de direcciones existentes en el sistema por código postal. Se requiere el código postal, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -279,7 +279,7 @@ public class AddressRestAdapter {
     @GetMapping("/find/pc/{postalCode}")
     @Operation(
             summary = "Obtiene una lista de direcciones en el sistema por código postal",
-            description = "Este endpoint permite a los usuarios obtener una lista de direcciones existentes en el sistema por código postal. Se requiere el código postal en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas. Por defecto, devuelve las primeras 10 direcciones.",
+            description = "Este endpoint permite obtener una lista de direcciones existentes en el sistema por código postal. Se requiere el código postal en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas. Por defecto, devuelve las primeras 10 direcciones.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -313,7 +313,7 @@ public class AddressRestAdapter {
     @GetMapping("/find/cnt/{country}/{offset}/{pageSize}")
     @Operation(
             summary = "Obtiene una lista paginada de direcciones en el sistema por país",
-            description = "Este endpoint permite a los usuarios obtener una lista paginada de direcciones existentes en el sistema por país. Se requiere el país, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
+            description = "Este endpoint permite obtener una lista paginada de direcciones existentes en el sistema por país. Se requiere el país, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -346,7 +346,7 @@ public class AddressRestAdapter {
     @GetMapping("/find/cnt/{country}")
     @Operation(
             summary = "Obtiene una lista de direcciones en el sistema por país",
-            description = "Este endpoint permite a los usuarios obtener una lista de direcciones existentes en el sistema por país. Se requiere el país en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas. Por defecto, devuelve las primeras 10 direcciones.",
+            description = "Este endpoint permite obtener una lista de direcciones existentes en el sistema por país. Se requiere el país en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas. Por defecto, devuelve las primeras 10 direcciones.",
             tags = {"Address"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

@@ -24,7 +24,7 @@ public class EventPostRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Guarda un nuevo post de evento en el sistema",
-            description = "Este endpoint permite a los usuarios guardar un nuevo post de evento en el sistema. Se requiere un objeto EventPostRequest en el cuerpo de la solicitud. Devuelve un objeto EventPostResponse con los detalles del post de evento guardado.",
+            description = "Este endpoint permite guardar un nuevo post de evento en el sistema. Se requiere un objeto EventPostRequest en el cuerpo de la solicitud. Devuelve un objeto EventPostResponse con los detalles del post de evento guardado.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -57,7 +57,7 @@ public class EventPostRestAdapter {
     @PostMapping("/{id}/edit")
     @Operation(
             summary = "Edita un post de evento existente en el sistema",
-            description = "Este endpoint permite a los usuarios editar un post de evento existente en el sistema. Se requiere un objeto EventPostRequest en el cuerpo de la solicitud y el ID del post de evento en la ruta de la URL. Devuelve un objeto EventPostResponse con los detalles del post de evento editado.",
+            description = "Este endpoint permite editar un post de evento existente en el sistema. Se requiere un objeto EventPostRequest en el cuerpo de la solicitud y el ID del post de evento en la ruta de la URL. Devuelve un objeto EventPostResponse con los detalles del post de evento editado.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -90,7 +90,7 @@ public class EventPostRestAdapter {
     @DeleteMapping("/{id}/remove")
     @Operation(
             summary = "Elimina un post de evento existente en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar un post de evento existente en el sistema. Se requiere el ID del post de evento en la ruta de la URL. No devuelve contenido en la respuesta.",
+            description = "Este endpoint permite eliminar un post de evento existente en el sistema. Se requiere el ID del post de evento en la ruta de la URL. No devuelve contenido en la respuesta.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -122,7 +122,7 @@ public class EventPostRestAdapter {
     @GetMapping("/find/{id}")
     @Operation(
             summary = "Encuentra un post de evento en el sistema por el ID del post",
-            description = "Este endpoint permite a los usuarios buscar un post de evento en el sistema utilizando el ID del post. Se requiere el ID del post en la ruta de la URL. Devuelve un objeto EventPostResponse con los detalles del post de evento encontrado.",
+            description = "Este endpoint permite buscar un post de evento en el sistema utilizando el ID del post. Se requiere el ID del post en la ruta de la URL. Devuelve un objeto EventPostResponse con los detalles del post de evento encontrado.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -155,7 +155,7 @@ public class EventPostRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra una lista de posts de eventos en el sistema",
-            description = "Este endpoint permite a los usuarios buscar una lista de posts de eventos en el sistema utilizando un offset y un tamaño de página. Se requieren el offset y el tamaño de página en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de posts de eventos en el sistema utilizando un offset y un tamaño de página. Se requieren el offset y el tamaño de página en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -188,7 +188,7 @@ public class EventPostRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Encuentra una lista de posts de eventos en el sistema con valores predeterminados",
-            description = "Este endpoint permite a los usuarios buscar una lista de posts de eventos en el sistema utilizando un offset y un tamaño de página predeterminados (0 y 10 respectivamente). No se requieren parámetros en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de posts de eventos en el sistema utilizando un offset y un tamaño de página predeterminados (0 y 10 respectivamente). No se requieren parámetros en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -221,7 +221,7 @@ public class EventPostRestAdapter {
     @GetMapping("/find/title/{title}/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra una lista de posts de eventos en el sistema por título",
-            description = "Este endpoint permite a los usuarios buscar una lista de posts de eventos en el sistema utilizando el título del post, un offset y un tamaño de página. Se requieren el título del post, el offset y el tamaño de página en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de posts de eventos en el sistema utilizando el título del post, un offset y un tamaño de página. Se requieren el título del post, el offset y el tamaño de página en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -254,7 +254,7 @@ public class EventPostRestAdapter {
     @GetMapping("/find/title/{title}")
     @Operation(
             summary = "Encuentra una lista de posts de eventos en el sistema por título con valores predeterminados",
-            description = "Este endpoint permite a los usuarios buscar una lista de posts de eventos en el sistema utilizando el título del post, un offset y un tamaño de página predeterminados (0 y 10 respectivamente). Se requiere el título del post en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de posts de eventos en el sistema utilizando el título del post, un offset y un tamaño de página predeterminados (0 y 10 respectivamente). Se requiere el título del post en la ruta de la URL. Devuelve una lista de objetos EventPostResponse con los detalles de los posts de eventos encontrados.",
             tags = {"EventPost"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

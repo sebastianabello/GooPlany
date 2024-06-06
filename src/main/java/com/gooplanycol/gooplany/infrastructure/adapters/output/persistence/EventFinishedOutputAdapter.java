@@ -91,7 +91,7 @@ public class EventFinishedOutputAdapter implements EventFinishedOutputPort {
             if (eventFinished.eventParticipants() != null) {
                 eventFinishedEntity = EventFinished.builder()
                         .createAt(LocalDateTime.now())
-                        .eventParticipants(eventParticipant(eventFinished.eventParticipants()))
+                        .eventParticipants(eventParticipant(eventFinished.getRegisteredParticipants()))
                         .build();
             } else {
                 eventFinishedEntity = EventFinished.builder()

@@ -186,8 +186,8 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <!-- Comentar para Spring Boot / Descomentar para Maven -->
-                    <exclude>application-*.properties</exclude>
+                    <!-- Comentar para Spring Boot / Descomentar para Maven
+                    <exclude>application-*.properties</exclude> -->
                 </excludes>
             </resource>
         </resources>

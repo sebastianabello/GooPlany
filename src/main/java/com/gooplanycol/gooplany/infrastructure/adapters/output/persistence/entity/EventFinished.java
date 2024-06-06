@@ -28,5 +28,4 @@ public class EventFinished {
     @JoinTable(name = "event_participants")
     private List<EventParticipant> eventParticipants;
 
-
 }

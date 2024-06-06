@@ -25,7 +25,7 @@ public class HistoryRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Guarda un nuevo historial en el sistema",
-            description = "Este endpoint permite a los usuarios guardar un nuevo historial en el sistema. Se requiere un objeto HistoryRequest en el cuerpo de la solicitud. Devuelve un objeto HistoryResponse con los detalles del historial guardado.",
+            description = "Este endpoint permite guardar un nuevo historial en el sistema. Se requiere un objeto HistoryRequest en el cuerpo de la solicitud. Devuelve un objeto HistoryResponse con los detalles del historial guardado.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -58,7 +58,7 @@ public class HistoryRestAdapter {
     @DeleteMapping("/{id}/remove")
     @Operation(
             summary = "Elimina un historial en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar un historial en el sistema utilizando el id del historial en la ruta de la URL. No devuelve contenido en caso de éxito.",
+            description = "Este endpoint permite eliminar un historial en el sistema utilizando el id del historial en la ruta de la URL. No devuelve contenido en caso de éxito.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -90,7 +90,7 @@ public class HistoryRestAdapter {
     @GetMapping("/find/{id}")
     @Operation(
             summary = "Encuentra un historial en el sistema por su ID",
-            description = "Este endpoint permite a los usuarios buscar un historial en el sistema utilizando el ID del historial en la ruta de la URL. Devuelve un objeto HistoryResponse con los detalles del historial encontrado.",
+            description = "Este endpoint permite buscar un historial en el sistema utilizando el ID del historial en la ruta de la URL. Devuelve un objeto HistoryResponse con los detalles del historial encontrado.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -124,7 +124,7 @@ public class HistoryRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra todos los historiales en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar todos los historiales en el sistema utilizando la paginación. Los parámetros de offset y pageSize se pasan en la ruta de la URL. Devuelve una lista de objetos HistoryResponse con los detalles de los historiales encontrados.",
+            description = "Este endpoint permite buscar todos los historiales en el sistema utilizando la paginación. Los parámetros de offset y pageSize se pasan en la ruta de la URL. Devuelve una lista de objetos HistoryResponse con los detalles de los historiales encontrados.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -157,7 +157,7 @@ public class HistoryRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Encuentra todos los historiales en el sistema con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar todos los historiales en el sistema utilizando la paginación por defecto (offset 0, pageSize 10). Devuelve una lista de objetos HistoryResponse con los detalles de los historiales encontrados.",
+            description = "Este endpoint permite buscar todos los historiales en el sistema utilizando la paginación por defecto (offset 0, pageSize 10). Devuelve una lista de objetos HistoryResponse con los detalles de los historiales encontrados.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -190,7 +190,7 @@ public class HistoryRestAdapter {
     @GetMapping("/{id}/find/eventFinished/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra los eventos finalizados de un historial con paginación",
-            description = "Este endpoint permite a los usuarios buscar los eventos finalizados de un historial en el sistema utilizando la paginación. Los parámetros de offset y pageSize se pasan en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados encontrados.",
+            description = "Este endpoint permite buscar los eventos finalizados de un historial en el sistema utilizando la paginación. Los parámetros de offset y pageSize se pasan en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados encontrados.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -223,7 +223,7 @@ public class HistoryRestAdapter {
     @GetMapping("/{id}/find/eventFinished")
     @Operation(
             summary = "Encuentra los eventos finalizados de un historial con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar los eventos finalizados de un historial en el sistema utilizando la paginación por defecto (offset 0, pageSize 10). Los parámetros de offset y pageSize se pasan en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados encontrados.",
+            description = "Este endpoint permite buscar los eventos finalizados de un historial en el sistema utilizando la paginación por defecto (offset 0, pageSize 10). Los parámetros de offset y pageSize se pasan en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados encontrados.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -256,7 +256,7 @@ public class HistoryRestAdapter {
     @PostMapping("/{id}/add/eventFinished")
     @Operation(
             summary = "Agrega un evento finalizado a un historial",
-            description = "Este endpoint permite a los usuarios agregar un evento finalizado a un historial en el sistema. Se requiere un objeto EventFinishedResponse en el cuerpo de la solicitud y el ID del historial en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados del historial.",
+            description = "Este endpoint usuarios agregar un evento finalizado a un historial en el sistema. Se requiere un objeto EventFinishedResponse en el cuerpo de la solicitud y el ID del historial en la ruta de la URL. Devuelve una lista de objetos EventFinishedResponse con los detalles de los eventos finalizados del historial.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -289,7 +289,7 @@ public class HistoryRestAdapter {
     @DeleteMapping("/{historyId}/remove/eventFinished/{eventFinishedId}")
     @Operation(
             summary = "Elimina un evento finalizado de un historial",
-            description = "Este endpoint permite a los usuarios eliminar un evento finalizado de un historial en el sistema. Se requiere el ID del historial y el ID del evento finalizado en la ruta de la URL. No devuelve contenido en caso de éxito.",
+            description = "Este endpoint permite eliminar un evento finalizado de un historial en el sistema. Se requiere el ID del historial y el ID del evento finalizado en la ruta de la URL. No devuelve contenido en caso de éxito.",
             tags = {"History"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

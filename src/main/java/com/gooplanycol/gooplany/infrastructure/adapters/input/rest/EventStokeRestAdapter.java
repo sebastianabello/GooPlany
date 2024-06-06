@@ -24,7 +24,7 @@ public class EventStokeRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Guarda un nuevo stock de eventos en el sistema",
-            description = "Este endpoint permite a los usuarios guardar un nuevo stock de eventos en el sistema. Se requiere un objeto EventStokeRequest en el cuerpo de la solicitud. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos guardado.",
+            description = "Este endpoint permite guardar un nuevo stock de eventos en el sistema. Se requiere un objeto EventStokeRequest en el cuerpo de la solicitud. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos guardado.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -57,7 +57,7 @@ public class EventStokeRestAdapter {
     @DeleteMapping("/{id}/remove")
     @Operation(
             summary = "Elimina un stock de eventos en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar un stock de eventos en el sistema. Se requiere el id del stock de eventos en la ruta de la URL. No devuelve contenido en caso de éxito.",
+            description = "Este endpoint permite eliminar un stock de eventos en el sistema. Se requiere el id del stock de eventos en la ruta de la URL. No devuelve contenido en caso de éxito.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -90,7 +90,7 @@ public class EventStokeRestAdapter {
     @PostMapping("/{id}/edit")
     @Operation(
             summary = "Edita un stock de eventos existente en el sistema",
-            description = "Este endpoint permite a los usuarios editar un stock de eventos existente en el sistema. Se requiere un objeto EventStokeRequest en el cuerpo de la solicitud y el id del stock de eventos en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos editado.",
+            description = "Este endpoint permite editar un stock de eventos existente en el sistema. Se requiere un objeto EventStokeRequest en el cuerpo de la solicitud y el id del stock de eventos en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos editado.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -123,7 +123,7 @@ public class EventStokeRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Encuentra una lista de stocks de eventos en el sistema con valores predeterminados",
-            description = "Este endpoint permite a los usuarios buscar una lista de stocks de eventos en el sistema utilizando un offset y un tamaño de página predeterminados (0 y 10 respectivamente). No se requieren parámetros en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de stocks de eventos en el sistema utilizando un offset y un tamaño de página predeterminados (0 y 10 respectivamente). No se requieren parámetros en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -156,7 +156,7 @@ public class EventStokeRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra una lista de stocks de eventos en el sistema",
-            description = "Este endpoint permite a los usuarios buscar una lista de stocks de eventos en el sistema utilizando un offset y un tamaño de página especificados en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de stocks de eventos en el sistema utilizando un offset y un tamaño de página especificados en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -189,7 +189,7 @@ public class EventStokeRestAdapter {
     @GetMapping("/find/{id}")
     @Operation(
             summary = "Encuentra un stock de eventos en el sistema por su ID",
-            description = "Este endpoint permite a los usuarios buscar un stock de eventos en el sistema utilizando el ID del stock de eventos en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos encontrado.",
+            description = "Este endpoint permite buscar un stock de eventos en el sistema utilizando el ID del stock de eventos en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos encontrado.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -219,10 +219,10 @@ public class EventStokeRestAdapter {
         }
     }
 
-    @GetMapping("/find/status/{status}")
+    @GetMapping("/find/enable")
     @Operation(
             summary = "Encuentra una lista de stocks de eventos en el sistema por su estado",
-            description = "Este endpoint permite a los usuarios buscar una lista de stocks de eventos en el sistema utilizando el estado del stock de eventos en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de stocks de eventos en el sistema utilizando el estado del stock de eventos en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -252,10 +252,10 @@ public class EventStokeRestAdapter {
         }
     }
 
-    @GetMapping("/find/status/{status}/{offset}/{pageSize}")
+    @GetMapping("/find/enable/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra una lista de stocks de eventos en el sistema por su estado",
-            description = "Este endpoint permite a los usuarios buscar una lista de stocks de eventos en el sistema utilizando el estado del stock de eventos y un offset y un tamaño de página especificados en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
+            description = "Este endpoint permite buscar una lista de stocks de eventos en el sistema utilizando el estado del stock de eventos y un offset y un tamaño de página especificados en la ruta de la URL. Devuelve una lista de objetos EventStokeResponse con los detalles de los stocks de eventos encontrados.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -288,7 +288,7 @@ public class EventStokeRestAdapter {
     @GetMapping("/find/title/{title}")
     @Operation(
             summary = "Encuentra un stock de eventos en el sistema por su título",
-            description = "Este endpoint permite a los usuarios buscar un stock de eventos en el sistema utilizando el título del stock de eventos en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos encontrado.",
+            description = "Este endpoint permite buscar un stock de eventos en el sistema utilizando el título del stock de eventos en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos encontrado.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -321,7 +321,7 @@ public class EventStokeRestAdapter {
     @PostMapping("/{id}/participate/{amount}")
     @Operation(
             summary = "Participa en un stock de eventos en el sistema",
-            description = "Este endpoint permite a los usuarios participar en un stock de eventos en el sistema. Se requiere el id del stock de eventos y la cantidad de participaciones en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos después de la participación.",
+            description = "Este endpoint permite a participar en un stock de eventos en el sistema. Se requiere el id del stock de eventos y la cantidad de participaciones en la ruta de la URL. Devuelve un objeto EventStokeResponse con los detalles del stock de eventos después de la participación.",
             tags = {"EventStoke"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

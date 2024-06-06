@@ -24,7 +24,7 @@ public class AuthenticationRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Guarda un nuevo cliente en el sistema",
-            description = "Este endpoint permite a los usuarios guardar un nuevo cliente en el sistema. Se requiere un objeto CustomerRequest en el cuerpo de la solicitud. Devuelve un objeto AuthenticationResponse con los detalles de la autenticación del cliente.",
+            description = "Este endpoint permite guardar un nuevo cliente en el sistema. Se requiere un objeto CustomerRequest en el cuerpo de la solicitud. Devuelve un objeto AuthenticationResponse con los detalles de la autenticación del cliente.",
             tags = {"Authentication"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

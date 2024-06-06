@@ -24,7 +24,7 @@ public class CreditCardRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Guarda una nueva tarjeta de crédito en el sistema",
-            description = "Este endpoint permite a los usuarios guardar una nueva tarjeta de crédito en el sistema. Se requiere un objeto CreditCardRequest en el cuerpo de la solicitud. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito guardada.",
+            description = "Este endpoint permite guardar una nueva tarjeta de crédito en el sistema. Se requiere un objeto CreditCardRequest en el cuerpo de la solicitud. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito guardada.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -57,7 +57,7 @@ public class CreditCardRestAdapter {
     @PostMapping("/{id}/edit")
     @Operation(
             summary = "Edita una tarjeta de crédito existente en el sistema",
-            description = "Este endpoint permite a los usuarios editar una tarjeta de crédito existente en el sistema. Se requiere un objeto CreditCardRequest en el cuerpo de la solicitud y el ID de la tarjeta de crédito en la ruta de la URL. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito editada.",
+            description = "Este endpoint permite editar una tarjeta de crédito existente en el sistema. Se requiere un objeto CreditCardRequest en el cuerpo de la solicitud y el ID de la tarjeta de crédito en la ruta de la URL. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito editada.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -90,7 +90,7 @@ public class CreditCardRestAdapter {
     @GetMapping("/find/{id}")
     @Operation(
             summary = "Encuentra una tarjeta de crédito por su ID en el sistema",
-            description = "Este endpoint permite a los usuarios buscar una tarjeta de crédito en el sistema utilizando su ID. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito encontrada.",
+            description = "Este endpoint permite buscar una tarjeta de crédito en el sistema utilizando su ID. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito encontrada.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -123,7 +123,7 @@ public class CreditCardRestAdapter {
     @GetMapping("/find/number/{number}")
     @Operation(
             summary = "Encuentra una tarjeta de crédito por su número en el sistema",
-            description = "Este endpoint permite a los usuarios buscar una tarjeta de crédito en el sistema utilizando su número. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito encontrada.",
+            description = "Este endpoint permite buscar una tarjeta de crédito en el sistema utilizando su número. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito encontrada.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -156,7 +156,7 @@ public class CreditCardRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Encuentra todas las tarjetas de crédito en el sistema",
-            description = "Este endpoint permite a los usuarios buscar todas las tarjetas de crédito en el sistema. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
+            description = "Este endpoint permite buscar todas las tarjetas de crédito en el sistema. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -189,7 +189,7 @@ public class CreditCardRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra todas las tarjetas de crédito en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar todas las tarjetas de crédito en el sistema con paginación. Se requiere el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
+            description = "Este endpoint permite buscar todas las tarjetas de crédito en el sistema con paginación. Se requiere el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -222,7 +222,7 @@ public class CreditCardRestAdapter {
     @GetMapping("/find/type/{type}/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra tarjetas de crédito por tipo en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar tarjetas de crédito en el sistema por tipo con paginación. Se requiere el tipo de tarjeta, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
+            description = "Este endpoint permite buscar tarjetas de crédito en el sistema por tipo con paginación. Se requiere el tipo de tarjeta, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -255,7 +255,7 @@ public class CreditCardRestAdapter {
     @GetMapping("/find/type/{type}")
     @Operation(
             summary = "Encuentra tarjetas de crédito por tipo en el sistema",
-            description = "Este endpoint permite a los usuarios buscar tarjetas de crédito en el sistema por tipo. Se requiere el tipo de tarjeta en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
+            description = "Este endpoint permite buscar tarjetas de crédito en el sistema por tipo. Se requiere el tipo de tarjeta en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -288,7 +288,7 @@ public class CreditCardRestAdapter {
     @DeleteMapping("/{id}/remove")
     @Operation(
             summary = "Elimina una tarjeta de crédito en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar una tarjeta de crédito en el sistema utilizando su ID. Devuelve un estado HTTP 200 si la tarjeta de crédito se eliminó correctamente.",
+            description = "Este endpoint permite eliminar una tarjeta de crédito en el sistema utilizando su ID. Devuelve un estado HTTP 200 si la tarjeta de crédito se eliminó correctamente.",
             tags = {"Credit Card"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

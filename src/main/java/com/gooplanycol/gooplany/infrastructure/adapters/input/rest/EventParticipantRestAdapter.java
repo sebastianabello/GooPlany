@@ -26,7 +26,7 @@ public class EventParticipantRestAdapter {
     @PostMapping("/save")
     @Operation(
             summary = "Guarda un nuevo participante de evento en el sistema",
-            description = "Este endpoint permite a los usuarios guardar un nuevo participante de evento en el sistema. Se requiere un cuerpo de solicitud con los detalles del participante del evento a guardar. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento guardado.",
+            description = "Este endpoint permite guardar un nuevo participante de evento en el sistema. Se requiere un cuerpo de solicitud con los detalles del participante del evento a guardar. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento guardado.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -59,7 +59,7 @@ public class EventParticipantRestAdapter {
     @PostMapping("/edit/{id}")
     @Operation(
             summary = "Edita un participante de evento existente en el sistema",
-            description = "Este endpoint permite a los usuarios editar un participante de evento existente en el sistema. Se requiere un cuerpo de solicitud con los detalles del participante del evento a editar y el ID del participante del evento en la ruta de la URL. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento editado.",
+            description = "Este endpoint permite editar un participante de evento existente en el sistema. Se requiere un cuerpo de solicitud con los detalles del participante del evento a editar y el ID del participante del evento en la ruta de la URL. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento editado.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -100,7 +100,7 @@ public class EventParticipantRestAdapter {
     @PostMapping("/change/status/{status}/{id}")
     @Operation(
             summary = "Cambia el estado de un participante de evento en el sistema",
-            description = "Este endpoint permite a los usuarios cambiar el estado de un participante de evento existente en el sistema. Se requiere el estado deseado y el ID del participante del evento en la ruta de la URL. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento actualizado.",
+            description = "Este endpoint permite cambiar el estado de un participante de evento existente en el sistema. Se requiere el estado deseado y el ID del participante del evento en la ruta de la URL. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento actualizado.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -141,7 +141,7 @@ public class EventParticipantRestAdapter {
     @GetMapping("/find/id/{id}")
     @Operation(
             summary = "Encuentra un participante de evento en el sistema por su ID",
-            description = "Este endpoint permite a los usuarios buscar un participante de evento en el sistema utilizando el ID del participante. Se requiere el ID del participante en la ruta de la URL. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento encontrado.",
+            description = "Este endpoint permite buscar un participante de evento en el sistema utilizando el ID del participante. Se requiere el ID del participante en la ruta de la URL. Devuelve un objeto EventParticipantResponse con los detalles del participante del evento encontrado.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -174,7 +174,7 @@ public class EventParticipantRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Encuentra todos los participantes de eventos en el sistema con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar todos los participantes de eventos en el sistema utilizando la paginación por defecto. No se requiere ningún parámetro en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
+            description = "Este endpoint permite buscar todos los participantes de eventos en el sistema utilizando la paginación por defecto. No se requiere ningún parámetro en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -207,7 +207,7 @@ public class EventParticipantRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra todos los participantes de eventos en el sistema con paginación personalizada",
-            description = "Este endpoint permite a los usuarios buscar todos los participantes de eventos en el sistema utilizando la paginación personalizada. Se requiere los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
+            description = "Este endpoint permite buscar todos los participantes de eventos en el sistema utilizando la paginación personalizada. Se requiere los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -240,7 +240,7 @@ public class EventParticipantRestAdapter {
     @DeleteMapping("/remove/{id}")
     @Operation(
             summary = "Elimina un participante de evento en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar un participante de evento existente en el sistema. Se requiere el ID del participante del evento en la ruta de la URL. No devuelve contenido en el cuerpo de la respuesta.",
+            description = "Este endpoint permite eliminar un participante de evento existente en el sistema. Se requiere el ID del participante del evento en la ruta de la URL. No devuelve contenido en el cuerpo de la respuesta.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -273,7 +273,7 @@ public class EventParticipantRestAdapter {
     @GetMapping("/find/status/{status}/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra los participantes de eventos en el sistema por estado con paginación personalizada",
-            description = "Este endpoint permite a los usuarios buscar los participantes de eventos en el sistema utilizando el estado del participante y la paginación personalizada. Se requiere el estado del participante y los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
+            description = "Este endpoint permite buscar los participantes de eventos en el sistema utilizando el estado del participante y la paginación personalizada. Se requiere el estado del participante y los parámetros de offset y pageSize en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -306,7 +306,7 @@ public class EventParticipantRestAdapter {
     @GetMapping("/find/status/{status}")
     @Operation(
             summary = "Encuentra los participantes de eventos en el sistema por estado con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar los participantes de eventos en el sistema utilizando el estado del participante y la paginación por defecto. Se requiere el estado del participante en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
+            description = "Este endpoint permite buscar los participantes de eventos en el sistema utilizando el estado del participante y la paginación por defecto. Se requiere el estado del participante en la ruta de la URL. Devuelve una lista de objetos EventParticipantResponse con los detalles de los participantes del evento encontrados.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -339,7 +339,7 @@ public class EventParticipantRestAdapter {
     @GetMapping("/find/{id}/customer")
     @Operation(
             summary = "Encuentra el cliente de un participante de evento en el sistema por el ID del participante",
-            description = "Este endpoint permite a los usuarios buscar el cliente de un participante de evento en el sistema utilizando el ID del participante. Se requiere el ID del participante en la ruta de la URL. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
+            description = "Este endpoint permite buscar el cliente de un participante de evento en el sistema utilizando el ID del participante. Se requiere el ID del participante en la ruta de la URL. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -372,7 +372,7 @@ public class EventParticipantRestAdapter {
     @GetMapping("/find/{id}/card")
     @Operation(
             summary = "Encuentra la tarjeta de crédito de un participante de evento en el sistema por el ID del participante",
-            description = "Este endpoint permite a los usuarios buscar la tarjeta de crédito de un participante de evento en el sistema utilizando el ID del participante. Se requiere el ID del participante en la ruta de la URL. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito encontrada.",
+            description = "Este endpoint permite buscar la tarjeta de crédito de un participante de evento en el sistema utilizando el ID del participante. Se requiere el ID del participante en la ruta de la URL. Devuelve un objeto CreditCardResponse con los detalles de la tarjeta de crédito encontrada.",
             tags = {"EventParticipant"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

@@ -27,7 +27,7 @@ public class CustomerRestAdapter {
     @DeleteMapping("/{id}/remove")
     @Operation(
             summary = "Elimina un cliente en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar un cliente en el sistema utilizando su ID. Devuelve un estado HTTP 200 si el cliente se eliminó correctamente.",
+            description = "Este endpoint permite eliminar un cliente en el sistema utilizando su ID. Devuelve un estado HTTP 200 si el cliente se eliminó correctamente.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -60,7 +60,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/edit")
     @Operation(
             summary = "Edita los datos de un cliente en el sistema",
-            description = "Este endpoint permite a los usuarios editar los datos de un cliente en el sistema utilizando su ID. Se requiere un cuerpo de solicitud con los datos del cliente a editar. Devuelve un objeto CustomerResponse con los detalles del cliente editado.",
+            description = "Este endpoint permite editar los datos de un cliente en el sistema utilizando su ID. Se requiere un cuerpo de solicitud con los datos del cliente a editar. Devuelve un objeto CustomerResponse con los detalles del cliente editado.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -93,7 +93,7 @@ public class CustomerRestAdapter {
     @GetMapping("find/{id}")
     @Operation(
             summary = "Encuentra un cliente en el sistema por su ID",
-            description = "Este endpoint permite a los usuarios buscar un cliente en el sistema utilizando su ID. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
+            description = "Este endpoint permite buscar un cliente en el sistema utilizando su ID. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -126,7 +126,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra todos los clientes en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar todos los clientes en el sistema con paginación. Se requiere el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CustomerResponse con los detalles de los clientes encontrados.",
+            description = "Este endpoint permite buscar todos los clientes en el sistema con paginación. Se requiere el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CustomerResponse con los detalles de los clientes encontrados.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -159,7 +159,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find")
     @Operation(
             summary = "Encuentra todos los clientes en el sistema con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar todos los clientes en el sistema con una paginación por defecto (10 elementos desde el inicio). Devuelve una lista de objetos CustomerResponse con los detalles de los clientes encontrados.",
+            description = "Este endpoint permite buscar todos los clientes en el sistema con una paginación por defecto (10 elementos desde el inicio). Devuelve una lista de objetos CustomerResponse con los detalles de los clientes encontrados.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -192,7 +192,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/history")
     @Operation(
             summary = "Encuentra el historial de un cliente en el sistema por su ID",
-            description = "Este endpoint permite a los usuarios buscar el historial de un cliente en el sistema utilizando su ID. Devuelve un objeto HistoryResponse con los detalles del historial del cliente.",
+            description = "Este endpoint permite buscar el historial de un cliente en el sistema utilizando su ID. Devuelve un objeto HistoryResponse con los detalles del historial del cliente.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -225,7 +225,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/address/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra las direcciones de un cliente en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar las direcciones de un cliente en el sistema utilizando su ID con paginación. Se requiere el ID del cliente, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
+            description = "Este endpoint permite buscar las direcciones de un cliente en el sistema utilizando su ID con paginación. Se requiere el ID del cliente, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -258,7 +258,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/address")
     @Operation(
             summary = "Encuentra las direcciones de un cliente en el sistema con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar las direcciones de un cliente en el sistema utilizando su ID con una paginación por defecto (10 elementos desde el inicio). Se requiere el ID del cliente en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
+            description = "Este endpoint permite buscar las direcciones de un cliente en el sistema utilizando su ID con una paginación por defecto (10 elementos desde el inicio). Se requiere el ID del cliente en la ruta de la URL. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones encontradas.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -291,7 +291,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/cards/{offset}/{pageSize}")
     @Operation(
             summary = "Encuentra las tarjetas de crédito de un cliente en el sistema con paginación",
-            description = "Este endpoint permite a los usuarios buscar las tarjetas de crédito de un cliente en el sistema utilizando su ID con paginación. Se requiere el ID del cliente, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
+            description = "Este endpoint permite buscar las tarjetas de crédito de un cliente en el sistema utilizando su ID con paginación. Se requiere el ID del cliente, el offset y el tamaño de la página en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -324,7 +324,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/{id}/cards")
     @Operation(
             summary = "Encuentra las tarjetas de crédito de un cliente en el sistema con paginación por defecto",
-            description = "Este endpoint permite a los usuarios buscar las tarjetas de crédito de un cliente en el sistema utilizando su ID con una paginación por defecto (10 elementos desde el inicio). Se requiere el ID del cliente en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
+            description = "Este endpoint permite buscar las tarjetas de crédito de un cliente en el sistema utilizando su ID con una paginación por defecto (10 elementos desde el inicio). Se requiere el ID del cliente en la ruta de la URL. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito encontradas.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -357,7 +357,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/email/{email}")
     @Operation(
             summary = "Encuentra un cliente en el sistema por su correo electrónico",
-            description = "Este endpoint permite a los usuarios buscar un cliente en el sistema utilizando su correo electrónico. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
+            description = "Este endpoint permite buscar un cliente en el sistema utilizando su correo electrónico. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -390,7 +390,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/change/pwd/{pwd}")
     @Operation(
             summary = "Cambia la contraseña de un cliente en el sistema",
-            description = "Este endpoint permite a los usuarios cambiar la contraseña de un cliente en el sistema utilizando su ID. Se requiere el ID del cliente y la nueva contraseña en la ruta de la URL. Devuelve un objeto CustomerResponse con los detalles del cliente cuya contraseña ha sido cambiada.",
+            description = "Este endpoint permite cambiar la contraseña de un cliente en el sistema utilizando su ID. Se requiere el ID del cliente y la nueva contraseña en la ruta de la URL. Devuelve un objeto CustomerResponse con los detalles del cliente cuya contraseña ha sido cambiada.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -424,7 +424,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/add/address")
     @Operation(
             summary = "Agrega una dirección a un cliente en el sistema",
-            description = "Este endpoint permite a los usuarios agregar una dirección a un cliente en el sistema utilizando su ID. Se requiere el ID del cliente en la ruta de la URL y un cuerpo de solicitud con los detalles de la dirección a agregar. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones del cliente, incluyendo la nueva dirección agregada.",
+            description = "Este endpoint permite agregar una dirección a un cliente en el sistema utilizando su ID. Se requiere el ID del cliente en la ruta de la URL y un cuerpo de solicitud con los detalles de la dirección a agregar. Devuelve una lista de objetos AddressResponse con los detalles de las direcciones del cliente, incluyendo la nueva dirección agregada.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -457,7 +457,7 @@ public class CustomerRestAdapter {
     @DeleteMapping("/{customerId}/remove/address/{addressId}")
     @Operation(
             summary = "Elimina una dirección de un cliente en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar una dirección de un cliente en el sistema utilizando el ID del cliente y el ID de la dirección. Se requiere el ID del cliente y el ID de la dirección en la ruta de la URL. Devuelve un estado HTTP 200 si la dirección se eliminó correctamente.",
+            description = "Este endpoint permite eliminar una dirección de un cliente en el sistema utilizando el ID del cliente y el ID de la dirección. Se requiere el ID del cliente y el ID de la dirección en la ruta de la URL. Devuelve un estado HTTP 200 si la dirección se eliminó correctamente.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -490,7 +490,7 @@ public class CustomerRestAdapter {
     @PostMapping("/{id}/add/card")
     @Operation(
             summary = "Agrega una tarjeta de crédito a un cliente en el sistema",
-            description = "Este endpoint permite a los usuarios agregar una tarjeta de crédito a un cliente en el sistema utilizando su ID. Se requiere el ID del cliente en la ruta de la URL y un cuerpo de solicitud con los detalles de la tarjeta de crédito a agregar. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito del cliente, incluyendo la nueva tarjeta agregada.",
+            description = "Este endpoint permite agregar una tarjeta de crédito a un cliente en el sistema utilizando su ID. Se requiere el ID del cliente en la ruta de la URL y un cuerpo de solicitud con los detalles de la tarjeta de crédito a agregar. Devuelve una lista de objetos CreditCardResponse con los detalles de las tarjetas de crédito del cliente, incluyendo la nueva tarjeta agregada.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -523,7 +523,7 @@ public class CustomerRestAdapter {
     @DeleteMapping("/{customerId}/remove/card/{cardId}")
     @Operation(
             summary = "Elimina una tarjeta de crédito de un cliente en el sistema",
-            description = "Este endpoint permite a los usuarios eliminar una tarjeta de crédito de un cliente en el sistema utilizando el ID del cliente y el ID de la tarjeta. Se requiere el ID del cliente y el ID de la tarjeta en la ruta de la URL. Devuelve un estado HTTP 200 si la tarjeta de crédito se eliminó correctamente.",
+            description = "Este endpoint permite eliminar una tarjeta de crédito de un cliente en el sistema utilizando el ID del cliente y el ID de la tarjeta. Se requiere el ID del cliente y el ID de la tarjeta en la ruta de la URL. Devuelve un estado HTTP 200 si la tarjeta de crédito se eliminó correctamente.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -556,7 +556,7 @@ public class CustomerRestAdapter {
     @GetMapping("/find/by/tk/{token}")
     @Operation(
             summary = "Encuentra un cliente en el sistema por su token",
-            description = "Este endpoint permite a los usuarios buscar un cliente en el sistema utilizando su token. Se requiere el token del cliente en la ruta de la URL. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
+            description = "Este endpoint permite buscar un cliente en el sistema utilizando su token. Se requiere el token del cliente en la ruta de la URL. Devuelve un objeto CustomerResponse con los detalles del cliente encontrado.",
             tags = {"Customer"},
             responses = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
