@@ -61,6 +61,7 @@ public class SecurityConfig {
                     "/api/v1/eventParticipant/find/{id}/card"};
     private static final String[] customersUrls =
             {
+                    "/api/v1/customer/find",
                     "/api/v1/customer/find/{id}",
                     "/api/v1/customer/{id}/edit",
                     "/api/v1/customer/{id}/add/address",
